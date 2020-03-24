@@ -21,7 +21,8 @@ def personalProfileView(request):
         if 'userName' in request.COOKIES:
             print(request.COOKIES['userName'])
         else:
-            raise Exception("Authentication failure")   
+            pass
+            #raise Exception("Authentication failure")   
 
         config=getConfig()
         log=config['log']
@@ -29,8 +30,8 @@ def personalProfileView(request):
        
         if request.method == "POST":
             #print(request.POST)
+            #print(json.loads(request.body))
             savePersonalProfileService(json.loads(request.body.decode('utf-8')))
-            #print(json.loads(request.body.decode('utf-8')))
             response['statusCode'] = 0
             response['data'] = 'Personal Profile data saved successfully'
         elif request.method == "GET":

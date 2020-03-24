@@ -21,11 +21,12 @@ def subscriptionsView(request):
         if 'userName' in request.COOKIES:
             print(request.COOKIES['userName'])
         else:
-            raise Exception("Authentication failure")   
-        print(request.META['REMOTE_HOST'])
-        print(request.META['REMOTE_ADDR'])
-        print(request.META.get('HTTP_X_FORWARDED_FOR'))
-        print(request.META['HTTP_USER_AGENT'])
+            pass
+          #  raise Exception("Authentication failure")   
+        #print(request.META['REMOTE_HOST'])
+        #print(request.META['REMOTE_ADDR'])
+        #print(request.META.get('HTTP_X_FORWARDED_FOR'))
+        #print(request.META['HTTP_USER_AGENT'])
         config=getConfig()
         log=config['log']
         configureLogging(log)
@@ -36,6 +37,6 @@ def subscriptionsView(request):
             response['data'] = subscriptionList
     except Exception as e:
         logging.error(str(e))
-        response['data'] = 'Error in saving Personal Profile data'
+        response['data'] = 'Error in retrieving subscription data'
         response['error'] = str(e)
     return JsonResponse(response)      

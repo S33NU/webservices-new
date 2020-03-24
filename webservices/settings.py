@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
 
 
 # Application definition
+CORS_ORIGIN_ALLOW_ALL=True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,10 +43,12 @@ INSTALLED_APPS = [
     'personal_profile',
     'rest_framework_swagger',
     'rest_framework',
-    'subscriptions'
+    'subscriptions',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
