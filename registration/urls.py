@@ -18,5 +18,6 @@ from . import views
 
 
 urlpatterns = [
-    path('registration/save',views.savePassword),    
+    path('registration/save',views.savePassword),
+    path('registration/validate', views.validateClient)    
 ]

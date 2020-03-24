@@ -5,7 +5,7 @@ from metadata.functions.metadata import getConfig, configureLogging
 import logging
 import json
 from rest_framework.decorators import api_view
-from registration.functions.registration_service import saveClientPasswordService, saveClientMobileService
+from registration.functions.registration_service import saveClientPasswordService, validateClientPasswordService, saveClientMobileService
 
 
 @csrf_exempt
@@ -51,3 +51,43 @@ def savePassword(request):
         response['data'] = 'Error in saving client details '
         response['error'] = str(e)
     return JsonResponse(response)
+
+@csrf_exempt
+@api_view(['POST'])
+def validateClient(request):
+    response = {
+        'data': None,
+        'error': None,
+        'statusCode': 1
+    }
+    try:
+        if 'userName' in request.COOKIES:
+            print(request.COOKIES['userName'])
+        else:
+            raise Exception("Authentication failure")
+
+        config = getConfig()
+        log = config['log']
+        configureLogging(log)
+
+        if request.method == "POST":
+            if validateClientPasswordService(json.loads(request.body.decode('utf-8'))):
+                # print(json.loads(request.body.decode('utf-8')))
+                response['statusCode'] = 0
+                response['data'] = 'Client credentials successfully validated'
+            else:
+                response['statusCode'] = 0
+                response['data'] = 'Invalid client credentials'
+                    
+    except Exception as e:
+        logging.error(str(e))
+        response['data'] = 'Error in validting client credentials '
+        response['error'] = str(e)
+    return JsonResponse(response)
+
+
+
+
+
+
+
