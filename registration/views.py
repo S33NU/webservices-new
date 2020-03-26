@@ -5,7 +5,7 @@ from metadata.functions.metadata import getConfig, configureLogging
 import logging
 import json
 from rest_framework.decorators import api_view
-from registration.functions.registration_service import saveClientPasswordService, validateClientPasswordService, saveClientMobileService
+from registration.functions.registration_service import saveClientPasswordService, validateClientPasswordService, saveClientMobileService, verifyOTPService
 
 
 @csrf_exempt
@@ -76,7 +76,7 @@ def validateClient(request):
                 response['statusCode'] = 0
                 response['data'] = 'Client credentials successfully validated'
             else:
-                response['statusCode'] = 0
+                response['statusCode'] = 2
                 response['data'] = 'Invalid client credentials'
                     
     except Exception as e:
@@ -86,8 +86,39 @@ def validateClient(request):
     return JsonResponse(response)
 
 
+@csrf_exempt
+@api_view(['POST'])
+def verifyOTP(request):
+    
+    response = {
+        'data': None,
+        'error': None,
+        'statusCode': 1
+    }
+    try:
+        if 'userName' in request.COOKIES:
+            print(request.COOKIES['userName'])
+        else:
+            raise Exception("Authentication failure")
 
+        config = getConfig()
+        log = config['log']
+        configureLogging(log)
 
+        if request.method == "POST":
 
+            if verifyOTPService(json.loads(request.body.decode('utf-8'))):
+                # print(json.loads(request.body.decode('utf-8')))
+                response['statusCode'] = 0
+                response['data'] = 'OTP successfully verified'
+            else:
+                response['statusCode'] = 3
+                response['data'] = 'Invalid OTP'
+                    
+    except Exception as e:
+        logging.error(str(e))
+        response['data'] = 'Error in validting client credentials '
+        response['error'] = str(e)
+    return JsonResponse(response)
 
 

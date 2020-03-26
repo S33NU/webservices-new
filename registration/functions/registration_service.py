@@ -1,6 +1,6 @@
 from registration.functions.database import saveClientPasswordDB,validateClientPasswordDB
 import logging
-
+from metadata.functions.metadata import getOTP,verifyOTP
 
 
 def saveClientPasswordService(dataObj):
@@ -21,6 +21,7 @@ def saveClientMobileService(dataObj):
 
 def validateClientPasswordService(dataObj):
     try:
+        getOTP(str(919160384325))
         clientList=validateClientPasswordDB(dataObj)
         if len(clientList) == 1:
             return True
@@ -29,3 +30,15 @@ def validateClientPasswordService(dataObj):
     except Exception  as e:
         logging.error("Error in validating client credentials")
         raise    
+
+def verifyOTPService(dataObj):
+    try:
+        response=verifyOTP(str(dataObj['phoneNumber']),str(dataObj['otp']))
+        if response.type == 'success':
+            return True
+        else:
+            return False
+        
+    except Exception as e:
+        logging.error("Error in validating OTP "+str(e))
+        raise
