@@ -38,7 +38,8 @@ def getOTP(mobile_number):
         conn = http.client.HTTPSConnection("api.msg91.com")
 
         headers = { 'content-type': "application/json" }
-        url = "/api/v5/otp?authkey="+otp_config['auth_key']+"&template_id="+otp_config['send_otp_template_id']+"&extra_param=%7B%22OTP%22%3A%2212390%22%7D&mobile="+mobile_number
+        #%7B%22OTP%22%3A%2212390%22%7D
+        url = "/api/v5/otp?authkey="+otp_config['auth_key']+"&template_id="+otp_config['send_otp_template_id']+"&extra_param=&mobile="+mobile_number
         conn.request("GET",url, headers=headers)
 
         res = conn.getresponse()
