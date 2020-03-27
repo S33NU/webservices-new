@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'rest_framework',
     'subscriptions',
-    'corsheaders'
+    'corsheaders',
+    'webapp',
+    'registration'
 ]
 
 MIDDLEWARE = [
@@ -128,6 +130,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 
 REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }

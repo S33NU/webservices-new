@@ -23,5 +23,6 @@ urlpatterns = [
     path('clients/',include('personal_profile.urls')),
     path('clients/',include('subscriptions.urls')),
     path('clients/',include('registration.urls')),
+    path('ui/',include('webapp.urls')),
     path(r'swagger-docs/', schema_view),
 ]
