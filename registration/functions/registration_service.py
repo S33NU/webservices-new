@@ -10,13 +10,22 @@ def saveClientPasswordService(dataObj):
         logging.error("Error in saving client password "+str(e))
         raise
 
-
-def saveClientMobileService(dataObj):
+def validateMobileandSaveService(dataObj, ip, device):
     try:
-        pass
-        #saveClientMobileDB(dataObj)
+        clientDetails = validateClientMobileDB(dataObj, ip, device)
+        if clientDetails == []:
+            return True
+        else:
+            pass
+    except Exception as msg:
+        logging.error('Error in validating mobile service' + str(msg)) 
+        
+        
+def saveClientMobileService(dataObj, ip, device):
+    try:
+        saveClientMobileDB(dataObj, ip, device)
     except Exception as e:
-        logging.error("Error in saving Client Mobile number"+str(e))
+        logging.error("Error in saving Client Mobile number" + str(e))
         raise
 
 def validateClientPasswordService(dataObj):
