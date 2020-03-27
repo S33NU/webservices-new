@@ -1,4 +1,4 @@
-from registration.functions.database import saveClientPasswordDB,validateClientPasswordDB
+from registration.functions.database import saveClientPasswordDB, validateClientPasswordDB,saveClientMobileDB
 import logging
 from metadata.functions.metadata import getOTP,verifyOTP
 
@@ -14,7 +14,7 @@ def saveClientPasswordService(dataObj):
 def saveClientMobileService(dataObj):
     try:
         pass
-        #saveClientMobileDB(dataObj)
+        saveClientMobileDB(dataObj)
     except Exception as e:
         logging.error("Error in saving Client Mobile number"+str(e))
         raise

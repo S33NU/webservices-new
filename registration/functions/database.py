@@ -4,7 +4,7 @@ from mysql.connector import errorcode
 from metadata.functions.metadata import connectToDatabase
 
 
-def saveClientPAsswordDB(dataObj):
+def saveClientPasswordDB(dataObj):
     try:
         cnx = connectToDatabase()
         mycursor = cnx.cursor()
@@ -45,3 +45,17 @@ def saveClientMobileDB(dataObj, ip, device):
     except Exception as e:
         logging.error("Error in saving client mobile number in DB " + str(e))
         raise
+
+def validateClientPasswordDB(dataObj):
+    try:
+        cnx = connectToDatabase()
+        mycursor = cnx.cursor()
+        sql = "SELECT phonenumber,password from registration WHERE password='"+dataObj['password']+"' and phonenumber = {}".format(dataObj['phonenumber'])
+
+        mycursor.execute(sql)
+        result=mycursor.fetchall()
+        cnx.close()
+        return result
+    except Exception as e:
+        logging.error("Error in validating client password DB "+str(e))
+        raise 

@@ -21,8 +21,7 @@ def subscriptionsView(request):
         if 'userName' in request.COOKIES:
             print(request.COOKIES['userName'])
         else:
-            pass
-          #  raise Exception("Authentication failure")   
+            raise Exception("Authentication failure")   
         #print(request.META['REMOTE_HOST'])
         #print(request.META['REMOTE_ADDR'])
         #print(request.META.get('HTTP_X_FORWARDED_FOR'))

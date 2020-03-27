@@ -5,8 +5,7 @@ from metadata.functions.metadata import getConfig, configureLogging,get_client_i
 import logging
 import json
 from rest_framework.decorators import api_view
-from registration.functions.registration_service import saveClientPasswordService, saveClientMobileService,
-    validateMobileandSaveService , validateClientPasswordService, verifyOTPService
+from registration.functions.registration_service import saveClientPasswordService, saveClientMobileService, validateMobileandSaveService , validateClientPasswordService, verifyOTPService
 
 
 
