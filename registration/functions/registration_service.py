@@ -1,4 +1,4 @@
-from registration.functions.database import saveClientPasswordDB,validateClientPasswordDB
+from registration.functions.database import saveClientPasswordDB,validateClientPasswordDB, saveClientMobileDB, validateClientMobileDB
 import logging
 from metadata.functions.metadata import getOTP,verifyOTP
 
