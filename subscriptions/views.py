@@ -6,6 +6,7 @@ from subscriptions.functions.subscriptions_service import getSubscriptionsServic
 import logging
 import json
 from rest_framework.decorators import api_view
+from metadata.functions.service import validateCookieService
 
 # Create your views here.
 
@@ -18,18 +19,15 @@ def subscriptionsView(request):
         'statusCode': 1
     }
     try:
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")   
-        #print(request.META['REMOTE_HOST'])
-        #print(request.META['REMOTE_ADDR'])
-        #print(request.META.get('HTTP_X_FORWARDED_FOR'))
-        #print(request.META['HTTP_USER_AGENT'])
         config=getConfig()
         log=config['log']
         configureLogging(log)
-       
+        
+        if 'userName' in request.COOKIES:
+            if not validateCookieService(request.COOKIES['userName']):
+                response['statusCode'] = 5
+                raise Exception("Authentication failure")
+                  
         if request.method == "GET":
             subscriptionList = getSubscriptionsService()
             response['statusCode'] = 0

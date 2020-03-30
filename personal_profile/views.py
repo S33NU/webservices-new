@@ -7,7 +7,7 @@ import logging
 import json
 from rest_framework.decorators import api_view
 from personal_profile.functions.database import getProfileData
-
+from metadata.functions.service import validateCookieService
 
 @csrf_exempt
 @api_view(['GET', 'POST'])
@@ -18,16 +18,17 @@ def personalProfileView(request):
         'statusCode': 1
     }
     try:
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            pass
-            #raise Exception("Authentication failure")   
-
         config=getConfig()
         log=config['log']
         configureLogging(log)
        
+        
+        if 'userName' in request.COOKIES:
+            if not validateCookieService(request.COOKIES['userName']):
+                response['statusCode'] = 5
+                raise Exception("Authentication failure")
+        
+        
         if request.method == "POST":
             #print(request.POST)
             #print(json.loads(request.body))
@@ -54,11 +55,15 @@ def getprofilebyid(request, id):
         'statusCode': None
     }
     try:
+        config=getConfig()
+        log=config['log']
+        configureLogging(log)
+       
         if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-
+            if not validateCookieService(request.COOKIES['userName']):
+                response['statusCode'] = 5
+                raise Exception("Authentication failure")
+        
         if request.method == "GET":
             try:
                 id = int(id)
@@ -108,14 +113,15 @@ def personalProfileQuestionsView(request):
         'statusCode': 1
     }
     try:
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")   
-
         config=getConfig()
         log=config['log']
         configureLogging(log)
+        
+        if 'userName' in request.COOKIES:
+            if not validateCookieService(request.COOKIES['userName']):
+                response['statusCode'] = 5
+                raise Exception("Authentication failure")
+               
        
         if request.method == "GET":
             #print(request.POST)
@@ -139,11 +145,16 @@ def getprofile(request):
         'statusCode': None
     }
     try:
+        config=getConfig()
+        log=config['log']
+        configureLogging(log)
+        
+        
         if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-
+            if not validateCookieService(request.COOKIES['userName']):
+                response['statusCode'] = 5
+                raise Exception("Authentication failure")
+        
         if request.method == "GET":
             all_profiles = getProfileData()
 

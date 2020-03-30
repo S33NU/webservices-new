@@ -18,7 +18,13 @@ from . import views
 
 
 urlpatterns = [
-    path('registration/save',views.savePassword),
-    path('registration/validate', views.validateClient),
-    path('registration/verifyOTP', views.verifyOTP)    
+    path('registration/save-password',views.savePassword),
+    path('registration/validate-password', views.validateClient),
+    path('registration/verifyOTP', views.verifyOTP),
+    path('registration/validate-phoneno',views.validatePhoneno),
+    path('registration/check-password',views.checkPassword),
+    path('registration/validate-email',views.validateEmail),
+    path('registration/validate-password-email',views.validateClientByEmail),
+    path('registration/verifyOTP-email',views.verifyOTPBByEmail),
+    path('registration/check-password-email',views.checkPasswordByEmail),   
 ]

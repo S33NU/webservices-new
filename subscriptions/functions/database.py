@@ -7,7 +7,7 @@ def getSubscriptionsListDB():
     try:
         cnx=connectToDatabase()
         mycursor = cnx.cursor()
-        mycursor.execute("select subscriptionKey,subscriptionName,subscriptionDescription,subscriptionCost from subscription")
+        mycursor.execute("select subscriptionKey,subscriptionName,subscriptionDescription,subscriptionCost,subscriptionPeriod  from subscription")
         
         result = mycursor.fetchall()
         

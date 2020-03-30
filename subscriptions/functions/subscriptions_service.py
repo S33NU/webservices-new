@@ -12,7 +12,8 @@ def getSubscriptionsService():
                'subscriptionKey':subscription[0],
                'subscriptionName':subscription[1],
                'subscriptionDescription':subscription[2],
-               'subscriptionCost':subscription[3]
+               'subscriptionCost':subscription[3],
+               'subscriptionPeriod':subscription[4]
            }
            temp.append(subscriptionObj) 
        subscriptionsList = temp    

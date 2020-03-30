@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
     path('login',views.login),
-    path('save-password',views.savePassword),  
+    path('save-password/<phonenumber>',views.savePassword,name="savePassword"),  
     path('email-login',views.emailLogin),
     path('personal-profile',views.personalProfile)
     

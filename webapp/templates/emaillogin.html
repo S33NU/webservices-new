@@ -26,8 +26,8 @@
    <script src="{% static "vendor/jquery-easing/jquery.easing.min.js" %}"></script>
  
    <!-- Custom scripts for all pages-->
-   <script src="{% static "js/sb-admin-2.min.js" %}"></script>
    <script src="{% static "vendor/parsley.min.js" %}"  type="text/javascript"></script>
+  
 </head>
 <body class="bg-gradient-primary">
   <div class="container"> <br> <br> <br> <br> <br> <br>
@@ -44,21 +44,35 @@
 		  
                 <div class="p-5">
                   
-                  <form class="user">
+                  <form class="user" data-parsley-validate="">
                     <div class="form-group">
-					<img src="{% static "pictures\phone.svg" %}" width="30" height="30" id="input_img" class="vl">
-                    <input type="email" class="form-control form-control-user text1" id="exampleInputemail" aria-describedby="emailHelp" placeholder="Enter Email Address" ></br>
+					            <img src="{% static "pictures\phone.svg" %}" width="30" height="30" id="input_img" class="vl">
+                      <input type="email" data-parsley-trigger="focusout" data-parsley-error-message="Enter a valid email" data-parsley-type="email" class="form-control form-control-user text1" id="userEmailID" aria-describedby="emailHelp" placeholder="Enter Email Address" required/></br>
                     </div>
-					 
-                    <div class="form-group">
-					<img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
-                      <input type="otp" class="form-control form-control-user text1" id="exampleInputOtp" placeholder="OTP"></br>
-                    </div></br>
-					
+                    
+                    <div id="newUserLogin">
+                      <div class="form-group">
+					              <img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
+                        <input type="otp" class="form-control form-control-user text1" id="userOTP" placeholder="OTP"></br>
+                      </div></br>
+                    </div>
                    
-                    <a href="newdashboard.html" class="btn btn-primary btn-user btn-block login">
-                      Login
-                    </a>
+                    <div id="existingUserLogin">
+                      <div class="form-group">
+                          <img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
+                          <input type="password" class="form-control form-control-user text1" id="userPassword" placeholder="Enter Password">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="form-group-mbn">
+                        <a class="small-login" href="login">Go back to mobile login</a>
+                     </div>
+                    </div>
+
+                    <div class="invalid-form-error-message"></div>
+                    <!--input type="submit" class="btn btn-primary btn-user btn-block login" value="Login" onsubmit="verifyUserCredentials();return false;"/-->
+                    <button id="loginSubmit" class="btn btn-primary btn-user btn-block login" onclick="verifyUserCredentials();return false;">Login</button>
+                  
                   </form>
                 </div>
               </div>
@@ -72,7 +86,9 @@
 
   </div>
 
- 
+  <script src="{% static "js/sb-admin-2.min.js" %}"></script>
+  
+  <script src="{% static "js/emailLogin.js" %}"></script>
 
 </body>
 
