@@ -1,0 +1,16 @@
+ul.parsley-errors-list.filled {
+    color: red;
+    font-size: small;
+  }
+  
+div.invalid-form-error-message.filled{
+    color: red;
+    font-size: small;
+    margin-bottom: 5%;
+  
+}
+
+p#otpMessage {
+    font-size: smaller;
+    color: black;
+}

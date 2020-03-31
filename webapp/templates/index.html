@@ -18,7 +18,7 @@
   <!-- Custom styles for this template-->
   <link href="{% static "css/sb-admin-2.min.css" %}" rel="stylesheet">
  <link href="{% static "css/sb-admin-2.css" %}" rel="stylesheet">
- <link href="{% static "css/login.css" %}" rel="stylesheet">
+ <link href="{% static "css/common.css" %}" rel="stylesheet">
  <!-- Bootstrap core JavaScript-->
  <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
  <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
@@ -52,23 +52,21 @@
 					<img src="{% static "pictures\phone.svg" %}" width="30" height="30" id="input_img" class="vl">
                     <input type="tel" data-parsley-trigger="focusout" data-parsley-error-message="Enter a valid mobile number"  pattern="^[1-9][0-9]{9}" class="form-control form-control-user text1" id="userMobileNumber"  data-parsley-maxlength=10 required aria-describedby="mobileHelp" placeholder="Enter Mobile Number"></br>
                     </div>
-                    
-                    <div id="newUserLogin">
-                        <div class="form-group">
+                   
+                    <p id="otpMessage"></p>
+                   
+                   
+                    <div class="form-group" id="newUserLogin">
 					    <img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
                             <input type="otp" data-parsley-trigger="change" class="form-control form-control-user text1" id="userOTP" placeholder="OTP" data-parsley-error-message="Enter a valid OTP" data-parsley-maxlength=4 pattern="[0-9]{4}"/>
-                        </div>
+                    </div>
                     
 
-                    </div>
-
-                    <div id="existingUserLogin">
-                        <div class="form-group">
+                   <div class="form-group" id="existingUserLogin">
                             <img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
                             <input type="password" class="form-control form-control-user text1" id="userPassword" placeholder="Enter Password">
-                        </div>
                     </div>
-
+                
                     <div class="form-group">
                         <div class="form-group-mbn">
                           <a class="small-login" href="email-login">Alternatively you can login using email </a>

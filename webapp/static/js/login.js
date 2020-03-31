@@ -3,9 +3,9 @@
     $("#newUserLogin").hide();
     $("#loginSubmit").hide();
     $('#userMobileNumber').parsley().on('field:success', function() {
-
+        var phonenumber =  $('#userMobileNumber').val();
         dataObj={
-            "phonenumber": $('#userMobileNumber').val()
+            "phonenumber":phonenumber
         }
        
         $.post("http://localhost:8000/clients/registration/validate-phoneno", JSON.stringify(dataObj), function(res){
@@ -23,6 +23,7 @@
                 }else{
                     console.log("new");
                     $("#newUserLogin").show();
+                    $("#otpMessage").html("OTP sent to "+phonenumber);
                     $("#existingUserLogin").hide();  
                 }
             }else if(res.statusCode == 1){
@@ -66,7 +67,7 @@ function verifyUserCredentials(){
                 $('.invalid-form-error-message')
                     .html('')
                     .toggleClass('filled', false);
-                
+                $("#otpMessage").html('');
                 checkPassword(phonenumber);
             }else{
                   

@@ -18,6 +18,7 @@
   <!-- Custom styles for this template-->
   <link href="{% static "css/sb-admin-2.min.css" %}" rel="stylesheet">
   <link href="{% static "css/sb-admin-2.css" %}" rel="stylesheet">
+  <link href="{% static "css/common.css" %}" rel="stylesheet">
    <!-- Bootstrap core JavaScript-->
    <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
    <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
@@ -49,20 +50,21 @@
 					            <img src="{% static "pictures\phone.svg" %}" width="30" height="30" id="input_img" class="vl">
                       <input type="email" data-parsley-trigger="focusout" data-parsley-error-message="Enter a valid email" data-parsley-type="email" class="form-control form-control-user text1" id="userEmailID" aria-describedby="emailHelp" placeholder="Enter Email Address" required/></br>
                     </div>
+                   
+                    <p id="otpMessage"></p>
+                 
                     
-                    <div id="newUserLogin">
-                      <div class="form-group">
+                    <div class="form-group" id="newUserLogin">
 					              <img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
                         <input type="otp" class="form-control form-control-user text1" id="userOTP" placeholder="OTP"></br>
-                      </div></br>
-                    </div>
-                   
-                    <div id="existingUserLogin">
-                      <div class="form-group">
+                    </div></br>
+                    
+                    
+                    <div id="existingUserLogin" class="form-group">
                           <img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
                           <input type="password" class="form-control form-control-user text1" id="userPassword" placeholder="Enter Password">
-                      </div>
                     </div>
+                    
                     <div class="form-group">
                       <div class="form-group-mbn">
                         <a class="small-login" href="login">Go back to mobile login</a>

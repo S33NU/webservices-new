@@ -27,6 +27,9 @@ def subscriptionsView(request):
             if not validateCookieService(request.COOKIES['userName']):
                 response['statusCode'] = 5
                 raise Exception("Authentication failure")
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
                   
         if request.method == "GET":
             subscriptionList = getSubscriptionsService()

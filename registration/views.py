@@ -27,7 +27,10 @@ def savePassword(request):
             if not validateCookieService(request.COOKIES['userName']):
                 response['statusCode'] = 5
                 raise Exception("Authentication failure")
-        
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
+            
         
         if request.method == "PUT":
             #print(json.loads(request.body.decode('utf-8')))

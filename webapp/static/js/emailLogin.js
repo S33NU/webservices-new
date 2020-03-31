@@ -3,9 +3,9 @@
     $("#newUserLogin").hide();
     $("#loginSubmit").hide();
     $('#userEmailID').parsley().on('field:success', function() {
-
+        var email = $('#userEmailID').val();
         dataObj={
-            "email": $('#userEmailID').val()
+            "email": email
         }
        
         $.post("http://localhost:8000/clients/registration/validate-email", JSON.stringify(dataObj), function(res){
@@ -24,6 +24,7 @@
                     $("#existingUserLogin").show();  
                 }else{
                     console.log("new");
+                    $("#otpMessage").html("OTP sent to "+email);
                     $("#newUserLogin").show();
                     $("#existingUserLogin").hide();  
                 }
@@ -68,7 +69,7 @@ function verifyUserCredentials(){
                 $('.invalid-form-error-message')
                     .html('')
                     .toggleClass('filled', false);
-                
+                $("#otpMessage").html("");
                 checkPassword(email);
             }else{
                   

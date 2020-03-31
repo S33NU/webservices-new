@@ -27,6 +27,9 @@ def personalProfileView(request):
             if not validateCookieService(request.COOKIES['userName']):
                 response['statusCode'] = 5
                 raise Exception("Authentication failure")
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
         
         
         if request.method == "POST":
@@ -63,6 +66,10 @@ def getprofilebyid(request, id):
             if not validateCookieService(request.COOKIES['userName']):
                 response['statusCode'] = 5
                 raise Exception("Authentication failure")
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
+        
         
         if request.method == "GET":
             try:
@@ -121,6 +128,9 @@ def personalProfileQuestionsView(request):
             if not validateCookieService(request.COOKIES['userName']):
                 response['statusCode'] = 5
                 raise Exception("Authentication failure")
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
                
        
         if request.method == "GET":
@@ -154,6 +164,9 @@ def getprofile(request):
             if not validateCookieService(request.COOKIES['userName']):
                 response['statusCode'] = 5
                 raise Exception("Authentication failure")
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
         
         if request.method == "GET":
             all_profiles = getProfileData()

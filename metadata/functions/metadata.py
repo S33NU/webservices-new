@@ -78,7 +78,7 @@ def verifyOTP(mobile_number, otp):
         res = conn.getresponse()
         data = res.read()
 
-        print(data.decode("utf-8"))
+       # print(data.decode("utf-8"))
         return data.decode("utf-8")
     except Exception as e:
         logging.error("Error in verifyting OTP " + str(e))

@@ -11282,14 +11282,4 @@ img.logo {
 	    margin-top: 120px;
 }
 
-ul.parsley-errors-list.filled {
-  color: red;
-  font-size: x-small;
-}
 
-div.invalid-form-error-message.filled{
-  color: red;
-  font-size: x-small;
-  margin-bottom: 5%;
-
-}
