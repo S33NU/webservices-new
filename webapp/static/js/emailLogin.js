@@ -16,19 +16,22 @@
                 $('.invalid-form-error-message')
                     .html('')
                     .toggleClass('filled', false);
-                
-                
+
+
                 if(data){
                     console.log("old");
                     $("#newUserLogin").hide();
+                    $("#otpMessage").hide();
                     $("#existingUserLogin").show();  
                 }else{
                     console.log("new");
+                    $("#otpMessage").show();
                     $("#otpMessage").html("OTP sent to "+email);
                     $("#newUserLogin").show();
                     $("#existingUserLogin").hide();  
                 }
             }else if(res.statusCode == 1){
+            console.log(res);
                 $('.invalid-form-error-message')
                     .html('Internal Server Error, try later')
                     .toggleClass('filled', true);
@@ -41,6 +44,7 @@
         $("#existingUserLogin").hide();
         $("#newUserLogin").hide();
         $("#loginSubmit").hide();
+        $("#otpMessage").hide();
         $('.invalid-form-error-message')
         .html('')
         .toggleClass('filled', false);
