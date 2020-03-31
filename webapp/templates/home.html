@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Savart personal-profile</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{% static "vendor/fontawesome-free/css/all.min.css" %}" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="{% static "css/sb-admin-2.min.css" %}" rel="stylesheet">
+  <link href="{% static "css/sb-admin-2.css" %}" rel="stylesheet">
+  <link href="{% static "css/common.css" %}" rel="stylesheet">
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+  <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{% static "vendor/jquery-easing/jquery.easing.min.js" %}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{% static "vendor/parsley.min.js" %}"  type="text/javascript"></script>
+ 
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+    <div id="wrapper">
+
+<!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+<!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href=".html">
+     <img src="{% static "pictures\Savart logo.svg" %}" width="80px" height="50px"/>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+ <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="newdashboard.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+
+
+      <!-- Nav Item - Pages Collapse Menu -->
+       <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProfile" aria-expanded="true" aria-controls="collapseProfile">
+         <i class="fa fa-user" aria-hidden="true"></i>
+          <span>Profile</span>
+        </a>
+        <div id="collapseProfile" class="collapse" aria-labelledby="headingProfile" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="save-password">Set/Change Password</a>
+            <a class="collapse-item" href="savartservice.html">Services</a>
+            <a class="collapse-item" href="personal-profile">Personal Profile</a>
+			<a class="collapse-item" href="Investmentprofile.html">Investment Profile</a>
+			<a class="collapse-item" href="kycpending.html">Documents</a>
+          </div>
+        </div>
+      </li>
+
+<!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item ">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePortfolio" aria-expanded="true" aria-controls="collapsePortfolio">
+			<i class="fas fa-briefcase" aria-hidden="true"></i>
+				<span>Portfolio</span>
+		</a>
+			<div id="collapsePortfolio" class="collapse" aria-labelledby="headingPortfolio" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+
+
+						<a class="collapse-item" href="currentportfolio.html">Invested</a>
+						<a class="collapse-item" href="selectgoal.html">New Investment</a>
+						<a class="collapse-item" href="uploadportfolio.html">Review Existing</a>
+						<a class="collapse-item" href="stocks.html">Advised</a>
+						<a class="collapse-item" href="uploadcontractnotes.html">Contract Notes</a>
+						<a class="collapse-item" href="portfoliostatus.html">Recommended Portfolio</a>
+
+                </div>
+			</div>
+    </li>
+
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+<!-- Nav Item - Pages Collapse Menu -->
+	<li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+           <i class="fas fa-envelope fa-fw"></i>
+				<span>Inbox</span>
+        </a>
+			<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+
+
+						<a class="collapse-item" href="inbox1.html">Inbox</a>
+
+                </div>
+			</div>
+    </li>
+<!-- Nav Item - Pages Collapse Menu -->
+	<li class="nav-item">
+		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseContactus" aria-expanded="true" aria-controls="collapseContactus">
+			<i class="fa fa-phone" aria-hidden="true"></i>
+				<span>Contact us</span>
+		</a>
+			<div id="collapseContactus" class="collapse" aria-labelledby="headingContactus" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+
+						<a class="collapse-item" href="contactusforhelp.html">Help</a>
+
+				</div>
+			</div>
+ <li>
+<!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+<!-- Nav Item - Pages Collapse Menu -->
+	<li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTools" aria-expanded="true" aria-controls="collapseTools">
+			<i class="fa fa-wrench" aria-hidden="true"></i>
+				<span>Tools</span>
+        </a>
+			<div id="collapseTools" class="collapse" aria-labelledby="headingTools" data-parent="#accordionSidebar">
+				<div class="bg-white py-2 collapse-inner rounded">
+
+						<a class="collapse-item" href="Tools.html">Calculators</a>
+
+                </div>
+		   </div>
+    <li>
+<!-- Divider -->
+	<hr class="sidebar-divider d-none d-md-block">
+
+<!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <center><button class="rounded-circle border-0" id="sidebarToggle"></button></center>
+    </div>
+
+    </ul>
+<!-- End of Sidebar -->
+
+<!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        {% include template_name %}
+
+    </div>   
+
+    
+
+    </div>
+
+</body>
+
+</html>

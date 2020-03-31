@@ -1,5 +1,5 @@
 (function(){
-    console.log("jhdgsagd");
+    
     $('#passwordReEntry').parsley().on('field:success', function() {
         passwordEntry = $('#passwordEntry').val()
         passwordReEntry = $('#passwordReEntry').val()
@@ -16,6 +16,7 @@
         }
     });
 
+     
 })();
 
 function savePassword(){
@@ -23,7 +24,17 @@ function savePassword(){
         passwordReEntry = $('#passwordReEntry').val()
         
         if(passwordEntry == passwordReEntry){
-            var userName=$("form.user").attr("id");
+            var userName='';
+            var cookieArr = document.cookie.split(";");
+    
+            for(var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+        
+                if("userName"== cookiePair[0].trim()) {
+                      userName = cookiePair[1];
+                }
+            }
+            
             dataObj={
                 "userName": userName,
                 "password": passwordEntry
@@ -33,7 +44,7 @@ function savePassword(){
             .toggleClass('filled', false);
         
             $.ajax({
-                url: "http://localhost:8000/clients/registration/save-password",
+                url: CONFIG['host']+":"+CONFIG['port']+"/clients/registration/save-password",
                 type: 'PUT',
                 data:JSON.stringify(dataObj),
                 dataType : "json",
@@ -42,7 +53,7 @@ function savePassword(){
                     data = res.data;
                     
                     if(res.statusCode == 0){
-                        window.location.href = "../personal-profile";
+                        window.location.href = "default";
                     } else {
                         console.log("Error in saving password");
                         if(res.statusCode == 1){

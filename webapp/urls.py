@@ -19,8 +19,8 @@ from . import views
 
 urlpatterns = [
     path('login',views.login),
-    path('save-password/<phonenumber>',views.savePassword,name="savePassword"),  
+    path('home/save-password',views.savePassword),  
     path('email-login',views.emailLogin),
-    path('personal-profile',views.personalProfile)
-    
+    path('home/personal-profile',views.personalProfile),
+    path('home/default',views.homePage),
 ]
