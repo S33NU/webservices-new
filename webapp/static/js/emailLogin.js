@@ -26,7 +26,7 @@
                 }else{
                     console.log("new");
                     $("#otpMessage").show();
-                    $("#otpMessage").html("OTP sent to "+email);
+                    $("#otpMessage").html("OTP sent");
                     $("#newUserLogin").show();
                     $("#existingUserLogin").hide();  
                 }
