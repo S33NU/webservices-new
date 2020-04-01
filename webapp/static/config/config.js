@@ -1,4 +1,3 @@
 var CONFIG ={
-    host : "http://localhost",
-    port : "8000"
+    host : "http://localhost:8000"
 }

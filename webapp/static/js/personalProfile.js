@@ -38,7 +38,7 @@ $(document).ready(function(){
 
 
             console.log(dataObj)
-    $.post(CONFIG['host']+":"+CONFIG['port']+"/clients/personal-profile", JSON.stringify(dataObj), function(res){
+    $.post(CONFIG['host']+"/clients/personal-profile", JSON.stringify(dataObj), function(res){
         data = res.data;
         console.log(res)
          alert("Details are saved Successfully");

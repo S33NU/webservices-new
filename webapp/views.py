@@ -92,6 +92,6 @@ def homePage(request):
         
     except Exception as e:
         logging.error(str(e))
-        return render(request,"error.html",{'redirectLink':'login'})
+        return render(request,"error.html",{'redirectLink':'../login'})
 
 

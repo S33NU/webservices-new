@@ -44,7 +44,7 @@ function savePassword(){
             .toggleClass('filled', false);
         
             $.ajax({
-                url: CONFIG['host']+":"+CONFIG['port']+"/clients/registration/save-password",
+                url: CONFIG['host']+"/clients/registration/save-password",
                 type: 'PUT',
                 data:JSON.stringify(dataObj),
                 dataType : "json",

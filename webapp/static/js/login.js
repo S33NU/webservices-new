@@ -9,7 +9,7 @@
             "phonenumber":phonenumber
         }
        
-        $.post(CONFIG['host']+":"+CONFIG['port']+"/clients/registration/validate-phoneno", JSON.stringify(dataObj), function(res){
+        $.post(CONFIG['host']+"/clients/registration/validate-phoneno", JSON.stringify(dataObj), function(res){
             data = res.data;
             $("#loginSubmit").show();
             if(res.statusCode == 0){
@@ -61,7 +61,7 @@ function verifyUserCredentials(){
             "otp":otp
         }
         
-        $.post(CONFIG['host']+":"+CONFIG['port']+"/clients/registration/verifyOTP", JSON.stringify(dataObj), function(res){
+        $.post(CONFIG['host']+"/clients/registration/verifyOTP", JSON.stringify(dataObj), function(res){
             data = res.data;
             statusCode = res.statusCode;
             if(statusCode==0){
@@ -92,7 +92,7 @@ function verifyUserCredentials(){
             "password":password
         }
         
-        $.post(CONFIG['host']+":"+CONFIG['port']+"/clients/registration/validate-password", JSON.stringify(dataObj), function(res){
+        $.post(CONFIG['host']+"/clients/registration/validate-password", JSON.stringify(dataObj), function(res){
             data = res.data;
             statusCode = res.statusCode;
             if(statusCode==0){
@@ -131,7 +131,7 @@ function checkPassword(phonenumber){
         "phonenumber":phonenumber
     }
 
-    $.post(CONFIG['host']+":"+CONFIG['port']+"/clients/registration/check-password", JSON.stringify(dataObj), function(res){
+    $.post(CONFIG['host']+"/clients/registration/check-password", JSON.stringify(dataObj), function(res){
             data = res.data;
             var dateVar = new Date();
             dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
