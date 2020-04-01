@@ -14,3 +14,12 @@ p#otpMessage {
     font-size: smaller;
     color: black;
 }
+
+div.card.o-hidden.border-5.index.password-card{
+    margin-left: 30%;
+}
+
+div.d-sm-flex.align-items-center.justify-content-between.mb-4.password-title {
+    margin-left: 20%;
+    margin-top: 5%;
+}

@@ -8,9 +8,9 @@
             "email": email
         }
        
-        $.post("http://localhost:8000/clients/registration/validate-email", JSON.stringify(dataObj), function(res){
+        $.post(CONFIG['host']+"/clients/registration/validate-email", JSON.stringify(dataObj), function(res){
             data = res.data;
-            console.log(res);
+
             $("#loginSubmit").show();
             if(res.statusCode == 0){
                 $('.invalid-form-error-message')
@@ -31,7 +31,7 @@
                     $("#existingUserLogin").hide();  
                 }
             }else if(res.statusCode == 1){
-            console.log(res);
+
                 $('.invalid-form-error-message')
                     .html('Internal Server Error, try later')
                     .toggleClass('filled', true);
@@ -66,7 +66,7 @@ function verifyUserCredentials(){
             "otp":otp
         }
         
-        $.post("http://localhost:8000/clients/registration/verifyOTP-email", JSON.stringify(dataObj), function(res){
+        $.post(CONFIG['host']+"/clients/registration/verifyOTP-email", JSON.stringify(dataObj), function(res){
             data = res.data;
             statusCode = res.statusCode;
             if(statusCode==0){
@@ -97,7 +97,7 @@ function verifyUserCredentials(){
             "password":password
         }
         
-        $.post("http://localhost:8000/clients/registration/validate-password-email", JSON.stringify(dataObj), function(res){
+        $.post(CONFIG['host']+"/clients/registration/validate-password-email", JSON.stringify(dataObj), function(res){
             data = res.data;
             statusCode = res.statusCode;
             if(statusCode==0){
@@ -110,7 +110,7 @@ function verifyUserCredentials(){
                 dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
                 var expires = "expires="+ dateVar.toUTCString();
                 document.cookie="userName="+email+";"+expires+";path=/";
-                window.location.href = "personal-profile"
+                window.location.href = "home/default";
             }else{
                 console.log("Error in validation")
                 if(statusCode == 2){
@@ -136,7 +136,7 @@ function checkPassword(email){
         "email":email
     }
 
-    $.post("http://localhost:8000/clients/registration/check-password-email", JSON.stringify(dataObj), function(res){
+    $.post(CONFIG['host']+"/clients/registration/check-password-email", JSON.stringify(dataObj), function(res){
             data = res.data;
             var dateVar = new Date();
             dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
@@ -145,10 +145,10 @@ function checkPassword(email){
                 
             if(data){
                 console.log("alredy registered");
-                window.location.href = "personal-profile";     
+                window.location.href = "home/default";     
             }else{
                 console.log("new user");
-                window.location.href = "save-password/"+email;
+                window.location.href = "home/save-password";
             }
     });
     

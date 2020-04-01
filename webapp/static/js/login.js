@@ -1,3 +1,4 @@
+
 (function() {
     $("#existingUserLogin").hide();
     $("#newUserLogin").hide();
@@ -9,7 +10,7 @@
             "phonenumber":phonenumber
         }
        
-        $.post("http://localhost:8000/clients/registration/validate-phoneno", JSON.stringify(dataObj), function(res){
+        $.post(CONFIG['host']+"/clients/registration/validate-phoneno", JSON.stringify(dataObj), function(res){
             data = res.data;
             $("#loginSubmit").show();
             if(res.statusCode == 0){
@@ -30,7 +31,7 @@
                     $("#existingUserLogin").hide();  
                 }
             }else if(res.statusCode == 1){
-            console.log(res);
+
                 $('.invalid-form-error-message')
                     .html('Internal Server Error, try later')
                     .toggleClass('filled', true);
@@ -65,7 +66,7 @@ function verifyUserCredentials(){
             "otp":otp
         }
         
-        $.post("http://localhost:8000/clients/registration/verifyOTP", JSON.stringify(dataObj), function(res){
+        $.post(CONFIG['host']+"/clients/registration/verifyOTP", JSON.stringify(dataObj), function(res){
             data = res.data;
             statusCode = res.statusCode;
             if(statusCode==0){
@@ -96,7 +97,7 @@ function verifyUserCredentials(){
             "password":password
         }
         
-        $.post("http://localhost:8000/clients/registration/validate-password", JSON.stringify(dataObj), function(res){
+        $.post(CONFIG['host']+"/clients/registration/validate-password", JSON.stringify(dataObj), function(res){
             data = res.data;
             statusCode = res.statusCode;
             if(statusCode==0){
@@ -108,8 +109,8 @@ function verifyUserCredentials(){
                 var dateVar = new Date();
                 dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
                 var expires = "expires="+ dateVar.toUTCString();
-                //document.cookie="userName="+phonenumber+";"+expires+";path=/";
-                window.location.href = "personal-profile"
+                document.cookie="userName="+phonenumber+";"+expires+";path=/";
+                window.location.href = "home/default"
             }else{
                 console.log("Error in validation")
                 if(statusCode == 2){
@@ -117,7 +118,7 @@ function verifyUserCredentials(){
                     .html('Invalid Credentials')
                     .toggleClass('filled', true);
                 }else if (statusCode == 1){
-                console.log(res);
+
                     $('.invalid-form-error-message')
                     .html('Internal Server Error, try later')
                     .toggleClass('filled', true);
@@ -136,7 +137,7 @@ function checkPassword(phonenumber){
         "phonenumber":phonenumber
     }
 
-    $.post("http://localhost:8000/clients/registration/check-password", JSON.stringify(dataObj), function(res){
+    $.post(CONFIG['host']+"/clients/registration/check-password", JSON.stringify(dataObj), function(res){
             data = res.data;
             var dateVar = new Date();
             dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
@@ -145,10 +146,10 @@ function checkPassword(phonenumber){
                 
             if(data){
                 console.log("alredy registered");
-                window.location.href = "personal-profile";     
+                window.location.href = "home/default";     
             }else{
                 console.log("new user");
-                window.location.href = "save-password/"+phonenumber;
+                window.location.href = "home/save-password";
             }
     });
     

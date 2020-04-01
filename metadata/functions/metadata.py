@@ -78,33 +78,10 @@ def verifyOTP(mobile_number, otp):
         res = conn.getresponse()
         data = res.read()
 
-       # print(data.decode("utf-8"))
+       #z print(data.decode("utf-8"))
         return data.decode("utf-8")
     except Exception as e:
         logging.error("Error in verifyting OTP " + str(e))
-
-
-def getOTPByEmail(email):
-    try:
-        config = getConfig()
-        otp_config = config['OTP_CONFIG']
-        conn = http.client.HTTPSConnection("api.msg91.com")
-
-        headers = {'content-type': "application/json"}
-        # %7B%22OTP%22%3A%2212390%22%7D
-        url = "/api/v5/otp?authkey=" + otp_config['auth_key'] + "&template_id=" + otp_config[
-            'send_otp_template_id'] + "&extra_param=&mobile=&email="+email
-        conn.request("GET", url, headers=headers)
-
-        res = conn.getresponse()
-        data = res.read()
-
-        #print(data.decode("utf-8"))
-
-    except Exception as err:
-        logging.error("Error in getting OTP")
-        raise
-
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
