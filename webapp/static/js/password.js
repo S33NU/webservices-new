@@ -1,9 +1,3 @@
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip({trigger: "hover"});
-
-
-});
-
 (function(){
     
     $('#passwordReEntry').parsley().on('field:success', function() {
@@ -81,3 +75,20 @@ function savePassword(){
             .toggleClass('filled', true);
         }
 }
+
+
+function showPasswordFunction() {
+  var x = document.getElementById("Password1");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip({trigger: "hover"});
+
+
+});
