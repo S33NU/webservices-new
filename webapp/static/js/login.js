@@ -27,7 +27,7 @@
                     console.log("new");
                     $("#newUserLogin").show();
                     $("#otpMessage").show();
-                    $("#otpMessage").html("OTP sent to "+phonenumber);
+                    $("#otpMessage").html("OTP sent");
                     $("#existingUserLogin").hide();  
                 }
             }else if(res.statusCode == 1){
