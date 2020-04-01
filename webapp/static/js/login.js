@@ -3,6 +3,7 @@
     $("#existingUserLogin").hide();
     $("#newUserLogin").hide();
     $("#loginSubmit").hide();
+    $("#otpMessage").hide();
     $('#userMobileNumber').parsley().on('field:success', function() {
         var phonenumber =  $('#userMobileNumber').val();
         dataObj={
@@ -19,15 +20,18 @@
                 
                 if(data){
                     console.log("old");
+                    $("#otpMessage").hide();
                     $("#newUserLogin").hide();
-                    $("#existingUserLogin").show();  
+                    $("#existingUserLogin").show();
                 }else{
                     console.log("new");
                     $("#newUserLogin").show();
+                    $("#otpMessage").show();
                     $("#otpMessage").html("OTP sent to "+phonenumber);
                     $("#existingUserLogin").hide();  
                 }
             }else if(res.statusCode == 1){
+
                 $('.invalid-form-error-message')
                     .html('Internal Server Error, try later')
                     .toggleClass('filled', true);
@@ -39,6 +43,7 @@
     $('#userMobileNumber').parsley().on('field:error', function() {
         $("#existingUserLogin").hide();
         $("#newUserLogin").hide();
+        $("#otpMessage").hide();
         $("#loginSubmit").hide();
         $('.invalid-form-error-message')
         .html('')
@@ -113,6 +118,7 @@ function verifyUserCredentials(){
                     .html('Invalid Credentials')
                     .toggleClass('filled', true);
                 }else if (statusCode == 1){
+
                     $('.invalid-form-error-message')
                     .html('Internal Server Error, try later')
                     .toggleClass('filled', true);

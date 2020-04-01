@@ -50,10 +50,10 @@
                   <form class="user" data-parsley-validate="" >
                     <div class="form-group">
 					<img src="{% static "pictures\phone.svg" %}" width="30" height="30" id="input_img" class="vl">
-                    <input type="tel" data-parsley-trigger="focusout" data-parsley-error-message="Enter a valid mobile number"  pattern="^[1-9][0-9]{9}" class="form-control form-control-user text1" id="userMobileNumber"  data-parsley-maxlength=10 required aria-describedby="mobileHelp" placeholder="Enter Mobile Number"></br>
+                    <input type="tel" data-parsley-trigger="focusout" data-parsley-error-message="Enter a valid mobile number"  pattern="^[1-9][0-9]{9}" class="form-control form-control-user text1" id="userMobileNumber"  data-parsley-maxlength=10 required aria-describedby="mobileHelp" placeholder="Enter Mobile Number"><p id="otpMessage"></p>
                     </div>
                    
-                    <p id="otpMessage"></p>
+
                    
                    
                     <div class="form-group" id="newUserLogin">
