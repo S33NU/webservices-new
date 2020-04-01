@@ -80,7 +80,7 @@ def homePage(request):
         configureLogging(log)
         
         if 'userName' in request.COOKIES:
-            print(request.COOKIES)
+            
             if not validateCookieService(request.COOKIES['userName']):
                 raise Exception("Authentication failure")
         else:
