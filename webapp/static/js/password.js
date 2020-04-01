@@ -77,8 +77,8 @@ function savePassword(){
 }
 
 
-function showPasswordFunction() {
-  var x = document.getElementById("Password1");
+function showPassword() {
+  var x = document.getElementById("passwordEntry");
   if (x.type === "password") {
     x.type = "text";
   } else {
