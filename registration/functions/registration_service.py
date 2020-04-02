@@ -63,10 +63,9 @@ def verifyOTPService(dataObj):
 def checkClientPasswordService(dataObj):
     try:
         clientPasswordList = checkClientPasswordDB(dataObj)
-        
-        if clientPasswordList[0][0] != 'None':
+        if clientPasswordList[0].password != 'None':
             return True
-        elif clientPasswordList[0][0] == 'None':
+        elif clientPasswordList[0].password == 'None':
             return False
     except Exception as e:
         logging.error("Error in checking client password service "+str(e))
@@ -113,16 +112,16 @@ def validateClientPasswordByEmailService(dataObj):
 
         
     except Exception as e:
-        logging.error("Error in validating OTP by email "+str(e))
+        logging.error("Error in validating OTP by email service"+str(e))
         raise
 
 def checkClientPasswordByEmailService(dataObj):
     try:
         clientPasswordList = checkClientPasswordByEmailDB(dataObj)
         
-        if clientPasswordList[0][0] != 'None':
+        if clientPasswordList[0].password != 'None':
             return True
-        elif clientPasswordList[0][0] == 'None':
+        elif clientPasswordList[0].password == 'None':
             return False
     except Exception as e:
         logging.error("Error in checking client password by email service "+str(e))

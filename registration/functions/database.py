@@ -1,7 +1,4 @@
-import mysql.connector
 import logging
-from mysql.connector import errorcode
-from metadata.functions.metadata import connectToDatabase
 from registration.models import Registration
 from django.db.models import Q
 
