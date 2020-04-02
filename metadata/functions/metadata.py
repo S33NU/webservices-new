@@ -7,12 +7,12 @@ import smtplib
 import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-
+import os 
 
 def getConfig():
     try:
         config = configparser.ConfigParser()
-        config.read('D:\Production_files\config\webservicesconfig.ini')
+        config.read(os.environ['WEBSERVICES_CONFIG']+'/webservicesconfig.ini')
         return config
     except Exception as e:
         raise
@@ -56,7 +56,7 @@ def getOTP(mobile_number):
         res = conn.getresponse()
         data = res.read()
 
-        print(data.decode("utf-8"))
+       #print(data.decode("utf-8"))
 
     except Exception as err:
         logging.error("Error in getting OTP")

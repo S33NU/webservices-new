@@ -2,23 +2,21 @@ import mysql.connector
 import logging
 from mysql.connector import errorcode
 from metadata.functions.metadata import connectToDatabase
-
+from registration.models import Registration
+from django.db.models import Q
 
 def saveClientPasswordDB(dataObj):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-        sql = "UPDATE registration SET password = '" + dataObj['password'] + "' WHERE phonenumber ='{}'".format(
-                 dataObj['userName'])
-        mycursor.execute(sql)
-        cnx.commit()
+        registrationObjs = []
+        registrationObjs=Registration.objects.filter(phonenumber=dataObj['userName'])
         
-        sql = "UPDATE registration SET password = '" + dataObj['password'] + "' WHERE email ='{}'".format(
-                 dataObj['userName'])
-        mycursor.execute(sql)
-        cnx.commit()
+        if len(registrationObjs) == 0:
+            registrationObjs=Registration.objects.filter(email=dataObj['userName'])
+       
+        for record in registrationObjs:
+            record.password = dataObj['password']
+            record.save()
         
-        cnx.close()
     except Exception as e:
         logging.error("Error in saving client password " + str(e))
         raise
@@ -26,13 +24,10 @@ def saveClientPasswordDB(dataObj):
 
 def validateClientMobileDB(dataObj, ip, device):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-        sql = "SELECT phonenumber,ip_address,device FROM registration WHERE password != 'None' AND phonenumber='{}' AND ip_address='{}' AND device='{}'".format(
-            dataObj['phonenumber'], ip, device)
-        mycursor.execute(sql)
-        mobilenos = mycursor.fetchall()
-        return mobilenos
+        
+        registrationObjs = Registration.objects.filter(~Q(password='None'),phonenumber=dataObj['phonenumber'],ip_address=ip,device=device)
+
+        return registrationObjs
     except Exception as msg:
         logging.error("Error in getting mobile number from DB: " + str(msg))
         raise
@@ -40,55 +35,40 @@ def validateClientMobileDB(dataObj, ip, device):
 
 def saveClientMobileDB(dataObj, ip, device):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-        sql = "INSERT INTO registration(phonenumber,ip_address,device,password) VALUES(%s,%s,%s,%s)"
-        val = (dataObj['phonenumber'], ip, device,'None')
-        mycursor.execute(sql, val)
-        cnx.commit()
+        registration = Registration(phonenumber=dataObj['phonenumber'],ip_address=ip,device=device,password='None')
+        registration.save()        
         
-        sql = "SELECT password FROM registration WHERE phonenumber='{}'".format(dataObj['phonenumber'])
+        clientPassword=Registration.objects.filter(phonenumber=dataObj['phonenumber'])
         
-        mycursor.execute(sql)
-        clientPassword = mycursor.fetchall()
-        
-        if clientPassword[0][0] == 'None':
+        if clientPassword[0].password == 'None':
             pass
-        elif clientPassword[0][0] != 'None':
-            sql = "UPDATE registration SET password = '" + clientPassword[0][0] + "' WHERE phonenumber='{}' AND ip_address='{}' AND device='{}'".format(
-            dataObj['phonenumber'], ip, device)
-            mycursor.execute(sql)
-            cnx.commit()
-        
-        cnx.close()
+        elif clientPassword[0].password != 'None':
+            clientRecords = Registration.objects.filter(phonenumber=dataObj['phonenumber'],ip_address=ip,device=device)        
+            for record in clientRecords:
+                record.password = clientPassword[0].password
+                record.save()
+                            
     except Exception as e:
         logging.error("Error in saving client mobile number in DB " + str(e))
         raise
 
 def validateClientPasswordDB(dataObj):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-        sql = "SELECT phonenumber,password from registration WHERE password='"+dataObj['password']+"' and phonenumber = '{}'".format(dataObj['phonenumber'])
-
-        mycursor.execute(sql)
-        result=mycursor.fetchall()
-        cnx.close()
-        return result
+        
+        registrationObjs=Registration.objects.filter(phonenumber=dataObj['phonenumber'],password=dataObj['password'])
+        
+        
+        return registrationObjs
     except Exception as e:
         logging.error("Error in validating client password DB "+str(e))
         raise 
 
 def checkClientPasswordDB(dataObj):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-        sql = "SELECT password from registration WHERE phonenumber='{}'".format(dataObj['phonenumber'])
-
-        mycursor.execute(sql)
-        result=mycursor.fetchall()
-        cnx.close()
-        return result
+        
+        registrationObjs=Registration.objects.filter(phonenumber=dataObj['phonenumber'])
+        
+        return registrationObjs
     except Exception as e:
         logging.error("Error in checking client password DB "+str(e))
         raise 
@@ -97,13 +77,10 @@ def checkClientPasswordDB(dataObj):
 
 def validateClientEmailDB(dataObj, ip, device):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-        sql = "SELECT phonenumber,ip_address,device FROM registration WHERE password!='None' AND email='{}' AND ip_address='{}' AND device='{}'".format(
-            dataObj['email'], ip, device)
-        mycursor.execute(sql)
-        mobilenos = mycursor.fetchall()
-        return mobilenos
+
+        registrationObjs = Registration.objects.filter(~Q(password='None'),email=dataObj['email'],ip_address=ip,device=device)
+
+        return registrationObjs
     except Exception as msg:
         logging.error("Error in getting email from DB: " + str(msg))
         raise
@@ -111,55 +88,39 @@ def validateClientEmailDB(dataObj, ip, device):
 
 def saveClientEmailDB(dataObj, ip, device, otp):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-        sql = "INSERT INTO registration(email,ip_address,device,email_otp,password) VALUES(%s,%s,%s,%s,%s)"
-        val = (dataObj['email'], ip, device, otp,'None')
-        mycursor.execute(sql, val)
-        cnx.commit()
+        registration = Registration(email=dataObj['email'],ip_address=ip,device=device,password='None',email_otp=otp)
+        registration.save()        
         
-        sql = "SELECT password FROM registration WHERE email='{}'".format(dataObj['email'])
+        clientPassword=Registration.objects.filter(email=dataObj['email'])
         
-        mycursor.execute(sql)
-        clientPassword = mycursor.fetchall()
-        
-        if clientPassword[0][0] == 'None':
+        if clientPassword[0].password == 'None':
             pass
-        elif clientPassword[0][0] != 'None':
-            sql = "UPDATE registration SET password = '" + clientPassword[0][0] + "' WHERE email='{}' AND ip_address='{}' AND device='{}'".format(
-            dataObj['email'], ip, device)
-            mycursor.execute(sql)
-            cnx.commit()
-        
-        cnx.close()
+        elif clientPassword[0].password != 'None':
+            clientRecords = Registration.objects.filter(email=dataObj['email'],ip_address=ip,device=device)        
+            for record in clientRecords:
+                record.password = clientPassword[0].password
+                record.save()
+
     except Exception as e:
         logging.error("Error in saving client email in DB " + str(e))
         raise
 
 def validateClientPasswordByEmailDB(dataObj):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-        sql = "SELECT email,password from registration WHERE password='"+dataObj['password']+"' and email = '{}'".format(dataObj['email'])
+       
+        registrationObjs=Registration.objects.filter(email=dataObj['email'],password=dataObj['password'])
 
-        mycursor.execute(sql)
-        result=mycursor.fetchall()
-        cnx.close()
-        return result
+        return registrationObjs
     except Exception as e:
         logging.error("Error in validating client password by email in DB "+str(e))
         raise 
 
 def checkClientPasswordByEmailDB(dataObj):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-        sql = "SELECT password from registration WHERE email='{}'".format(dataObj['email'])
+        
+        registrationObjs=Registration.objects.filter(email=dataObj['email'])
 
-        mycursor.execute(sql)
-        result=mycursor.fetchall()
-        cnx.close()
-        return result
+        return registrationObjs
     except Exception as e:
         logging.error("Error in checking client password by email in DB "+str(e))
         raise 

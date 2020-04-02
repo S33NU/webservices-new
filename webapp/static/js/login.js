@@ -31,7 +31,7 @@
                     $("#existingUserLogin").hide();  
                 }
             }else if(res.statusCode == 1){
-
+               
                 $('.invalid-form-error-message')
                     .html('Internal Server Error, try later')
                     .toggleClass('filled', true);
@@ -112,7 +112,8 @@ function verifyUserCredentials(){
                 document.cookie="userName="+phonenumber+";"+expires+";path=/";
                 window.location.href = "home/default"
             }else{
-                console.log("Error in validation")
+                console.log("Error in validation");
+                
                 if(statusCode == 2){
                     $('.invalid-form-error-message')
                     .html('Invalid Credentials')
@@ -139,18 +140,29 @@ function checkPassword(phonenumber){
 
     $.post(CONFIG['host']+"/clients/registration/check-password", JSON.stringify(dataObj), function(res){
             data = res.data;
-            var dateVar = new Date();
-            dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
-            var expires = "expires="+ dateVar.toUTCString();
-            document.cookie="userName="+phonenumber+";"+expires+";path=/";
-                
-            if(data){
-                console.log("alredy registered");
-                window.location.href = "home/default";     
-            }else{
-                console.log("new user");
-                window.location.href = "home/save-password";
+            if(res.statusCode == 0){ 
+                $('.invalid-form-error-message')
+                    .html('')
+                    .toggleClass('filled', false);
+ 
+                var dateVar = new Date();
+                dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
+                var expires = "expires="+ dateVar.toUTCString();
+                document.cookie="userName="+phonenumber+";"+expires+";path=/";
+            
+                if(data){
+                    console.log("Password saved");
+                    window.location.href = "home/default";     
+                }else {
+                    console.log("Password not saved");
+                    window.location.href = "home/save-password";
+                }
             }
+            else if(res.statusCode == 1){
+                $('.invalid-form-error-message')
+                .html('Internal Server Error, try later')
+                .toggleClass('filled', true);
+            }    
     });
     
 
