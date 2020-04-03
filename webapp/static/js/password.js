@@ -22,6 +22,7 @@ $(document).ready(function(){
         }
     });
 
+    $("a").prop("disabled",true);
      
 })();
 
@@ -59,6 +60,8 @@ function savePassword(){
                     data = res.data;
                     
                     if(res.statusCode == 0){
+                        $("a").prop("disabled",false);
+    
                         window.location.href = "default";
                     } else {
                         console.log("Error in saving password");

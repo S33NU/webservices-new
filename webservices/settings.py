@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+from metadata.functions.metadata import getConfig
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -83,15 +83,16 @@ WSGI_APPLICATION = 'webservices.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
+config = getConfig()
+sqldb_config = config['sqldb_config']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'savart2',
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'NAME': sqldb_config['database'],
+        'USER': sqldb_config['user'],
+        'PASSWORD': sqldb_config['password'],
+        'HOST': sqldb_config['host'],
+        'PORT': sqldb_config['port'],
     }
 }
 
