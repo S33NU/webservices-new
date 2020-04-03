@@ -81,11 +81,11 @@ def getPersonalProfileQuestionsService():
         for profileQuestion in profileQuestions:
            
             profileQuestionsObj = {
-                'profqname':profileQuestion[0],
-                'profqtype':profileQuestion[1],
-                'profqorder':profileQuestion[2],
-                'profqkey': profileQuestion[3],
-                'profqselection': profileQuestion[4],
+                'profqname':profileQuestion.profqname,
+                'profqtype':profileQuestion.profqtype,
+                'profqorder':profileQuestion.profqorder,
+                'profqkey': profileQuestion.profqkey,
+                'profqselection': profileQuestion.profqselection,
                 'values':None
             }
             
@@ -93,8 +93,8 @@ def getPersonalProfileQuestionsService():
             
             if len(lookUpId) != 0:
                 
-                lookUpValues = getLookUpValues(lookUpId[0][0])
-                lookUpValues = [ lookUpValue[0] for lookUpValue in lookUpValues]
+                lookUpValues = getLookUpValues(lookUpId[0].lookupid)
+                lookUpValues = [ lookUpValue.lookupname for lookUpValue in lookUpValues]
                 profileQuestionsObj['values']=lookUpValues      
             temp.append(profileQuestionsObj)
         profileQuestions = temp

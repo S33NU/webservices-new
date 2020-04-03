@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'subscriptions',
     'corsheaders',
     'webapp',
-    'registration'
+    'registration',
+    'metadata'
 ]
 
 MIDDLEWARE = [

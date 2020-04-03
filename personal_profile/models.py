@@ -12,3 +12,15 @@ class PersonalProfile(models.Model):
     addr3 = models.CharField(max_length=225)
     addr4 = models.CharField(max_length=225)
     occupation = models.CharField(max_length=225)
+
+
+class ProfQuestion(models.Model):
+    id = models.AutoField(primary_key=True)
+    profqname = models.CharField(max_length=125)
+    profqtype = models.CharField(max_length=10)
+    profqorder = models.IntegerField()
+    profqstatus = models.CharField(max_length=1)
+    profqkey = models.CharField(max_length=125)
+    profqselection = models.CharField(max_length=100)
+    profqcreateddt = models.DateField()  
+    profqupdateddt = models.DateField()

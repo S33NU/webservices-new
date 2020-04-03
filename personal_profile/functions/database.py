@@ -1,10 +1,8 @@
-import mysql.connector
 import logging
-from mysql.connector import errorcode
-from metadata.functions.metadata import connectToDatabase
 from personal_profile.models import PersonalProfile
-
-
+from personal_profile.models import ProfQuestion
+from django.db.models import Q
+from metadata.models import LookUpMaster
 def savePersonalProfileDB(dataObj):
     try:
 
@@ -63,17 +61,10 @@ def updateProfileDataFromDbById(id, dataObj):
 
 def getPersonalProfileQuestionsDB():
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-
-        mycursor.execute(
-            "select profqname,profqtype,profqorder,profqkey,profqselection from profquestion where profqstatus='A'")
-
-        result = mycursor.fetchall()
-
-        cnx.close()
-
-        return result
+        
+        profQuestionsObjs = ProfQuestion.objects.all()
+        
+        return profQuestionsObjs
     except Exception as e:
         logging.error("Error in retrieving Personal Profile questions " + str(e))
         raise
@@ -81,16 +72,9 @@ def getPersonalProfileQuestionsDB():
 
 def getLookUpID(lookupname):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-
-        mycursor.execute("select lookupid from lookupmaster where lookupname='{}'".format(lookupname))
-
-        result = mycursor.fetchall()
-
-        cnx.close()
-
-        return result
+       
+        lookupMasterObjs = LookUpMaster.objects.filter(lookupname=lookupname)
+        return lookupMasterObjs
 
     except Exception as e:
         logging.error("Error in retrieving lookUpId " + str(e))
@@ -99,17 +83,10 @@ def getLookUpID(lookupname):
 
 def getLookUpValues(lookupid):
     try:
-        cnx = connectToDatabase()
-        mycursor = cnx.cursor()
-
-        mycursor.execute(
-            "select lookupname from lookupmaster where lookupid={} and lookupmasterid != 0".format(lookupid))
-
-        result = mycursor.fetchall()
-
-        cnx.close()
-
-        return result
+        
+        lookupMasterObjs = LookUpMaster.objects.filter(~Q(lookupmasterid=0),lookupid=lookupid)
+  
+        return lookupMasterObjs
 
     except Exception as e:
         logging.error("Error in retrieving lookUpValues " + str(e))
