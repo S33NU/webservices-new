@@ -9,11 +9,11 @@ def getSubscriptionsService():
        temp=[]
        for subscription in subscriptionsList:
            subscriptionObj={
-               'subscriptionKey':subscription[0],
-               'subscriptionName':subscription[1],
-               'subscriptionDescription':subscription[2],
-               'subscriptionCost':subscription[3],
-               'subscriptionPeriod':subscription[4]
+               'subscriptionKey':subscription.subscriptionKey,
+               'subscriptionName':subscription.subscriptionName,
+               'subscriptionDescription':subscription.subscriptionDescription,
+               'subscriptionCost':subscription.subscriptionCost,
+               'subscriptionPeriod':subscription.subscriptionPeriod
            }
            temp.append(subscriptionObj) 
        subscriptionsList = temp    

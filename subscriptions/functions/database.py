@@ -1,19 +1,10 @@
-import mysql.connector
 import logging
-from mysql.connector import errorcode
-from metadata.functions.metadata import connectToDatabase
-
+from subscriptions.models import Subscription
 def getSubscriptionsListDB():
     try:
-        cnx=connectToDatabase()
-        mycursor = cnx.cursor()
-        mycursor.execute("select subscriptionKey,subscriptionName,subscriptionDescription,subscriptionCost,subscriptionPeriod  from subscription")
+        subscriptionObjs = Subscription.objects.all()
         
-        result = mycursor.fetchall()
-        
-        cnx.close()
-        
-        return result
+        return subscriptionObjs
     except Exception as e:
         logging.error("Error in retrieving data from database "+str(e))
         raise
