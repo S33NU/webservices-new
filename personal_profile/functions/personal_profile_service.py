@@ -6,8 +6,72 @@ def savePersonalProfileService(personal_profile):
         savePersonalProfileDB(personal_profile)
     except Exception as e:
         logging.error("Error in saving personal profile "+str(e))
-        raise    
-    
+        raise
+
+
+def personalProfileDataService():
+    try:
+        profiles = getProfileData()
+        temp = []
+        for profile in profiles:
+            prof = {
+                'ID': profile.id,
+                "registeredMobile": profile.registeredmobile,
+                "firstName": profile.firstname,
+                "lastName": profile.lastname,
+                "email": profile.email,
+                "marriedStatus": profile.marriedstatus,
+                "age": profile.age,
+                "addrLine1": profile.addr1,
+                "addrLine2": profile.addr2,
+                "addrLine3": profile.addr3,
+                "addrLine4": profile.addr4,
+                "occupation": profile.occupation
+            }
+            temp.append(prof)
+        return temp
+    except Exception as msg:
+        logging.error('Error in getting Profiles' + str(msg))
+        raise
+
+
+def personalProfileDataByIdService(id):
+    try:
+        profilebyID = getProfileDataFromDbById(id)
+        temp = []
+        for profile in profilebyID:
+            byid = {
+                'ID': profile.id,
+                "registeredMobile": profile.registeredmobile,
+                "firstName": profile.firstname,
+                "lastName": profile.lastname,
+                "email": profile.email,
+                "marriedStatus": profile.marriedstatus,
+                "age": profile.age,
+                "addrLine1": profile.addr1,
+                "addrLine2": profile.addr2,
+                "addrLine3": profile.addr3,
+                "addrLine4": profile.addr4,
+                "occupation": profile.occupation
+            }
+            temp.append(byid)
+        if temp == []:
+            return 0
+        else:
+            return temp
+    except Exception as msg:
+        logging.error('Error in getting Profiles' + str(msg))
+        raise
+
+
+def personalProfileEditDataByIdService(id, data):
+    try:
+        updateProfileDataFromDbById(id, data)
+    except Exception as msg:
+        logging.error('Error in updating Profiles' + str(msg))
+        raise
+
+
 def getPersonalProfileQuestionsService():
     try:
         profileQuestions=getPersonalProfileQuestionsDB()
@@ -39,62 +103,4 @@ def getPersonalProfileQuestionsService():
     except Exception as e:
         logging.error("Error in retrieving personal profile questions "+str(e))
         
-def personalProfileDataByIdService(id):
-    try:
-        from_dbid = getProfileDataFromDbById(id)
-        temp = []
-        for i in from_dbid:
-            id_index = {
-                'ID': i[0],
-                "registeredMobile": i[1],
-                "firstName": i[2],
-                "lastName": i[3],
-                "email": i[4],
-                "marriedStatus": i[5],
-                "age": i[6],
-                "addrLine1": i[7],
-                "addrLine2": i[8],
-                "addrLine3": i[9],
-                "addrLine4": i[10],
-                "occupation": i[11]
-            }
-            temp.append(id_index)
-        if temp == []:
-            return 0
-        else:
-            return temp
-    except Exception as msg:
-        logging.error('Error in getting Profiles' + str(msg))
-        raise
-        
-def personalProfileEditDataByIdService(id, data):
-    try:
-        from_editdbid = updateProfileDataFromDbById(id, data)
-    except Exception as msg:
-        logging.error('Error in updating Profiles' + str(msg))
-        raise
-        
-def personalProfileDataService():
-    try:
-        profiles = getProfileData()
-        temp = []
-        for profile in profiles:
-            prof = {
-                'ID': profile[0],
-                "registeredMobile": profile[1],
-                "firstName": profile[2],
-                "lastName": profile[3],
-                "email": profile[4],
-                "marriedStatus": profile[5],
-                "age": profile[6],
-                "addrLine1": profile[7],
-                "addrLine2": profile[8],
-                "addrLine3": profile[9],
-                "addrLine4": profile[10],
-                "occupation": profile[11]
-            }
-            temp.append(prof)
-        return temp
-    except Exception as msg:
-        logging.error('Error in getting Profiles' + str(msg))
-        raise
+
