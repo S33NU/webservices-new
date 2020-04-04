@@ -1,4 +1,4 @@
-django
+django=3.0.2
 mysql-connector-python
 django-rest-swagger
 django-cors-headers
