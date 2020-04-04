@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from metadata.functions.metadata import getConfig
+import configparser
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,7 +27,7 @@ SECRET_KEY = '_ytc^z0ss=obj@ogkd7xzptg8042)8$y1xyi4i9v(*lzpkjxk9'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    
+	'savart.eastus.cloudapp.azure.com'    
 ]
 
 
@@ -84,16 +85,18 @@ WSGI_APPLICATION = 'webservices.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-config = getConfig()
-sqldb_config = config['sqldb_config']
+config = configparser.ConfigParser()
+config.read(os.environ['WEBSERVICES_CONFIG']+'/webservicesconfig.ini')
+sqldb_config = config['sqldb_config']        
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': sqldb_config['database'],
+       	'NAME': sqldb_config['database'],
         'USER': sqldb_config['user'],
         'PASSWORD': sqldb_config['password'],
         'HOST': sqldb_config['host'],
-        'PORT': sqldb_config['port'],
+        'PORT': sqldb_config['port']
     }
 }
 
