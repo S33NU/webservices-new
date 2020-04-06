@@ -2,7 +2,6 @@ import logging
 from personal_profile.models import PersonalProfile
 from personal_profile.models import ProfQuestion
 from django.db.models import Q
-from metadata.models import LookUpMaster
 def savePersonalProfileDB(dataObj):
     try:
 
@@ -62,7 +61,7 @@ def updateProfileDataFromDbById(id, dataObj):
 def getPersonalProfileQuestionsDB():
     try:
         
-        profQuestionsObjs = ProfQuestion.objects.all()
+        profQuestionsObjs = ProfQuestion.objects.filter(profqstatus='A')
         
         return profQuestionsObjs
     except Exception as e:
@@ -70,24 +69,4 @@ def getPersonalProfileQuestionsDB():
         raise
 
 
-def getLookUpID(lookupname):
-    try:
-       
-        lookupMasterObjs = LookUpMaster.objects.filter(lookupname=lookupname)
-        return lookupMasterObjs
 
-    except Exception as e:
-        logging.error("Error in retrieving lookUpId " + str(e))
-        raise
-
-
-def getLookUpValues(lookupid):
-    try:
-        
-        lookupMasterObjs = LookUpMaster.objects.filter(~Q(lookupmasterid=0),lookupid=lookupid)
-  
-        return lookupMasterObjs
-
-    except Exception as e:
-        logging.error("Error in retrieving lookUpValues " + str(e))
-        raise

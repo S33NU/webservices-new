@@ -1,6 +1,6 @@
-from personal_profile.functions.database import getLookUpValues,getLookUpID,savePersonalProfileDB,getPersonalProfileQuestionsDB,getProfileData, getProfileDataFromDbById, updateProfileDataFromDbById
+from personal_profile.functions.database import savePersonalProfileDB,getPersonalProfileQuestionsDB,getProfileData, getProfileDataFromDbById, updateProfileDataFromDbById
 import logging
-
+from metadata.functions.database import getLookUpValues,getLookUpID
 def savePersonalProfileService(personal_profile):
     try:
         savePersonalProfileDB(personal_profile)

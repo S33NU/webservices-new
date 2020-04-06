@@ -18,5 +18,6 @@ from . import views
 
 
 urlpatterns = [
+    path('investment-profile/questions',views.investmentProfileQuestionsView),
     
 ]
