@@ -94,7 +94,7 @@ def getPersonalProfileQuestionsService():
             if len(lookUpId) != 0:
                 
                 lookUpValues = getLookUpValues(lookUpId[0].lookupid)
-                lookUpValues = [ lookUpValue.lookupname for lookUpValue in lookUpValues]
+                lookUpValues = [ lookUpValue.lookupname+":"+lookUpValue.lookupparam1 for lookUpValue in lookUpValues]
                 profileQuestionsObj['values']=lookUpValues      
             temp.append(profileQuestionsObj)
         profileQuestions = temp
