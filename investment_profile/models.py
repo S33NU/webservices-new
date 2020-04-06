@@ -5,6 +5,7 @@ from django.db import models
 
 class InvestmentProfile(models.Model):
         investmentId = models.AutoField(primary_key=True)    
+        userName = models.CharField(max_length=150)
         investmentAmount = models.CharField(max_length=100)
         investmentType = models.CharField(max_length=100)
         investmentFrequency = models.CharField(max_length=100)

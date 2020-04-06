@@ -9,6 +9,6 @@ class LookUpMaster(models.Model):
     lookupparam1 = models.CharField(max_length=10)
     lookupparam2 = models.CharField(max_length=10)
     lookupstatus = models.CharField(max_length=1)
-    lookupcreateddt = models.DateField()  
-    lookupupdateddt = models.DateField() 
+    lookupcreateddt = models.DateTimeField()  
+    lookupupdateddt = models.DateTimeField() 
      

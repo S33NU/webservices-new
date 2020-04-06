@@ -22,5 +22,5 @@ class ProfQuestion(models.Model):
     profqstatus = models.CharField(max_length=1)
     profqkey = models.CharField(max_length=125)
     profqselection = models.CharField(max_length=100)
-    profqcreateddt = models.DateField()  
-    profqupdateddt = models.DateField()
+    profqcreateddt = models.DateTimeField()  
+    profqupdateddt = models.DateTimeField()

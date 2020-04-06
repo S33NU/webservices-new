@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'webapp',
     'registration',
-    'metadata'
+    'metadata',
+    'investment_profile'
 ]
 
 MIDDLEWARE = [
