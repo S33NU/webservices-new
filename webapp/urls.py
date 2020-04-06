@@ -23,4 +23,6 @@ urlpatterns = [
     path('email-login',views.emailLogin),
     path('home/personal-profile',views.personalProfile),
     path('home/default',views.homePage),
+    path('home/investment-profile',views.investmentProfile),
+    
 ]

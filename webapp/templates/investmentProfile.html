@@ -1,0 +1,122 @@
+
+
+ 
+
+
+
+<!-- Main Content -->
+    <div id="content">
+        {% load static %} 
+	 <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+         
+<!-- Begin Page Content -->
+        <div class="container-fluid">
+
+<!-- End of Sidebar -->
+			<div class="d-sm-flex align-items-center justify-content-between mb-4">
+				<h1 class="h3 mb-0 text-gray-800">Investment Profile</h1>
+			</div>
+        <!-- Begin Page Content -->
+
+
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center test">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+            
+              <div class="col-lg-10">
+                <div class="p-5-investment">
+                 
+                  <form class="user" id="investmentForm">
+                    <div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-0"> 
+                    <label>1.How much amount you wish to invest ?</label> 
+                  
+                   <div class="form-group">
+                        Lump sum
+                      <input type="text" class="form-control" id="exampleInputlumpsum" >
+                    </div>
+				   <div class="form-group">
+                       Monthly (SIP)
+                      <input type="text" class="form-control" id="exampleInputsip" >
+                    </div>
+					
+                   </div>
+                    </div>
+					<div class="form-group row">
+                        <div class="col-sm-12 mb-3 mb-sm-0">
+						<label>	2.At what frequency you want to invest ?</label></br>
+								<input type="radio" name="status" value="frequency"> At my choice frequency
+								<input type="radio" name="status" value="Monthlybasis" checked> Monthly basis<br>
+						</div> 
+					</div>
+										
+					<div class="form-group row">
+									<div class="col-sm-12 mb-3 mb-sm-0">
+										<label for="timeperiod">3.How often do you review your investment ?</label></br>
+											<input type="radio" name="status" value="Weekly"> Weekly
+											<input type="radio" name="status" value="Monthly" checked> Monthly
+											<input type="radio" name="status" value="Randomly"> Randomly
+											<input type="radio" name="status" value=" Never"> Never
+									</div> 
+					</div>
+								
+								<div class="form-group row">
+									<div class="col-sm-12 mb-3 mb-sm-0">
+										<label>4.What is your monthly average savings? </label><br/>
+											<input type="text" class="form-control form-control" id="exampleLastName">
+									</div> 
+								</div> 
+								<div class="form-group row">
+									<div class="col-sm-12 mb-3 mb-sm-0">
+										<label>5.In short term,what % your investment you are prepared to loose (assuming it recovers in long term)? </label>
+											<input type="radio" name="status" value="Single"> Less then
+											<input type="radio" name="status" value="Married" checked>9-15%
+											<input type="radio" name="status" value="Single"> 16-25%
+											<input type="radio" name="status" value="Single"> Above 25%
+									</div>
+								</div> 
+					
+				
+                    
+
+						<div class="btn-block-profile">
+							<a href=".html" class="btn btn-primary btn-user-investment btn-block-profile">
+							Save
+							</a>
+						</div>
+                  
+                    
+                    
+                  </form>
+               
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+        </div>
+        <script src="{% static 'js/investmentProfile.js' %}"></script>
+    </div>
+
+
+

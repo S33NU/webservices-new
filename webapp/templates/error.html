@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <h3>Access Denied. Please Login <a href={{redirectLink}}>here</a></h3>
+        <h3>{{errorMessage}} {% if redirectLink %}<a href={{redirectLink}}>here</a>{% endif %}</h3>
     </body>
 </html>

@@ -37,7 +37,14 @@ def savePassword(request):
         
     except Exception as e:
         logging.error(str(e))
-        return render(request,"error.html",{'redirectLink':'../login'})
+        if str(e) == "Authentication failure":
+            errorMessage = "Access Denied. Please Login"
+            redirectLink ="../login"
+        else:
+            errorMessage = "Internal Server Error"
+            redirectLink = False               
+        
+        return render(request,"error.html",{'redirectLink':redirectLink,'errorMessage':errorMessage})
 
 @csrf_exempt
 @api_view(['GET'])
@@ -54,7 +61,7 @@ def personalProfile(request):
         configureLogging(log)
         
         if 'userName' in request.COOKIES:
-            print(request.COOKIES)
+           
             if not validateCookieService(request.COOKIES['userName']):
                 raise Exception("Authentication failure")
         else:
@@ -66,7 +73,47 @@ def personalProfile(request):
         
     except Exception as e:
         logging.error(str(e))
-        return render(request,"error.html",{'redirectLink':'../login'})
+        if str(e) == "Authentication failure":
+            errorMessage = "Access Denied. Please Login"
+            redirectLink ="../login"
+        else:
+            errorMessage = "Internal Server Error"
+            redirectLink = False               
+        
+        return render(request,"error.html",{'redirectLink':redirectLink,'errorMessage':errorMessage})
+
+
+
+@csrf_exempt
+@api_view(['GET'])
+def investmentProfile(request):
+    try:
+        config = getConfig()
+        log = config['log']
+        configureLogging(log)
+        
+        if 'userName' in request.COOKIES:
+            print(request.COOKIES)
+            if not validateCookieService(request.COOKIES['userName']):
+                raise Exception("Authentication failure")
+        else:
+            raise Exception("Authentication failure")
+        
+        if request.method == 'GET':   
+            return render(request,"home.html",{"template_name":"investmentProfile.html"})  
+
+        
+    except Exception as e:
+        logging.error(str(e))
+        if str(e) == "Authentication failure":
+            errorMessage = "Access Denied. Please Login"
+            redirectLink ="../login"
+        else:
+            errorMessage = "Internal Server Error"
+            redirectLink = False               
+        return render(request,"error.html",{'redirectLink':redirectLink,'errorMessage':errorMessage})
+
+
 
 
 
@@ -92,6 +139,13 @@ def homePage(request):
         
     except Exception as e:
         logging.error(str(e))
-        return render(request,"error.html",{'redirectLink':'../login'})
+        if str(e) == "Authentication failure":
+            errorMessage = "Access Denied. Please Login"
+            redirectLink ="../login"
+        else:
+            errorMessage = "Internal Server Error"
+            redirectLink = False               
+        
+        return render(request,"error.html",{'redirectLink':redirectLink,'errorMessage':errorMessage})
 
 
