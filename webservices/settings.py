@@ -27,7 +27,8 @@ SECRET_KEY = '_ytc^z0ss=obj@ogkd7xzptg8042)8$y1xyi4i9v(*lzpkjxk9'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-	'savart.eastus.cloudapp.azure.com'    
+	'savart.eastus.cloudapp.azure.com',
+    'localhost'    
 ]
 
 
