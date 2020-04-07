@@ -28,3 +28,9 @@ button#savePasswordSubmit {
     width: fit-content;
     margin-left: 20%;
 }
+
+#investmentForm input[type="radio"],#investmentForm input[type="checkbox"] {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 1%;
+}

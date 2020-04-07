@@ -7,6 +7,9 @@ from metadata.functions.metadata import getConfig, configureLogging
 from metadata.functions.service import validateCookieService
 from rest_framework.decorators import api_view
 import sys
+
+from investment_profile.functions.investment_profile_service import getInvestmentProfileQuestionsService
+
 # Create your views here.
 
 @csrf_exempt
@@ -100,7 +103,8 @@ def investmentProfile(request):
             raise Exception("Authentication failure")
         
         if request.method == 'GET':   
-            return render(request,"home.html",{"template_name":"investmentProfile.html"})  
+            investmentProfileQuestions=getInvestmentProfileQuestionsService()
+            return render(request,"home.html",{"template_name":"investmentProfile.html","investmentProfileQuestions":investmentProfileQuestions})  
 
         
     except Exception as e:

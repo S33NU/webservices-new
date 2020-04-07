@@ -7,6 +7,7 @@
 <!-- Main Content -->
     <div id="content">
         {% load static %} 
+        {% load custom_template_tags%}
 	 <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
@@ -37,64 +38,46 @@
             
               <div class="col-lg-10">
                 <div class="p-5-investment">
-                 
-                  <form class="user" id="investmentForm">
-                    <div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0"> 
-                    <label>1.How much amount you wish to invest ?</label> 
-                  
-                   <div class="form-group">
-                        Lump sum
-                      <input type="text" class="form-control" id="exampleInputlumpsum" >
-                    </div>
-				   <div class="form-group">
-                       Monthly (SIP)
-                      <input type="text" class="form-control" id="exampleInputsip" >
-                    </div>
-					
-                   </div>
-                    </div>
-					<div class="form-group row">
-                        <div class="col-sm-12 mb-3 mb-sm-0">
-						<label>	2.At what frequency you want to invest ?</label></br>
-								<input type="radio" name="status" value="frequency"> At my choice frequency
-								<input type="radio" name="status" value="Monthlybasis" checked> Monthly basis<br>
-						</div> 
-					</div>
-										
-					<div class="form-group row">
-									<div class="col-sm-12 mb-3 mb-sm-0">
-										<label for="timeperiod">3.How often do you review your investment ?</label></br>
-											<input type="radio" name="status" value="Weekly"> Weekly
-											<input type="radio" name="status" value="Monthly" checked> Monthly
-											<input type="radio" name="status" value="Randomly"> Randomly
-											<input type="radio" name="status" value=" Never"> Never
-									</div> 
-					</div>
-								
-								<div class="form-group row">
-									<div class="col-sm-12 mb-3 mb-sm-0">
-										<label>4.What is your monthly average savings? </label><br/>
-											<input type="text" class="form-control form-control" id="exampleLastName">
-									</div> 
-								</div> 
-								<div class="form-group row">
-									<div class="col-sm-12 mb-3 mb-sm-0">
-										<label>5.In short term,what % your investment you are prepared to loose (assuming it recovers in long term)? </label>
-											<input type="radio" name="status" value="Single"> Less then
-											<input type="radio" name="status" value="Married" checked>9-15%
-											<input type="radio" name="status" value="Single"> 16-25%
-											<input type="radio" name="status" value="Single"> Above 25%
-									</div>
-								</div> 
-					
-				
                     
+                  <form class="user" id="investmentForm" data-parsley-validate>                   
+                    {% for profileQuestions in investmentProfileQuestions %}
+                        {% if profileQuestions.investqtype == "yes/no" and profileQuestions.investqselection == "singleselect" and ":" in profileQuestions.investqkey %}
+                        <div class='form-group row'>
+                            <div class='col-sm-12 mb-3 mb-sm-0'>
+                                <label>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label>
+                                {% for value in profileQuestions.values %}
+                                    {% with value|split:":" as value %}
+                                    <div class='form-group'>{{value.0}}<input type='text' class='form-control' id='{{value.1}}' /></div>
+                                    {% endwith %}    
+                                {% endfor %}
+                            </div>
+                        </div>    
+                        {% elif profileQuestions.investqtype == "yes/no" and profileQuestions.investqselection == "singleselect" and ":" not in profileQuestions.investqkey %}
+                        <div class='form-group row'><div class='col-sm-12 mb-3 mb-sm-0'>
+                            <label for='{{profileQuestions.investqkey}}'>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label></br> 
+                            {% for value in profileQuestions.values %}
+                                {% with value|split:":" as value %}
+                                <input type='radio' name='{{profileQuestions.investqkey}}' value='{{value.1}}' required /><label> {{value.0}} </label>   
+                                {% endwith %}    
+                            {% endfor %}
+                         </div>
+                        </div>   
+                        {% elif profileQuestions.investqtype == "text" and profileQuestions.investqselection == "null" %}
+                        <div class='form-group row'>
+                            <div class='col-sm-12 mb-3 mb-sm-0'>
+                                <label>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label>
+                                <input type='text' class='form-control' data-parsley-error-message='This value is required' required name='{{profileQuestions.investqkey}}' id='{{profileQuestions.investqkey}}' />
+                            </div>
+                        </div>    
+                        {% endif %}
+                    {% endfor %}
 
-						<div class="btn-block-profile">
-							<a href=".html" class="btn btn-primary btn-user-investment btn-block-profile">
+                    
+                    
+                        <div class="btn-block-profile">
+							<button id="saveInvestmentProfileButton" class="btn btn-primary btn-user-investment btn-block-profile" onclick="saveInvestmentProfile();return false;">
 							Save
-							</a>
+							</button>
 						</div>
                   
                     
