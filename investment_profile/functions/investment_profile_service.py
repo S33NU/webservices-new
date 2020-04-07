@@ -1,5 +1,5 @@
 
-from investment_profile.functions.database import getInvestmentProfileQuestionsDB
+from investment_profile.functions.database import getInvestmentProfileQuestionsDB, saveInvestmentProfileDB
 from metadata.functions.database import getLookUpValues,getLookUpID
 import logging
 
@@ -33,6 +33,13 @@ def getInvestmentProfileQuestionsService():
         #print(profileQuestions)
         return profileQuestions
     except Exception as e:
-        logging.error("Error in retrieving investment profile questions "+str(e))
+        logging.error("Error in retrieving investment profile questions service "+str(e))
         
 
+def saveInvestmentProfileService(investment_profile):
+    try:
+        saveInvestmentProfileDB(investment_profile)
+    except Exception as e:
+        logging.error("Error in saving Investment profile service"+str(e))
+        raise
+    

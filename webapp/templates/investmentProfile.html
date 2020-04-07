@@ -39,7 +39,7 @@
               <div class="col-lg-10">
                 <div class="p-5-investment">
                     
-                  <form class="user" id="investmentForm" data-parsley-validate>                   
+                  <form class="user" id="investmentForm" data-parsley-validate="">                   
                     {% for profileQuestions in investmentProfileQuestions %}
                         {% if profileQuestions.investqtype == "yes/no" and profileQuestions.investqselection == "singleselect" and ":" in profileQuestions.investqkey %}
                         <div class='form-group row'>
@@ -47,7 +47,7 @@
                                 <label>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label>
                                 {% for value in profileQuestions.values %}
                                     {% with value|split:":" as value %}
-                                    <div class='form-group'>{{value.0}}<input type='text' class='form-control' id='{{value.1}}' /></div>
+                                    <div class='form-group'>{{value.0}}<input type='text' class='form-control' name='{{profileQuestions.investqkey}}' id='{{value.1}}' /></div>
                                     {% endwith %}    
                                 {% endfor %}
                             </div>
