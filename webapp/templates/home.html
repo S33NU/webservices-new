@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   {% load static %}
+  {% load custom_template_tags%}
 <head>
 
   <meta charset="utf-8">
@@ -48,108 +49,38 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
- <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="newdashboard.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-
-
-      <!-- Nav Item - Pages Collapse Menu -->
-       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProfile" aria-expanded="true" aria-controls="collapseProfile">
-         <i class="fa fa-user" aria-hidden="true"></i>
-          <span>Profile</span>
-        </a>
-        <div id="collapseProfile" class="collapse" aria-labelledby="headingProfile" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="save-password">Set/Change Password</a>
-            <a class="collapse-item" href="savartservice.html">Services</a>
-            <a class="collapse-item" href="personal-profile">Personal Profile</a>
-			<a class="collapse-item" href="investment-profile">Investment Profile</a>
-			<a class="collapse-item" href="kycpending.html">Documents</a>
+      <!-- Nav Item - Dashboard -->
+      
+      {% for menuItemObj in menuItemList%}
+        {% if menuItemObj.child|length_is:"1"  and menuItemObj.child.0.menuItemName == '' %}
+        <li class="nav-item">
+          <a class="nav-link" href={{menuItemObj.child.0.menuItemLink}}>
+            <i class='{{menuItemObj.UIIcon}}' aria-hidden="true"></i>
+            <span>{{menuItemObj.menuItemParent}}</span></a>
+        </li>
+        <hr class="sidebar-divider d-none d-md-block">  
+        {% else %}
+        <li class="nav-item">
+          {% with "#"|add:menuItemObj.menuItemParent as collapse %}
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target={{collapse|lower}} aria-expanded="true" aria-controls={{menuItemObj.menuItemParent|lower}}>
+           <i class='{{menuItemObj.UIIcon}}' aria-hidden="true"></i>
+            <span>{{menuItemObj.menuItemParent}}</span>
+          </a>
+          <div id={{menuItemObj.menuItemParent|lower}} class="collapse" aria-labelledby="headingProfile" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              {% for sublink in menuItemObj.child %}
+              <a class="collapse-item" href={{sublink.menuItemLink}}>{{sublink.menuItemName}}</a>
+              
+              {% endfor %}
+            </div>
           </div>
-        </div>
-      </li>
-
-<!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item ">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePortfolio" aria-expanded="true" aria-controls="collapsePortfolio">
-			<i class="fas fa-briefcase" aria-hidden="true"></i>
-				<span>Portfolio</span>
-		</a>
-			<div id="collapsePortfolio" class="collapse" aria-labelledby="headingPortfolio" data-parent="#accordionSidebar">
-				<div class="bg-white py-2 collapse-inner rounded">
-
-
-						<a class="collapse-item" href="currentportfolio.html">Invested</a>
-						<a class="collapse-item" href="selectgoal.html">New Investment</a>
-						<a class="collapse-item" href="uploadportfolio.html">Review Existing</a>
-						<a class="collapse-item" href="stocks.html">Advised</a>
-						<a class="collapse-item" href="uploadcontractnotes.html">Contract Notes</a>
-						<a class="collapse-item" href="portfoliostatus.html">Recommended Portfolio</a>
-
-                </div>
-			</div>
-    </li>
-
-
-<!-- Divider -->
-<hr class="sidebar-divider">
-<!-- Nav Item - Pages Collapse Menu -->
-	<li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-           <i class="fas fa-envelope fa-fw"></i>
-				<span>Inbox</span>
-        </a>
-			<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-				<div class="bg-white py-2 collapse-inner rounded">
-
-
-						<a class="collapse-item" href="inbox1.html">Inbox</a>
-
-                </div>
-			</div>
-    </li>
-<!-- Nav Item - Pages Collapse Menu -->
-	<li class="nav-item">
-		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseContactus" aria-expanded="true" aria-controls="collapseContactus">
-			<i class="fa fa-phone" aria-hidden="true"></i>
-				<span>Contact us</span>
-		</a>
-			<div id="collapseContactus" class="collapse" aria-labelledby="headingContactus" data-parent="#accordionSidebar">
-				<div class="bg-white py-2 collapse-inner rounded">
-
-						<a class="collapse-item" href="contactusforhelp.html">Help</a>
-
-				</div>
-			</div>
- <li>
-<!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-<!-- Nav Item - Pages Collapse Menu -->
-	<li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTools" aria-expanded="true" aria-controls="collapseTools">
-			<i class="fa fa-wrench" aria-hidden="true"></i>
-				<span>Tools</span>
-        </a>
-			<div id="collapseTools" class="collapse" aria-labelledby="headingTools" data-parent="#accordionSidebar">
-				<div class="bg-white py-2 collapse-inner rounded">
-
-						<a class="collapse-item" href="Tools.html">Calculators</a>
-
-                </div>
-		   </div>
-    <li>
-<!-- Divider -->
-	<hr class="sidebar-divider d-none d-md-block">
-
+          {% endwith %}
+        </li>
+        <hr class="sidebar-divider d-none d-md-block">  
+          
+        {% endif %}
+      {% endfor %}
+      
 <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <center><button class="rounded-circle border-0" id="sidebarToggle"></button></center>

@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'webapp',
     'registration',
     'metadata',
-    'investment_profile'
+    'investment_profile',
+    'customer'
 ]
 
 MIDDLEWARE = [

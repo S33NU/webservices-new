@@ -24,6 +24,7 @@ urlpatterns = [
     path('clients/',include('subscriptions.urls')),
     path('clients/',include('registration.urls')),
     path('clients/',include('investment_profile.urls')),
+    path('clients/',include('customer.urls')),
     path('ui/',include('webapp.urls')),
     path(r'swagger', schema_view),
 ]

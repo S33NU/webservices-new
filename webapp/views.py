@@ -9,7 +9,8 @@ from rest_framework.decorators import api_view
 import sys
 
 from investment_profile.functions.investment_profile_service import getInvestmentProfileQuestionsService
-
+from customer.functions.customer_service import getCustomerDetailsService
+from metadata.functions.service import getMenuItemsByCustomerStatuService
 # Create your views here.
 
 @csrf_exempt
@@ -35,7 +36,9 @@ def savePassword(request):
         
        
         if request.method == 'GET':   
-            return render(request,"home.html",{"template_name":"password.html"})  
+            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.customerStatus) 
+            return render(request,"home.html",{"template_name":"password.html","menuItemList":menuItemList})  
         
         
     except Exception as e:
@@ -96,7 +99,6 @@ def investmentProfile(request):
         configureLogging(log)
         
         if 'userName' in request.COOKIES:
-            print(request.COOKIES)
             if not validateCookieService(request.COOKIES['userName']):
                 raise Exception("Authentication failure")
         else:
@@ -104,7 +106,10 @@ def investmentProfile(request):
         
         if request.method == 'GET':   
             investmentProfileQuestions=getInvestmentProfileQuestionsService()
-            return render(request,"home.html",{"template_name":"investmentProfile.html","investmentProfileQuestions":investmentProfileQuestions})  
+            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.customerStatus) 
+            
+            return render(request,"home.html",{"template_name":"investmentProfile.html","investmentProfileQuestions":investmentProfileQuestions,'menuItemList':menuItemList})  
 
         
     except Exception as e:

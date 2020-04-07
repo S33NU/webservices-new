@@ -1,5 +1,5 @@
 from registration.models import Registration
-from metadata.models import LookUpMaster
+from metadata.models import LookUpMaster, MenuItems
 from django.db.models import Q
 def validateCookieDB(cookie):
     try:
@@ -49,3 +49,15 @@ def getLookUpValues(lookupid):
     except Exception as e:
         logging.error("Error in retrieving lookUpValues " + str(e))
         raise
+    
+def getMenuItemsByCustomerStatusDB(customerStatus):
+    try:
+        
+        menuItemsObjs = MenuItems.objects.filter(menuItemState__contains=customerStatus)
+  
+        return menuItemsObjs
+
+    except Exception as e:
+        logging.error("Error in retrieving menu items by customer status DB " + str(e))
+        raise
+    

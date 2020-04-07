@@ -12,7 +12,7 @@ def getInvestmentProfileQuestionsDB():
 
         return investmentQuestionsObjs
     except Exception as e:
-        logging.error("Error in retrieving Investment Profile questions " + str(e))
+        logging.error("Error in retrieving Investment Profile questions DB " + str(e))
         raise
 
 

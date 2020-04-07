@@ -3,12 +3,20 @@ from registration.functions.database import checkClientPasswordByEmailDB, saveCl
 import logging
 from metadata.functions.metadata import getOTP,verifyOTP,getOTPByEmail, getConfig
 import json
-
 from random import randint
-
+from customer.functions.database import saveCustomerDetailsDB,updateCustomerDetailsDB
 def saveClientPasswordService(dataObj):
     try:
+        
         saveClientPasswordDB(dataObj)
+        custObj={
+            'username':dataObj['userName'],
+            'customerStatus':'R',
+            'profileStatus':'personal,invest,'
+        }
+        
+        updateCustomerDetailsDB(custObj)
+        
     except Exception as e:
         logging.error("Error in saving client password "+str(e))
         raise
@@ -26,6 +34,8 @@ def validateMobileandSaveService(dataObj, ip, device):
         if len(clientDetails) == 0:
             getOTP("91"+str(dataObj['phonenumber']))
             saveClientMobileService(dataObj, ip, device)
+            saveCustomerDetailsDB({'userName':dataObj['phonenumber'],'customerStatus':'P'})
+            
             return True
         else:
             return False
@@ -91,6 +101,8 @@ def validateEmailandSaveService(dataObj, ip, device):
             otp=randint(range_start, range_end)
             getOTPByEmail(str(dataObj['email']),otp)
             saveClientEmailService(dataObj, ip, device, str(otp))
+            saveCustomerDetailsDB({'userName':dataObj['email'],'customerStatus':'P'})
+            
             return True
         else:
             return False

@@ -22,8 +22,7 @@ $(document).ready(function(){
         }
     });
 
-    $("a").prop("disabled",true);
-     
+   
 })();
 
 function savePassword(){
@@ -32,15 +31,8 @@ function savePassword(){
         
         if(passwordEntry == passwordReEntry){
             var userName='';
-            var cookieArr = document.cookie.split(";");
-    
-            for(var i = 0; i < cookieArr.length; i++) {
-                var cookiePair = cookieArr[i].split("=");
-        
-                if("userName"== cookiePair[0].trim()) {
-                      userName = cookiePair[1];
-                }
-            }
+           
+            userName = getCookie();
             
             dataObj={
                 "userName": userName,
@@ -60,7 +52,6 @@ function savePassword(){
                     data = res.data;
                     
                     if(res.statusCode == 0){
-                        $("a").prop("disabled",false);
     
                         window.location.href = "default";
                     } else {
