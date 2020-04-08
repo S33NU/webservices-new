@@ -8,7 +8,7 @@ import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os 
-
+from random import randint
 def getConfig():
     try:
         config = configparser.ConfigParser()
@@ -114,3 +114,26 @@ def getOTPByEmail(email_to,otp):
     except Exception as e:
         logging.error("Error in sending OTP via email to "+email_to+" "+str(e))
         raise
+    
+def getCurrentPath(path):
+    try:
+        pathList=path.split('/')
+        
+        return pathList[len(pathList)-1]
+    except Exception as e:
+        logging.error("Error in retrieving current path "+str(e))
+        raise
+
+def generateOTP():
+    try:
+        config = getConfig()
+        email_otp_config = config['EMAIL_OTP_CONFIG']
+        n = email_otp_config.getint('otp_length')
+        range_start = 10**(n-1)
+        range_end = (10**n)-1
+        otp=randint(range_start, range_end)
+        return otp
+    except Exception as e:
+        logging.error("Error in generating OTP "+str(e))
+        raise
+    

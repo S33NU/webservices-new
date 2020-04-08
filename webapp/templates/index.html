@@ -41,7 +41,7 @@
 	<div class="row">
                <img class="logo"src="{% static "pictures\Savart logo.svg" %}"  width="50%" height="50%" >
              
-	 <div class="card o-hidden border-5 index">
+	 <div class="card o-hidden border-5 index login">
           
             <!-- Nested Row within Card Body --> 
 		  
@@ -49,29 +49,45 @@
                   
                   <form class="user" data-parsley-validate="" >
                     <div class="form-group">
-					<img src="{% static "pictures\phone.svg" %}" width="30" height="30" id="input_img" class="vl">
-                    <input type="tel" data-parsley-trigger="focusout" data-parsley-error-message="Enter a valid mobile number"  pattern="^[1-9][0-9]{9}" class="form-control form-control-user text1" id="userMobileNumber"  data-parsley-maxlength=10 required aria-describedby="mobileHelp" placeholder="Enter Mobile Number"><p id="otpMessage"></p>
+					          <img src="{% static "pictures\phone.svg" %}" width="30" height="30" id="input_img" class="vl">
+                    <input type="tel" data-parsley-trigger="focusout" data-parsley-error-message="Enter a valid mobile number"  pattern="^[1-9][0-9]{9}" class="form-control form-control-user text1" id="userMobileNumber"  data-parsley-maxlength=10 required aria-describedby="mobileHelp" placeholder="Enter Mobile Number"><p id="mobileotpMessage"></p>
                     </div>
                    
 
                    
-                   
-                    <div class="form-group" id="newUserLogin">
-					    <img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
+                  <div id="newUserLogin">
+                    <div class="form-group">
+					            <img src="{% static "pictures\email.svg" %}" width="30" height="30" id="input_img" class="vl">
+                      <input type="email" data-parsley-trigger="focusout" data-parsley-error-message="Enter a valid email" data-parsley-type="email" class="form-control form-control-user text1" id="userEmailID" aria-describedby="emailHelp" placeholder="Enter Email Address"/></p><p id="emailotpMessage"></p>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="otpType">Send OTP</label><br>
+                      <input type="radio" id="mobile" name="otpType" value="mobile" checked>
+                      <label for="phone">Mobile </label>
+                      <input type="radio" id="email" name="otpType"  value="email">
+                      <label for="email">Email</label>
+                    </div>  
+
+
+                    <div class="form-group">
+                            <img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
                             <input type="otp" data-parsley-trigger="change" class="form-control form-control-user text1" id="userOTP" placeholder="OTP" data-parsley-error-message="Enter a valid OTP" data-parsley-maxlength=4 pattern="[0-9]{4}"/>
                     </div>
                     
 
+                    <div class="form-group">
+                      <div class="form-group-mbn">
+                        <a class="small-login" href="" onclick="resendOTP();return false;">Resend OTP</a>
+                     </div>
+                  </div>  
+                  </div>
                    <div class="form-group" id="existingUserLogin">
                             <img src="{% static "pictures\lock.svg" %}" width="30" height="30" id="input_img" class="vl">
                             <input type="password" class="form-control form-control-user text1" id="userPassword" placeholder="Enter Password">
                     </div>
-                
-                    <div class="form-group">
-                        <div class="form-group-mbn">
-                          <a class="small-login" href="email-login">Alternatively you can login using email </a>
-                       </div>
-                    </div>
+                    
+
                     <div class="invalid-form-error-message"></div>
                     <!--input type="submit" class="btn btn-primary btn-user btn-block login" value="Login" onsubmit="verifyUserCredentials();return false;"/-->
                     <button id="loginSubmit" class="btn btn-primary btn-user btn-block login" onclick="verifyUserCredentials();return false;">Login</button>

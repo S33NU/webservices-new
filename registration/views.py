@@ -7,7 +7,7 @@ import json
 from rest_framework.decorators import api_view
 from registration.functions.registration_service import saveClientPasswordService, checkClientPasswordService,saveClientMobileService, validateMobileandSaveService , validateClientPasswordService, verifyOTPService
 from metadata.functions.service import validateCookieService, verifyOTPByEmailService
-from registration.functions.registration_service import checkClientPasswordByEmailService, validateEmailandSaveService,validateClientPasswordByEmailService 
+from registration.functions.registration_service import resendOTPService,sendOTPByEmailService 
 
 @csrf_exempt
 @api_view(['PUT'])
@@ -191,88 +191,9 @@ def checkPassword(request):
         response['error'] = str(e)
     return JsonResponse(response)
 
-
-
-
-
 @csrf_exempt
 @api_view(['POST'])
-def validateEmail(request):
-    response = {
-        'data': None,
-        'error': None,
-        'statusCode': 1
-    }
-    try:
-        '''
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-        '''
-        config = getConfig()
-        log = config['log']
-        configureLogging(log)
-        if request.method == "POST":
-            ip = get_client_ip(request)
-            device = request.META['HTTP_USER_AGENT']
-           
-            hasNoClientDetails = validateEmailandSaveService(json.loads(request.body.decode('utf-8')), ip, device)
-            if hasNoClientDetails == True:
-                #print(json.loads(request.body.decode('utf-8')))
-                
-                
-                response['data'] = False
-                response['error'] = 'null'
-                response['statusCode'] = 0
-            else:
-                response['data'] = True
-                response['error'] = 'null'
-                response['statusCode'] = 0
-    except Exception as e:
-        logging.error(str(e))
-        response['data'] = 'Error in validating client email'
-        response['error'] = str(e)
-    return JsonResponse(response)
-
-@csrf_exempt
-@api_view(['POST'])
-def validateClientByEmail(request):
-    response = {
-        'data': None,
-        'error': None,
-        'statusCode': 1
-    }
-    try:
-        '''
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-        '''
-        config = getConfig()
-        log = config['log']
-        configureLogging(log)
-
-        if request.method == "POST":
-            if validateClientPasswordByEmailService(json.loads(request.body.decode('utf-8'))):
-                # print(json.loads(request.body.decode('utf-8')))
-                response['statusCode'] = 0
-                response['data'] = 'Client credentials successfully validated'
-            else:
-                response['statusCode'] = 2
-                response['data'] = 'Invalid client credentials'
-                    
-    except Exception as e:
-        logging.error(str(e))
-        response['data'] = 'Error in validting client credentials by email '
-        response['error'] = str(e)
-    return JsonResponse(response)
-
-
-@csrf_exempt
-@api_view(['POST'])
-def verifyOTPBByEmail(request):
+def verifyOTPByEmail(request):
     
     response = {
         'data': None,
@@ -307,42 +228,54 @@ def verifyOTPBByEmail(request):
         response['error'] = str(e)
     return JsonResponse(response)
 
+
 @csrf_exempt
 @api_view(['POST'])
-def checkPasswordByEmail(request):
+def sendOTPByEmail(request):
     response = {
         'data': None,
         'error': None,
         'statusCode': 1
     }
     try:
-        '''
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-        '''
         config = getConfig()
         log = config['log']
         configureLogging(log)
 
         if request.method == "POST":
-            if checkClientPasswordByEmailService(json.loads(request.body.decode('utf-8'))):
-                # print(json.loads(request.body.decode('utf-8')))
-                response['statusCode'] = 0
-                response['data'] = True
-            else:
-                response['statusCode'] = 0
-                response['data'] = False
+            sendOTPByEmailService(json.loads(request.body.decode('utf-8')))
+            response['statusCode'] = 0
+            response['data'] = "OTP Successfully sent to email"
                     
     except Exception as e:
         logging.error(str(e))
-        response['data'] = 'Error in checking client password'
+        response['data'] = 'Error in sending OTP to email'
         response['error'] = str(e)
     return JsonResponse(response)
 
+@csrf_exempt
+@api_view(['POST'])
+def resendOTP(request):
+    response = {
+        'data': None,
+        'error': None,
+        'statusCode': 1
+    }
+    try:
+        config = getConfig()
+        log = config['log']
+        configureLogging(log)
 
-
+        if request.method == "POST":
+            resendOTPService(json.loads(request.body.decode('utf-8')))
+            response['statusCode'] = 0
+            response['data'] = "OTP Successfully sent again"
+                    
+    except Exception as e:
+        logging.error(str(e))
+        response['data'] = 'Error in resending OTP'
+        response['error'] = str(e)
+    return JsonResponse(response)
 
 
 

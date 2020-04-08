@@ -34,3 +34,7 @@ button#savePasswordSubmit {
     padding: 0;
     margin: 1%;
 }
+
+div.card.o-hidden.border-5.index.login {
+    height: auto;
+}

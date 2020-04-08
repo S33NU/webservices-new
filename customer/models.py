@@ -3,9 +3,9 @@ from django.db import models
 # Create your models here.
 
 
-class CustomerDetails(models.Model):
-    
-    userName = models.CharField(max_length=50,primary_key=True)
+class Customer(models.Model):
+    customerId = models.AutoField(primary_key=True)
+    userName = models.CharField(max_length=50,unique=True)
     customerStatus = models.CharField(max_length=1)
     profileStatus = models.CharField(max_length=50)
     subscriptionType = models.CharField(max_length=50)

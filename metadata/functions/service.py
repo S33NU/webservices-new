@@ -40,6 +40,7 @@ def getMenuItemsByCustomerStatuService(customerStatus):
                 uiMenuItemObj = {
                     'menuItemParent':menuItemObj.menuItemParent,
                     'UIIcon': menuItemObj.UIIcon,
+                    'menuItemKey':menuItemObj.menuItemKey,
                     'child':[] 
                 }
                 uiMenuItemObj['child'].append({'menuItemName':menuItemObj.menuItemName,'menuItemLink':menuItemObj.menuItemLink})

@@ -23,8 +23,7 @@ urlpatterns = [
     path('registration/verifyOTP', views.verifyOTP),
     path('registration/validate-phoneno',views.validatePhoneno),
     path('registration/check-password',views.checkPassword),
-    path('registration/validate-email',views.validateEmail),
-    path('registration/validate-password-email',views.validateClientByEmail),
-    path('registration/verifyOTP-email',views.verifyOTPBByEmail),
-    path('registration/check-password-email',views.checkPasswordByEmail),   
+    path('registration/verifyOTP-email',views.verifyOTPByEmail),
+    path('registration/send-otp-email',views.sendOTPByEmail),  
+    path('registration/resend-otp',views.resendOTP),
 ]

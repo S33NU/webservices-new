@@ -1,11 +1,11 @@
 import logging
-from customer.models import CustomerDetails
+from customer.models import Customer
 
 
 def getCustomerDetailsDB(userName):
     try:
        
-        customerDetailsobj=CustomerDetails.objects.get(userName=userName)
+        customerDetailsobj=Customer.objects.filter(userName=userName)
         
         return customerDetailsobj
     except Exception as e:
@@ -14,17 +14,23 @@ def getCustomerDetailsDB(userName):
     
 def saveCustomerDetailsDB(dataObj):
     try:
-        customerDetailsobj=CustomerDetails(userName=dataObj['userName'],
+        
+        customerDetailsobjs=getCustomerDetailsDB(dataObj['userName'])
+        if len(customerDetailsobjs) == 0:
+            
+            customerDetailsobj=Customer(userName=dataObj['userName'],
                                            customerStatus=dataObj['customerStatus'])
                                            
-        customerDetailsobj.save()
+            customerDetailsobj.save()
     except Exception as e:
         logging.error("Error in saving customer details DB " + str(e))
         raise    
     
 def updateCustomerDetailsDB(dataObj):
     try:
-        customerDetailsobj=CustomerDetails.objects.get(userName=dataObj['username'])
+        customerDetailsobj=Customer.objects.filter(userName=dataObj['username'])
+        if len(customerDetailsobj) == 1:
+            customerDetailsobj=customerDetailsobj[0]
         if customerDetailsobj.customerStatus == 'P' and dataObj['customerStatus'] == 'R':
             customerDetailsobj.customerStatus=dataObj['customerStatus']
             customerDetailsobj.profileStatus=dataObj['profileStatus']

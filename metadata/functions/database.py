@@ -6,15 +6,10 @@ def validateCookieDB(cookie):
         registrationObjs=Registration.objects.filter(phonenumber=cookie)
 
         if len(registrationObjs) == 0:
-            registrationObjs=Registration.objects.filter(email=cookie)
-            if len(registrationObjs) == 0:
-                return False
-            elif len(registrationObjs) != 0:
-                return True
+            
+            return False
         elif len(registrationObjs) != 0:
             return True     
-                            
-        
     except Exception as e:
         logging.error("Error in validating Cookie DB "+str(e))
         raise    

@@ -61,12 +61,12 @@
         <hr class="sidebar-divider d-none d-md-block">  
         {% else %}
         <li class="nav-item">
-          {% with "#"|add:menuItemObj.menuItemParent as collapse %}
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target={{collapse|lower}} aria-expanded="true" aria-controls={{menuItemObj.menuItemParent|lower}}>
+          {% with "#"|add:menuItemObj.menuItemKey as collapse %}
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target={{collapse}} aria-expanded="true" aria-controls={{menuItemObj.menuItemKey}}>
            <i class='{{menuItemObj.UIIcon}}' aria-hidden="true"></i>
             <span>{{menuItemObj.menuItemParent}}</span>
           </a>
-          <div id={{menuItemObj.menuItemParent|lower}} class="collapse" aria-labelledby="headingProfile" data-parent="#accordionSidebar">
+          <div id={{menuItemObj.menuItemKey}} class="collapse" aria-labelledby="headingProfile" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
               {% for sublink in menuItemObj.child %}
               <a class="collapse-item" href={{sublink.menuItemLink}}>{{sublink.menuItemName}}</a>

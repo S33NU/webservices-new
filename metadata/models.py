@@ -14,7 +14,8 @@ class LookUpMaster(models.Model):
 
 class MenuItems(models.Model):
     menuItemId = models.AutoField(primary_key=True)
-    menuItemName = models.CharField(max_length=100) 
+    menuItemName = models.CharField(max_length=100)
+    menuItemKey = models.CharField(max_length=100) 
     menuItemLink = models.CharField(max_length=100)
     menuItemState = models.CharField(max_length=50)
     menuItemParent = models.CharField(max_length=100)
