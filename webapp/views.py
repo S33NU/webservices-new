@@ -12,6 +12,7 @@ import sys
 from investment_profile.functions.investment_profile_service import getInvestmentProfileQuestionsService
 from customer.functions.customer_service import getCustomerDetailsService
 from metadata.functions.service import getMenuItemsByCustomerStatuService
+from personal_profile.functions.personal_profile_service import getPersonalProfileQuestionsService
 # Create your views here.
 
 @csrf_exempt
@@ -75,8 +76,9 @@ def personalProfile(request):
         else:
             raise Exception("Authentication failure")
         
-        if request.method == 'GET':   
-            return render(request,"home.html",{"template_name":"personalProfile.html"})  
+        if request.method == 'GET':
+            personalProfileQuestions = getPersonalProfileQuestionsService()
+            return render(request,"home.html",{"template_name":"personalProfile.html","personalProfileQuestions":personalProfileQuestions})
 
         
     except Exception as e:
@@ -152,8 +154,9 @@ def homePage(request):
         else:
             raise Exception("Authentication failure")
         
-        if request.method == 'GET':  
-            return render(request,"home.html",{"template_name":"personalProfile.html"})  
+        if request.method == 'GET':
+            personalProfileQuestions = getPersonalProfileQuestionsService()
+            return render(request,"home.html",{"template_name":"personalProfile.html","personalProfileQuestions":personalProfileQuestions})
         
         
     except Exception as e:

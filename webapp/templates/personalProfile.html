@@ -1,7 +1,8 @@
 
 <!-- Main Content -->
     <div id="content">
-      {% load static %} 
+      {% load static %}
+                {% load custom_template_tags%}
 
       <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -36,64 +37,70 @@
               <div class="col-lg-10">
                 <div class="p-5 personalprofile">
 
-                  <form id='Pform' name="contactForm"  class="user" data-parsley-validate="">
-				  <div class="form-group">Registered Mobile:
-                      <input class="form-control form-control" name="mobile" id="exampleInputregisteredmobile"  data-parsley-required data-parsley-type="digits" data-parsley-length="[10,10]" data-parsley-error-message="Please enter a valid Mobile Number" >
+                  <form id='Pform'  class="user" data-parsley-validate="">
+                      {% for profileQuestions in personalProfileQuestions %}
+                         {% if profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "registeredMobile" %}
+                      <div class="form-group"><label>{{profileQuestions.profqname}}:</label>
+                      <input class="form-control form-control" name='{{profileQuestions.profqkey}}' id='{{profileQuestions.profqkey}}' data-parsley-required data-parsley-type="digits" data-parsley-length="[10,10]" data-parsley-error-message="Please enter a valid Mobile Number" >
                     </div>
-				   <div class="form-group">First Name:
-                      <input  class="form-control form-control" id="firstname" name="firstname"  required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your First Name"    >
+                         {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "firstName" %}
+				   <div class="form-group">{{profileQuestions.profqname}}:
+                      <input  class="form-control form-control" name='{{profileQuestions.profqkey}}'  required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your First Name"    >
                     </div>
-					 <div class="form-group">Last Name:
-                      <input  name="lastname" class="form-control form-control" id="exampleInputlastname"  required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your Last Name"  >
+                      {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "lastName" %}
+					 <div class="form-group">{{profileQuestions.profqname}}:
+                      <input  name='{{profileQuestions.profqkey}}' class="form-control form-control" id="exampleInputlastname"  required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your Last Name"  >
                     </div>
-
-                    <div class="form-group">Email:
-                      <input name="email" required data-parsley-type="email" data-parsley-error-message="Please enter a valid E-Mail address"  class="form-control form-control" id="exampleInputEmail" aria-describedby="emailHelp" >
+                      {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "email" %}
+                    <div class="form-group">{{profileQuestions.profqname}}:
+                      <input name='{{profileQuestions.profqkey}}' required data-parsley-type="email" data-parsley-error-message="Please enter a valid E-Mail address"  class="form-control form-control" id="exampleInputEmail" aria-describedby="emailHelp" >
                     </div>
+                        {% elif profileQuestions.profqtype == "yes/no" and profileQuestions.profqselection == "singleselect" and ":" not in profileQuestions.profqkey and profileQuestions.profqkey == "marriedStatus" %}
 						<div class="form-group row">
 											<div class="col-sm-12 mb-3 mb-sm-0">
-												<h6>Martial status:</h6>
-													<div class="row">
-														<div class="col-sm-3">
-															<input type="radio" name="status" value="Single"> Single
-														</div>
-														<div class="col-sm-3">
-															<input type="radio" name="status" value="Married" checked>Married
-														</div>
-													</div>
+												<label for='{{profileQuestions.profqkey}}'>{{profileQuestions.profqname}}:</label></br>
+                            {% for value in profileQuestions.values %}
+                                {% with value|split:":" as value %}
+                                <input type='radio' name='{{profileQuestions.profqkey}}' value='{{value.1}}' checked/><label>   {{  value.0}} </label>
+                                {% endwith %}
+                            {% endfor %}
 											</div>
 										</div>
+                        {% elif profileQuestions.profqtype == "list" and profileQuestions.profqselection == "singleselect" and ":" not in profileQuestions.profqkey and profileQuestions.profqkey == "age" %}
 										<div class="form-group row">
 											<div class="col-sm-12 mb-3 mb-sm-0">
-												<h6>Age:</h6>
-													<select id="AgeDropdownId" name="age" class="AgeDropdown">
-													<option value="21-30">21-30</option>
-													<option value="31-40">31-40</option>
-													<option value="41-50">41-50</option>
-													<option value="51-60">51-60</option>
-													<option value="61-70">61-70</option>
-													<option value="71-80">71-80</option>
-													<option value="81-90">81-90</option>
-													<option value="91-100">91-100</option>
+												<h6>{{ profileQuestions.profqname }}:</h6>
+
+													<select id="AgeDropdownId" name='{{profileQuestions.profqkey}}' class="AgeDropdown">
+                                                     {% for value in profileQuestions.values %}
+                                                     {% with value|split:":" as value %}
+													<option name='{{profileQuestions.profqkey}}' value="{{ value.1 }}">{{value.0}}</option>
+                                                        {% endwith %}
+                                                 {% endfor %}
 													</select>
+
 											</div>
 										</div>
 					 <div class="form-group" data-parsley-required data-parsley-type="alphanum">Address:
-                      <input class="form-control form-control" name="address1" id="exampleInputaddress"  type="text" placeholder="H.no/Flat.no" data-parsley-required data-parsley-error-message="Please enter your Address">
-					  <input class="form-control form-control" name="address2" id="exampleInputaddress" placeholder="Street Name" type="text" data-parsley-required data-parsley-error-message="Please enter your Address">
-					  <input class="form-control form-control" name="address3" id="exampleInputaddress" placeholder="City" required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your City">
-            <input  class="form-control form-control" name="address4" id="exampleInputaddress" placeholder="Pincode" data-parsley-required data-parsley-type="digits"  data-parsley-required-message="Please enter Pincode">
+                         {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "addrLine1" %}
+                      <input class="form-control form-control" name="{{ profileQuestions.profqkey }}"  type="text" placeholder="H.no/Flat.no" data-parsley-required data-parsley-error-message="Please enter your Address">
+                          {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "addrLine2" %}
+					  <input class="form-control form-control" name='{{profileQuestions.profqkey}}' placeholder="Street Name" type="text" data-parsley-required data-parsley-error-message="Please enter your Address">
+                          {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "addrLine3" %}
+					  <input class="form-control form-control" name='{{profileQuestions.profqkey}}' placeholder="City" required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your City">
+                          {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "addrLine4" %}
+            <input  class="form-control form-control" name='{{profileQuestions.profqkey}}' placeholder="Pincode" data-parsley-required data-parsley-type="digits"  data-parsley-required-message="Please enter Pincode">
 
           </div>
-
-					 <div class="form-group">Occupation:
-                      <input class="form-control form-control" name="occupation" id="exampleInputoccupation"  required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your Occupation">
+                         {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "occupation" %}
+					 <div class="form-group">{{profileQuestions.profqname}}:
+                      <input class="form-control form-control" name='{{profileQuestions.profqkey}}' id="exampleInputoccupation"  required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your Occupation">
                     </div>
-
-
-    <button type="submit" id="submit" name="submit" value="Submit"  class="btn btn-primary btn-user btn-block" >Save</button>
-
-
+{% endif %}
+                      {% endfor %}
+                      <center><h5 id="saveStatus0"><font color="blue">Details saved successfully</font></h5></center>
+                       <center><h5 id="saveFailStatus"><font color="red">Unable to save the details due to some Technical Issue</font></h5></center>
+    <button type="submit" class="btn btn-primary btn-user btn-block"  id="submit"   >Save</button>
 
 
 
