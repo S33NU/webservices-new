@@ -35,7 +35,7 @@
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-            
+
               <div class="col-lg-10">
                 <div class="p-5-investment">
                     
@@ -47,7 +47,7 @@
                                 <label>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label>
                                 {% for value in profileQuestions.values %}
                                     {% with value|split:":" as value %}
-                                    <div class='form-group'>{{value.0}}<input type='text' class='form-control' name='{{profileQuestions.investqkey}}' id='{{value.1}}' /></div>
+                                    <div class='form-group'>{{value.0}}<input data-parsley-type="digits" data-parsley-min="500" data-parsley-max="1000000000" data-parsley-required-message='Please Enter Investment Amount ' class='form-control' name='{{profileQuestions.investqkey}}' id='{{value.1}}' required/></div>
                                     {% endwith %}    
                                 {% endfor %}
                             </div>
@@ -57,7 +57,7 @@
                             <label for='{{profileQuestions.investqkey}}'>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label></br> 
                             {% for value in profileQuestions.values %}
                                 {% with value|split:":" as value %}
-                                <input type='radio' name='{{profileQuestions.investqkey}}' value='{{value.1}}' required /><label> {{value.0}} </label>   
+                                <input type='radio' name='{{profileQuestions.investqkey}}' value='{{value.1}}' required /><label> {{value.0}} </label>
                                 {% endwith %}    
                             {% endfor %}
                          </div>
@@ -66,16 +66,19 @@
                         <div class='form-group row'>
                             <div class='col-sm-12 mb-3 mb-sm-0'>
                                 <label>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label>
-                                <input type='text' class='form-control' data-parsley-error-message='This value is required' required name='{{profileQuestions.investqkey}}' id='{{profileQuestions.investqkey}}' />
+                                <input data-parsley-required data-parsley-type="digits" class='form-control' data-parsley-max="1000000000" data-parsley-required-message='Please Enter monthly avg  savings ' name='{{profileQuestions.investqkey}}' id='{{profileQuestions.investqkey}}' />
                             </div>
                         </div>    
                         {% endif %}
                     {% endfor %}
 
                     
-                    
+                      <center><h5 id="saveStatus0"><font color="blue">Details saved successfully</font></h5></center>
+                      <center><h5 id="saveStatus5"><font color="red">Internal Server Error</font></h5></center>
+
+
                         <div class="btn-block-profile">
-							<button id="saveInvestmentProfileButton" class="btn btn-primary btn-user-investment btn-block-profile" onclick="saveInvestmentProfile();return false;">
+							<button class="btn btn-primary btn-user-investment btn-block-profile" type="submit" id="saveInvestmentProfileButton"  >
 							Save
 							</button>
 						</div>

@@ -45,15 +45,15 @@
                     </div>
                          {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "firstName" %}
 				   <div class="form-group">{{profileQuestions.profqname}}:
-                      <input  class="form-control form-control" name='{{profileQuestions.profqkey}}'  required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your First Name"    >
+                      <input  class="form-control form-control" name='{{profileQuestions.profqkey}}' data-parsley-maxlength="20" required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your First Name"    >
                     </div>
                       {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "lastName" %}
 					 <div class="form-group">{{profileQuestions.profqname}}:
-                      <input  name='{{profileQuestions.profqkey}}' class="form-control form-control" id="exampleInputlastname"  required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your Last Name"  >
+                      <input  name='{{profileQuestions.profqkey}}' class="form-control form-control" id="exampleInputlastname" data-parsley-maxlength="20" required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your Last Name"  >
                     </div>
                       {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "email" %}
                     <div class="form-group">{{profileQuestions.profqname}}:
-                      <input name='{{profileQuestions.profqkey}}' required data-parsley-type="email" data-parsley-error-message="Please enter a valid E-Mail address"  class="form-control form-control" id="exampleInputEmail" aria-describedby="emailHelp" >
+                      <input name='{{profileQuestions.profqkey}}' required data-parsley-type="email" data-parsley-maxlength="50" data-parsley-error-message="Please enter a valid E-Mail address"  class="form-control form-control" id="exampleInputEmail" aria-describedby="emailHelp" >
                     </div>
                         {% elif profileQuestions.profqtype == "yes/no" and profileQuestions.profqselection == "singleselect" and ":" not in profileQuestions.profqkey and profileQuestions.profqkey == "marriedStatus" %}
 						<div class="form-group row">
@@ -83,23 +83,23 @@
 										</div>
 					 <div class="form-group" data-parsley-required data-parsley-type="alphanum">Address:
                          {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "addrLine1" %}
-                      <input class="form-control form-control" name="{{ profileQuestions.profqkey }}"  type="text" placeholder="H.no/Flat.no" data-parsley-required data-parsley-error-message="Please enter your Address">
+                      <input class="form-control form-control" name="{{ profileQuestions.profqkey }}"  type="text" data-parsley-maxlength="30" placeholder="H.no/Flat.no" data-parsley-required data-parsley-required-message="Please enter your Address">
                           {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "addrLine2" %}
-					  <input class="form-control form-control" name='{{profileQuestions.profqkey}}' placeholder="Street Name" type="text" data-parsley-required data-parsley-error-message="Please enter your Address">
+					  <input class="form-control form-control" name='{{profileQuestions.profqkey}}' placeholder="Street Name" type="text" data-parsley-maxlength="30" data-parsley-required data-parsley-required-message="Please enter your Address">
                           {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "addrLine3" %}
-					  <input class="form-control form-control" name='{{profileQuestions.profqkey}}' placeholder="City" required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your City">
+					  <input class="form-control form-control" name='{{profileQuestions.profqkey}}' placeholder="City" required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-maxlength="20" data-parsley-required-message="Please enter your City">
                           {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "addrLine4" %}
-            <input  class="form-control form-control" name='{{profileQuestions.profqkey}}' placeholder="Pincode" data-parsley-required data-parsley-type="digits"  data-parsley-required-message="Please enter Pincode">
+            <input  class="form-control form-control" name='{{profileQuestions.profqkey}}' placeholder="Pincode" data-parsley-required data-parsley-type="digits" data-parsley-maxlength="20" data-parsley-required-message="Please enter Pincode">
 
           </div>
                          {% elif profileQuestions.profqtype == "text" and profileQuestions.profqselection == "null" and profileQuestions.profqkey == "occupation" %}
 					 <div class="form-group">{{profileQuestions.profqname}}:
-                      <input class="form-control form-control" name='{{profileQuestions.profqkey}}' id="exampleInputoccupation"  required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your Occupation">
+                      <input class="form-control form-control" name='{{profileQuestions.profqkey}}' id="exampleInputoccupation" data-parsley-maxlength="25" required data-parsley-pattern="^[a-zA-Z ]+$" data-parsley-required-message="Please enter your Occupation">
                     </div>
 {% endif %}
                       {% endfor %}
                       <center><h5 id="saveStatus0"><font color="blue">Details saved successfully</font></h5></center>
-                       <center><h5 id="saveFailStatus"><font color="red">Unable to save the details due to some Technical Issue</font></h5></center>
+                      <center><h5 id="saveStatus5"><font color="red">Internal Server Error</font></h5></center>
     <button type="submit" class="btn btn-primary btn-user btn-block"  id="submit"   >Save</button>
 
 
