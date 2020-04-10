@@ -81,6 +81,14 @@ def updateEmailOTPDB(otp,phonenumber,email):
         logging.error("Error in sending OTP by email  DB "+str(e))
         raise 
 
-
-
+def getRegistrationDetailsDB(userName):
+    try:
+        
+        registrationObjs=Registration.objects.filter(phonenumber=userName)
+        if len(registrationObjs) > 0:
+            registrationObjs = registrationObjs[0]
+        return registrationObjs
+    except Exception as e:
+        logging.error("Error in retreiving registration details DB "+str(e))
+        raise 
 

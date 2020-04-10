@@ -20,6 +20,26 @@ var PROFILE_QUESTIONS =[];
 
     });
 
+    $.get(CONFIG['host']+"/clients/registration/details", function(res, status){
+
+        if(res.statusCode == 0){
+
+            var data = res.data;
+            
+            $("#registeredMobile").val(data.phonenumber)
+            $("#registeredMobile").prop("disabled", true);
+            if(data.email != ""){
+                $("#email").val(data.email)
+                $("#email").prop("disabled", true);
+    
+            }
+
+        }else if (res.statusCode == 1){
+
+        }
+
+    });
+
 
 
 })();

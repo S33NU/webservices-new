@@ -26,4 +26,6 @@ urlpatterns = [
     path('registration/verifyOTP-email',views.verifyOTPByEmail),
     path('registration/send-otp-email',views.sendOTPByEmail),  
     path('registration/resend-otp',views.resendOTP),
+    path('registration/details',views.getRegistrationDetails),
+    
 ]

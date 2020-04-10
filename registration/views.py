@@ -7,7 +7,7 @@ import json
 from rest_framework.decorators import api_view
 from registration.functions.registration_service import saveClientPasswordService, checkClientPasswordService,saveClientMobileService, validateMobileandSaveService , validateClientPasswordService, verifyOTPService
 from metadata.functions.service import validateCookieService, verifyOTPByEmailService
-from registration.functions.registration_service import resendOTPService,sendOTPByEmailService 
+from registration.functions.registration_service import resendOTPService,sendOTPByEmailService,getRegistrationDetailsService 
 
 @csrf_exempt
 @api_view(['PUT'])
@@ -278,6 +278,37 @@ def resendOTP(request):
     return JsonResponse(response)
 
 
+@csrf_exempt
+@api_view(['GET'])
+def getRegistrationDetails(request):
+    response = {
+        'data': None,
+        'error': None,
+        'statusCode': 1
+    }
+    try:
+        config = getConfig()
+        log = config['log']
+        configureLogging(log)
+        
+        if 'userName' in request.COOKIES:
+            if not validateCookieService(request.COOKIES['userName']):
+                response['statusCode'] = 5
+                raise Exception("Authentication failure")
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
+
+        if request.method == "GET":
+            data=getRegistrationDetailsService(request.COOKIES['userName'])
+            response['statusCode'] = 0
+            response['data'] = data
+                    
+    except Exception as e:
+        logging.error(str(e))
+        response['data'] = 'Error in retreiving registration details'
+        response['error'] = str(e)
+    return JsonResponse(response)
 
 
 

@@ -1,5 +1,5 @@
 from registration.functions.database import saveClientPasswordDB,checkClientPasswordDB,validateClientPasswordDB,saveClientMobileDB, validateClientMobileDB
-from registration.functions.database import updateEmailOTPDB
+from registration.functions.database import updateEmailOTPDB,getRegistrationDetailsDB
 import logging
 from metadata.functions.metadata import getOTP,verifyOTP,getOTPByEmail, getConfig,generateOTP,reSendOTP
 import json
@@ -102,7 +102,20 @@ def checkClientPasswordService(dataObj):
         logging.error("Error in checking client password service "+str(e))
         raise
     
- 
+def getRegistrationDetailsService(userName):
+    try:
+        registrationDetailsObj = getRegistrationDetailsDB(userName)
+        
+        dataObj = {
+            'phonenumber':registrationDetailsObj.phonenumber,
+            'email':registrationDetailsObj.email  
+        }
+        
+        return dataObj
+    except Exception as e:
+        logging.error("Error in  retreiving registration details  service "+str(e))
+        raise
+     
 
        
     
