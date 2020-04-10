@@ -71,7 +71,7 @@ def saveInvestmentProfile(request):
         
         
         if request.method == "POST":
-            saveInvestmentProfileService(json.loads(request.body.decode('utf-8')))
+            saveInvestmentProfileService(json.loads(request.body.decode('utf-8')),request.COOKIES['userName'])
             response['statusCode'] = 0
             response['data'] = 'Investment Profile data saved successfully'
                  

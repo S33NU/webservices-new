@@ -23,8 +23,6 @@ var INVESTENT_QUESTIONS =[];
 function saveInvestmentProfile(){
     if($('#investmentForm').parsley().isValid()){
         dataObj = {}
-        userName=getCookie();
-        dataObj['userName']=userName;
         for(var i=0;i< INVESTENT_QUESTIONS.length;i++) {
          
             if (INVESTENT_QUESTIONS[i].investqtype == "yes/no" && INVESTENT_QUESTIONS[i].investqselection == "singleselect" && INVESTENT_QUESTIONS[i].investqkey.includes(':')){
@@ -58,6 +56,7 @@ function saveInvestmentProfile(){
              $('#saveInvestmentProfileButton').hide()
              $("input").prop('disabled', true)
              
+            
         });
 
     }

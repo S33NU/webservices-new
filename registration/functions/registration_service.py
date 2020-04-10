@@ -1,16 +1,16 @@
 from registration.functions.database import saveClientPasswordDB,checkClientPasswordDB,validateClientPasswordDB,saveClientMobileDB, validateClientMobileDB
 from registration.functions.database import updateEmailOTPDB
 import logging
-from metadata.functions.metadata import getOTP,verifyOTP,getOTPByEmail, getConfig,generateOTP
+from metadata.functions.metadata import getOTP,verifyOTP,getOTPByEmail, getConfig,generateOTP,reSendOTP
 import json
 
 from customer.functions.database import saveCustomerDetailsDB,updateCustomerDetailsDB
-def saveClientPasswordService(dataObj):
+def saveClientPasswordService(dataObj,userName):
     try:
         
-        saveClientPasswordDB(dataObj)
+        saveClientPasswordDB(dataObj,userName)
         custObj={
-            'username':dataObj['userName'],
+            'username':userName,
             'customerStatus':'R',
             'profileStatus':'personal,invest,'
         }
@@ -18,7 +18,7 @@ def saveClientPasswordService(dataObj):
         updateCustomerDetailsDB(custObj)
         
     except Exception as e:
-        logging.error("Error in saving client password "+str(e))
+        logging.error("Error in saving client password service "+str(e))
         raise
 
 def sendOTPByEmailService(dataObj):
@@ -28,25 +28,25 @@ def sendOTPByEmailService(dataObj):
         updateEmailOTPDB(otp,dataObj['phonenumber'],dataObj['email'])
         
     except Exception as e:
-        logging.error("Error in sending OTP by email service"+str(e))
+        logging.error("Error in sending OTP by email service "+str(e))
         raise
 def resendOTPService(dataObj):
     try:
         if dataObj['otpType'] == 'mobile':
-            getOTP("91"+str(dataObj['phonenumber']))
+            reSendOTP("91"+str(dataObj['phonenumber']))
         elif dataObj['otpType'] == 'email':
             otp=generateOTP()
             getOTPByEmail(str(dataObj['email']),otp)                
             updateEmailOTPDB(otp,dataObj['phonenumber'],dataObj['email'])
     except Exception as e:
-        logging.error("Error in resending OTP service"+str(e))
+        logging.error("Error in resending OTP service "+str(e))
         raise
          
 def saveClientMobileService(dataObj, ip, device):
     try:
         saveClientMobileDB(dataObj, ip, device)
     except Exception as e:
-        logging.error("Error in saving Client Mobile number" + str(e))
+        logging.error("Error in saving Client Mobile number service " + str(e))
         raise
      
 def validateMobileandSaveService(dataObj, ip, device):
@@ -55,13 +55,13 @@ def validateMobileandSaveService(dataObj, ip, device):
         if len(clientDetails) == 0:
             getOTP("91"+str(dataObj['phonenumber']))
             saveClientMobileService(dataObj, ip, device)
-            saveCustomerDetailsDB({'userName':dataObj['phonenumber'],'customerStatus':'P'})
+            saveCustomerDetailsDB({'userName':dataObj['phonenumber'],'customerStatus_new':'P','customerStatus_old':'P'})
             
             return True
         else:
             return False
     except Exception as msg:
-        logging.error('Error in validating mobile service' + str(msg))
+        logging.error('Error in validating mobile service ' + str(msg))
         raise
         
 def validateClientPasswordService(dataObj):
@@ -73,7 +73,7 @@ def validateClientPasswordService(dataObj):
         else:
             return False
     except Exception  as e:
-        logging.error("Error in validating client credentials")
+        logging.error("Error in validating client credentials service "+str(e))
         raise    
 
 def verifyOTPService(dataObj):
@@ -88,7 +88,7 @@ def verifyOTPService(dataObj):
             return False
         
     except Exception as e:
-        logging.error("Error in validating OTP "+str(e))
+        logging.error("Error in validating OTP service "+str(e))
         raise
 
 def checkClientPasswordService(dataObj):

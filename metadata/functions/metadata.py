@@ -63,6 +63,27 @@ def getOTP(mobile_number):
         raise
 
 
+def reSendOTP(mobile_number):
+    try:
+        config = getConfig()
+        otp_config = config['OTP_CONFIG']
+        conn = http.client.HTTPSConnection("api.msg91.com")
+
+        payload = ""
+        url = "/api/v5/otp/retry?mobile="+mobile_number+"&authkey="+otp_config['auth_key']+"&retrytype="
+        conn.request("POST",url, payload)
+
+        res = conn.getresponse()
+        data = res.read()
+
+       #print(data.decode("utf-8"))
+
+    except Exception as err:
+        logging.error("Error in getting OTP")
+        raise
+
+
+
 def verifyOTP(mobile_number, otp):
     try:
         config = getConfig()
@@ -136,4 +157,5 @@ def generateOTP():
     except Exception as e:
         logging.error("Error in generating OTP "+str(e))
         raise
+
     

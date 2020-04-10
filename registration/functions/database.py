@@ -2,17 +2,17 @@ import logging
 from registration.models import Registration
 from django.db.models import Q
 
-def saveClientPasswordDB(dataObj):
+def saveClientPasswordDB(dataObj,userName):
     try:
         registrationObjs = []
-        registrationObjs=Registration.objects.filter(phonenumber=dataObj['userName'])
+        registrationObjs=Registration.objects.filter(phonenumber=userName)
     
         for record in registrationObjs:
             record.password = dataObj['password']
             record.save()
         
     except Exception as e:
-        logging.error("Error in saving client password " + str(e))
+        logging.error("Error in saving client password DB" + str(e))
         raise
 
 

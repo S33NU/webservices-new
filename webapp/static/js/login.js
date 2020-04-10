@@ -119,7 +119,9 @@ function validatePassword(dataObj,phonenumber){
                 .toggleClass('filled', false);
             
             var dateVar = new Date();
-            dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
+            //dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
+            dateVar.setTime(dateVar.getTime() + (300*1000));
+            
             var expires = "expires="+ dateVar.toUTCString();
             document.cookie="userName="+phonenumber+";"+expires+";path=/";
             window.location.href = "home/default"
@@ -149,8 +151,13 @@ function verifyOTPByMobile(dataObj,phonenumber){
             $('.invalid-form-error-message')
                 .html('')
                 .toggleClass('filled', false);
-            $("#mobileotpMessage").html('');
-            checkPassword(phonenumber);
+            $("#mobileotpMessage").hide();
+            var dateVar = new Date();
+            //dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
+            dateVar.setTime(dateVar.getTime() + (300*1000));
+            var expires = "expires="+ dateVar.toUTCString();
+            document.cookie="userName="+phonenumber+";"+expires+";path=/";
+            window.location.href = "home/default";
         }else{
               
             console.log("Invalid OTP");
@@ -179,8 +186,13 @@ function verifyOTPByEmail(dataObj,phonenumber){
             $('.invalid-form-error-message')
                 .html('')
                 .toggleClass('filled', false);
-            $("#emailotpMessage").html("");
-            checkPassword(phonenumber);
+            $("#emailotpMessage").hide();
+            var dateVar = new Date();
+            //dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
+            dateVar.setTime(dateVar.getTime() + (300*1000));
+            var expires = "expires="+ dateVar.toUTCString();
+            document.cookie="userName="+phonenumber+";"+expires+";path=/";
+            window.location.href = "home/default";
         }else{
               
             console.log("Invalid OTP");
@@ -209,7 +221,8 @@ function resendOTP(){
         'phonenumber':phonenumber,
         'email':email
     };
-
+    $("#mobileotpMessage").hide();
+    $("#emailotpMessage").hide();
     $.post(CONFIG['host']+"/clients/registration/resend-otp", JSON.stringify(dataObj), function(res){
         data = res.data;
 
@@ -217,6 +230,11 @@ function resendOTP(){
             $('.invalid-form-error-message')
                 .html('')
                 .toggleClass('filled', false);
+                if (otpType == 'mobile'){
+                    $("#mobileotpMessage").show();
+                }else if (otpType == 'email'){
+                    $("#emailotpMessage").show();
+                }    
             
         }else if(res.statusCode == 1){
 
@@ -259,40 +277,4 @@ function registerEmailValidation(){
         });
     
     });
-}
-
-function checkPassword(phonenumber){
-    
-    dataObj = {
-        "phonenumber":phonenumber
-    }
-
-    $.post(CONFIG['host']+"/clients/registration/check-password", JSON.stringify(dataObj), function(res){
-            data = res.data;
-            if(res.statusCode == 0){ 
-                $('.invalid-form-error-message')
-                    .html('')
-                    .toggleClass('filled', false);
- 
-                var dateVar = new Date();
-                dateVar.setTime(dateVar.getTime() + (1*24*60*60*1000));
-                var expires = "expires="+ dateVar.toUTCString();
-                document.cookie="userName="+phonenumber+";"+expires+";path=/";
-            
-                if(data){
-                    console.log("Password saved");
-                    window.location.href = "home/default";     
-                }else {
-                    console.log("Password not saved");
-                    window.location.href = "home/save-password";
-                }
-            }
-            else if(res.statusCode == 1){
-                $('.invalid-form-error-message')
-                .html('Internal Server Error, try later')
-                .toggleClass('filled', true);
-            }    
-    });
-    
-
 }

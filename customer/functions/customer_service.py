@@ -1,4 +1,4 @@
-from customer.functions.database import getCustomerDetailsDB, saveCustomerDetailsDB
+from customer.functions.database import getCustomerDetailsDB, saveCustomerDetailsDB,updateCustomerDetailsDB
 import logging
 
 def getCustomerDetailsService(userName):
@@ -16,3 +16,10 @@ def saveCustomerDetailsService(customer_details):
       except Exception as e:
         logging.error("Error in saving customer details service "+str(e))
         raise
+      
+def updateCustomerDetailsService(customer_details):
+      try:
+        updateCustomerDetailsDB(customer_details)
+      except Exception as e:
+        logging.error("Error in updating customer details service "+str(e))
+        raise      

@@ -38,3 +38,7 @@ button#savePasswordSubmit {
 div.card.o-hidden.border-5.index.login {
     height: auto;
 }
+
+a.btn.btn-primary.btn-user.btn-block.login.disabled {
+    background-color: grey;
+}

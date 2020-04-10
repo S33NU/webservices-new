@@ -1,0 +1,32 @@
+<div class="card o-hidden border-5 index password-card">
+    {% load static %}
+    <!-- Nested Row within Card Body -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4 password-title">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+      </div>
+        <div class="p-4">
+           {% if not profileCompleted %} 
+            <a href='{{profileLink}}' class="btn btn-primary btn-user btn-block login">
+                Profile Incomplete
+              </a>
+              <a href="" class="btn btn-primary btn-user btn-block login disabled">  
+                Start Investing
+              </a>
+              <a href="" class="btn btn-primary btn-user btn-block login disabled">
+                Review Existing Investment
+              </a>
+           {% elif profileCompleted %}
+            <a href="" class="btn btn-primary btn-user btn-block login" onclick="reviewInvestment();return false;">  
+              Start Investing
+            </a>
+            <a href="" class="btn btn-primary btn-user btn-block login" onclick="reviewInvestment();return false;">
+              Review Existing Investment
+            </a>
+       
+           {% endif %}     
+        </div>
+
+        <script src="{% static 'js/dashboardview1.js' %}"></script>
+
+
+</div>

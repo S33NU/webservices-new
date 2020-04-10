@@ -32,10 +32,8 @@ function savePassword(){
         if(passwordEntry == passwordReEntry){
             var userName='';
            
-            userName = getCookie();
             
             dataObj={
-                "userName": userName,
                 "password": passwordEntry
             }
             $('.invalid-form-error-message')

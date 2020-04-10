@@ -1,6 +1,8 @@
 from metadata.functions.database import validateCookieDB, validateClientOTPByEmailDB,getMenuItemsByCustomerStatusDB
 import logging
-
+from customer.functions.database import getCustomerDetailsDB
+import datetime
+import pytz
 
 def validateCookieService(cookie):
     try:
@@ -54,4 +56,16 @@ def getMenuItemsByCustomerStatuService(customerStatus):
         return menuItemList
     except Exception as e:
         logging.error("Error in retrieving menu items by customer status service" + str(e))
+        raise
+
+def checkSubscriptionExpirationService(userName):
+    try:
+        customerObj = getCustomerDetailsDB(userName)
+        customerObj = customerObj[0]
+        utc=pytz.UTC
+        now = datetime.datetime.now().replace(tzinfo=utc)
+        expirationTime = customerObj.subscriptionExpirationDate.replace(tzinfo=utc)   
+        return now<expirationTime  
+    except Exception as e:
+        logging.error("Error in saving subscription"+str(e))
         raise

@@ -35,7 +35,7 @@ def personalProfileView(request):
         if request.method == "POST":
             #print(request.POST)
             #print(json.loads(request.body))
-            savePersonalProfileService(json.loads(request.body.decode('utf-8')))
+            savePersonalProfileService(json.loads(request.body.decode('utf-8')),request.COOKIES['userName'])
             response['statusCode'] = 0
             response['data'] = 'Personal Profile data saved successfully'
         elif request.method == "GET":

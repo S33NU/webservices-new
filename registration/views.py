@@ -34,7 +34,7 @@ def savePassword(request):
         
         if request.method == "PUT":
             #print(json.loads(request.body.decode('utf-8')))
-            saveClientPasswordService(json.loads(request.body.decode('utf-8')))
+            saveClientPasswordService(json.loads(request.body.decode('utf-8')),request.COOKIES['userName'])
             # print(json.loads(request.body.decode('utf-8')))
             response['statusCode'] = 0
             response['data'] = 'Client password saved successfully'

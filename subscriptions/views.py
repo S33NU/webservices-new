@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from metadata.functions.metadata import getConfig, configureLogging
-from subscriptions.functions.subscriptions_service import getSubscriptionsService
+from subscriptions.functions.subscriptions_service import getSubscriptionsService, saveSubscriptionService,reviewInvestmentService,saveDocumentsService
 import logging
 import json
 from rest_framework.decorators import api_view
@@ -40,3 +40,98 @@ def subscriptionsView(request):
         response['data'] = 'Error in retrieving subscription data'
         response['error'] = str(e)
     return JsonResponse(response)      
+
+
+@csrf_exempt
+@api_view(['POST'])
+def subscriptionCompleted(request):
+    response = {
+        'data':None,
+        'error':None,
+        'statusCode': 1
+    }
+    try:
+        config=getConfig()
+        log=config['log']
+        configureLogging(log)
+        
+        if 'userName' in request.COOKIES:
+            if not validateCookieService(request.COOKIES['userName']):
+                response['statusCode'] = 5
+                raise Exception("Authentication failure")
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
+                  
+        if request.method == "POST":
+            subscriptionList = saveSubscriptionService(json.loads(request.body.decode('utf-8')),request.COOKIES['userName'])
+            response['statusCode'] = 0
+            response['data'] = subscriptionList
+    except Exception as e:
+        logging.error(str(e))
+        response['data'] = 'Error in retrieving subscription data'
+        response['error'] = str(e)
+    return JsonResponse(response)   
+
+
+@csrf_exempt
+@api_view(['POST'])
+def reviewInvestment(request):
+    response = {
+        'data':None,
+        'error':None,
+        'statusCode': 1
+    }
+    try:
+        config=getConfig()
+        log=config['log']
+        configureLogging(log)
+        
+        if 'userName' in request.COOKIES:
+            if not validateCookieService(request.COOKIES['userName']):
+                response['statusCode'] = 5
+                raise Exception("Authentication failure")
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
+                  
+        if request.method == "POST":
+            subscriptionList = reviewInvestmentService(request.COOKIES['userName'])
+            response['statusCode'] = 0
+            response['data'] = subscriptionList
+    except Exception as e:
+        logging.error(str(e))
+        response['data'] = 'Error in retrieving subscription data'
+        response['error'] = str(e)
+    return JsonResponse(response)   
+
+@csrf_exempt
+@api_view(['POST'])
+def submitDocuments(request):
+    response = {
+        'data':None,
+        'error':None,
+        'statusCode': 1
+    }
+    try:
+        config=getConfig()
+        log=config['log']
+        configureLogging(log)
+        
+        if 'userName' in request.COOKIES:
+            if not validateCookieService(request.COOKIES['userName']):
+                response['statusCode'] = 5
+                raise Exception("Authentication failure")
+        else:
+            response['statusCode'] = 5
+            raise Exception("Authentication failure")
+                  
+        if request.method == "POST":
+            subscriptionList = saveDocumentsService(request.COOKIES['userName'])
+            response['statusCode'] = 0
+            response['data'] = subscriptionList
+    except Exception as e:
+        logging.error(str(e))
+        response['data'] = 'Error in retrieving subscription data'
+        response['error'] = str(e)
+    return JsonResponse(response)   

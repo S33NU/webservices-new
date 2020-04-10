@@ -19,9 +19,12 @@ from . import views
 
 urlpatterns = [
     path('login',views.login),
-    path('home/save-password',views.savePassword),  
-    path('home/personal-profile',views.personalProfile),
+    path('home/save-password',views.savePasswordPage),  
+    path('home/personal-profile',views.personalProfilePage),
     path('home/default',views.homePage),
-    path('home/investment-profile',views.investmentProfile),
-    
+    path('home/investment-profile',views.investmentProfilePage),
+    path('home/subscription',views.subscriptionPage),
+    path('home/invested',views.investedPage),
+    path('home/dashboard',views.dashboardPage),
+    path('home/documents',views.documentPage),
 ]

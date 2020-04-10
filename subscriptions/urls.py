@@ -19,5 +19,7 @@ from . import views
 
 urlpatterns = [
     path('subscriptions',views.subscriptionsView),
-    
+    path('subscriptions/subscription-paid',views.subscriptionCompleted),
+    path('investment/review-investment',views.reviewInvestment),
+    path('documents/submit',views.submitDocuments)
 ]

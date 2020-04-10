@@ -16,10 +16,10 @@ def getInvestmentProfileQuestionsDB():
         raise
 
 
-def saveInvestmentProfileDB(dataObj):
+def saveInvestmentProfileDB(dataObj,userName):
     try:
 
-        investmentProfileObj = InvestmentProfile(userName=dataObj['userName'],
+        investmentProfileObj = InvestmentProfile(userName=userName,
                                                  investmentAmount=dataObj['investmentAmount'],
                                                  investmentType=dataObj['investmentType'],
                                                  investmentFrequency=dataObj['investmentFrequency'],
