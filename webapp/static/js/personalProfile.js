@@ -1,6 +1,9 @@
-var PROFILE_QUESTIONS =[];
  $('#saveStatus0').hide();
- $('#saveFailStatus').hide();
+ $('#saveStatus5').hide();
+
+
+var PROFILE_QUESTIONS =[];
+
 (function(){
 
 
@@ -60,16 +63,25 @@ $(document).ready(function(){
                     if(res.statusCode == 0){
 
 //             alert("Details are saved Successfully");
-             $('#submit').hide()
-             $("input").prop('disabled', true)
-             $("#AgeDropdownId").prop('disabled',true)
+             $('#submit').hide();
+             $("input").prop('disabled', true);
+             $("#AgeDropdownId").prop('disabled',true);
              $('#saveStatus0').show();
-
+             $('#saveStatus5').hide();
+             window.location.href = "default";
 
         }
-        else{
 
-         $('#saveFailStatus').show();
+        else if(res.statusCode == 5){
+
+                            window.location.href = "../login"
+
+        }
+
+        else if(res.statusCode == 1){
+
+         $('#saveStatus5').show();
+         $('#saveStatus0').hide();
 
         }
 
