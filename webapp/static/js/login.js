@@ -57,11 +57,13 @@
     $('input[type=radio][name=otpType]').change(function() {
         if (this.value == 'email') {
             $("#mobileotpMessage").hide();
+            $('#userEmailID').prop('required',true);
             registerEmailValidation()
             $("#userEmailID").parsley().validate();
         }
         else if (this.value == 'mobile') {
             $("#emailotpMessage").hide();
+            $('#userEmailID').prop('required',false);
             $("#userMobileNumber").parsley().validate();
         }
     }); 

@@ -44,7 +44,7 @@ def updateCustomerDetailsDB(dataObj):
             customerDetailsobj.subscriptionType=dataObj['subscriptionType']
             customerDetailsobj.subscriptionExpirationDate = dataObj['subscriptionExpirationDate']
             customerDetailsobj.amountPaid = dataObj['amountPaid']
-        elif customerDetailsobj.customerStatus_new == 'E' and customerDetailsobj.customerStatus_old == 'S':
+        elif customerDetailsobj.customerStatus_new == 'E' and customerDetailsobj.customerStatus_old == 'S' and dataObj['customerStatus'] == 'S':
             customerDetailsobj.customerStatus_old = customerDetailsobj.customerStatus_new
             customerDetailsobj.customerStatus_new=dataObj['customerStatus']
             customerDetailsobj.subscriptionType=dataObj['subscriptionType']
@@ -56,7 +56,7 @@ def updateCustomerDetailsDB(dataObj):
         elif customerDetailsobj.customerStatus_new == 'I' and dataObj['customerStatus'] == 'E':
             customerDetailsobj.customerStatus_old = customerDetailsobj.customerStatus_new
             customerDetailsobj.customerStatus_new=dataObj['customerStatus']
-        elif customerDetailsobj.customerStatus_new == 'E' and customerDetailsobj.customerStatus_old == 'I':
+        elif customerDetailsobj.customerStatus_new == 'E' and customerDetailsobj.customerStatus_old == 'I' and dataObj['customerStatus'] == 'I':
             customerDetailsobj.customerStatus_old = customerDetailsobj.customerStatus_new
             customerDetailsobj.customerStatus_new=dataObj['customerStatus']
             customerDetailsobj.subscriptionType=dataObj['subscriptionType']
