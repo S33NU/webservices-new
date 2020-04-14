@@ -28,10 +28,10 @@ class InvestmentQuestions(models.Model):
 class CustInvestmentProfile(models.Model):
         id = models.AutoField(primary_key=True)
         custid = models.IntegerField()
-        order = models.IntegerField(unique=True)
-        attribute = models.CharField(max_length=100)
-        custresponse = models.CharField(max_length=100)
-        attributetype = models.CharField(max_length=1)
+        order = models.IntegerField()
+        attribute = models.CharField(max_length=100,null=True)
+        custresponse = models.CharField(max_length=100,null=True)
+        attributetype = models.CharField(max_length=1,null=True)
         createddt = models.DateTimeField()
         class Meta:
                 db_table = 'custinvestmentprofile'
