@@ -12,24 +12,24 @@ class Subscription(models.Model):
     
 class CustSubscription(models.Model):
     id = models.AutoField(primary_key=True)
-    custid = models.IntegerField()
-    servid = models.IntegerField()
-    servsigneddt = models.DateTimeField()
-    servexpdt = models.DateTimeField()
-    servstatus = models.CharField(max_length=1)
-    servpayid = models.IntegerField()
+    custid = models.IntegerField(null=True)
+    servid = models.IntegerField(null=True)
+    servsigneddt = models.DateTimeField(null=True)
+    servexpdt = models.DateTimeField(null=True)
+    servstatus = models.CharField(max_length=1,null=True)
+    servpayid = models.IntegerField(null=True)
     class Meta:
         db_table = 'custsubscription'
         
 class CustPayments(models.Model):
     id = models.AutoField(primary_key=True)
-    custid = models.IntegerField()
-    servid = models.IntegerField()
-    custsubid = models.IntegerField()
-    paymentmod = models.CharField(max_length=20)
-    paygateway = models.CharField(max_length=40)
-    payamount = models.DecimalField(max_digits=13, decimal_places=2)
-    payreference = models.CharField(max_length=40)
+    custid = models.IntegerField(null=True)
+    servid = models.IntegerField(null=True)
+    custsubid = models.IntegerField(null=True)
+    paymentmod = models.CharField(max_length=20,null=True)
+    paygateway = models.CharField(max_length=40,null=True)
+    payamount = models.DecimalField(max_digits=13, decimal_places=2,null=True)
+    payreference = models.CharField(max_length=40,null=True)
     class Meta:
         db_table = 'custpayments'
         
