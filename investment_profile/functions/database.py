@@ -1,4 +1,5 @@
-from investment_profile.models import  InvestmentProfile, InvestmentQuestions
+from investment_profile.models import InvestmentProfile, InvestmentQuestions
+from metadata.models import ProfQuestion
 import logging
 
 
@@ -8,7 +9,7 @@ import logging
 def getInvestmentProfileQuestionsDB():
     try:
         
-        investmentQuestionsObjs = InvestmentQuestions.objects.filter(investqstatus='A')
+        investmentQuestionsObjs = ProfQuestion.objects.filter(profqclass='I', profqstatus='A')
 
         return investmentQuestionsObjs
     except Exception as e:
