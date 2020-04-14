@@ -20,7 +20,7 @@ class Customer(models.Model):
     custfirstname = models.CharField(max_length=60,null=True)
     custlastname = models.CharField(max_length=60,null=True)
     custmiddlename = models.CharField(max_length=60,null=True)
-    custmaritalstatus = models.CharField(max_length=1,null=True)
+    custmaritalstatus = models.CharField(max_length=10,null=True)
     custagegroup = models.CharField(max_length=20,null=True)
     custcountrycode = models.CharField(max_length=4,null=True)
     custadd1 = models.CharField(max_length=100,null=True)

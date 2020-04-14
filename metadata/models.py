@@ -11,7 +11,9 @@ class LookUpMaster(models.Model):
     lookupstatus = models.CharField(max_length=1)
     lookupcreateddt = models.DateTimeField()  
     lookupupdateddt = models.DateTimeField() 
-
+    class Meta:
+        db_table = 'lookupmaster'
+    
 class MenuItems(models.Model):
     menuItemId = models.AutoField(primary_key=True)
     menuItemName = models.CharField(max_length=100)
