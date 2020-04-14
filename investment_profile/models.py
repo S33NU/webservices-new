@@ -24,3 +24,14 @@ class InvestmentQuestions(models.Model):
         investqselection = models.CharField(max_length=100)
         investqcreateddt = models.DateTimeField()  
         investqupdateddt = models.DateTimeField()
+        
+class CustInvestmentProfile(models.Model):
+        id = models.AutoField(primary_key=True)
+        custid = models.IntegerField()
+        order = models.IntegerField(unique=True)
+        attribute = models.CharField(max_length=100)
+        custresponse = models.CharField(max_length=100)
+        attributetype = models.CharField(max_length=1)
+        createddt = models.DateTimeField()
+        class Meta:
+                db_table = 'custinvestmentprofile'

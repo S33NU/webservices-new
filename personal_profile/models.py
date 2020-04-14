@@ -14,13 +14,14 @@ class PersonalProfile(models.Model):
     occupation = models.CharField(max_length=225)
 
 
-class ProfQuestion(models.Model):
+    
+class CustPersonalProfile(models.Model):
     id = models.AutoField(primary_key=True)
-    profqname = models.CharField(max_length=125)
-    profqtype = models.CharField(max_length=10)
-    profqorder = models.IntegerField()
-    profqstatus = models.CharField(max_length=1)
-    profqkey = models.CharField(max_length=125)
-    profqselection = models.CharField(max_length=100)
-    profqcreateddt = models.DateTimeField()  
-    profqupdateddt = models.DateTimeField()
+    custid =  models.IntegerField()
+    order = models.IntegerField(unique=True)
+    attribute = models.CharField(max_length=100)
+    custresponse = models.CharField(max_length=100)
+    attributetype = models.CharField(max_length=1)
+    createddt = models.DateTimeField()
+    class Meta:
+        db_table = 'custpersonalprofile'

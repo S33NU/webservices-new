@@ -34,7 +34,7 @@ var INVESTENT_QUESTIONS =[];
         if(res.statusCode == 0){
 
             INVESTENT_QUESTIONS = res.data;
-            
+            console.log(INVESTENT_QUESTIONS);
         }else if (res.statusCode == 1){
 
         }

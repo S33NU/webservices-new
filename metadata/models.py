@@ -20,3 +20,19 @@ class MenuItems(models.Model):
     menuItemState = models.CharField(max_length=50)
     menuItemParent = models.CharField(max_length=100)
     UIIcon = models.CharField(max_length=100)
+    class Meta:
+        db_table = 'menuitems'
+        
+
+class ProfQuestion(models.Model):
+    id = models.AutoField(primary_key=True)
+    profqname = models.CharField(max_length=125)
+    profqclass = models.CharField(max_length=1)
+    profqtype = models.CharField(max_length=10)
+    profqorder = models.IntegerField()
+    profqstatus = models.CharField(max_length=1)
+    profqchoicelabels = models.CharField(max_length=125)
+    profqcreateddt = models.DateTimeField()  
+    profqupdateddt = models.DateTimeField()
+    class Meta:
+        db_table = 'profquestion'
