@@ -1,6 +1,6 @@
 import logging
 from personal_profile.models import PersonalProfile
-from personal_profile.models import ProfQuestion
+from metadata.models import ProfQuestion
 from django.db.models import Q
 def savePersonalProfileDB(dataObj):
     try:

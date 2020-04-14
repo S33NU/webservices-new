@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-
+'''
 class Customer(models.Model):
     customerId = models.AutoField(primary_key=True)
     userName = models.CharField(max_length=50,unique=True)
@@ -12,7 +12,7 @@ class Customer(models.Model):
     subscriptionType = models.CharField(max_length=50)
     subscriptionExpirationDate = models.DateTimeField(blank=True,null=True)
     amountPaid = models.CharField(max_length=40)
-'''    
+'''  
 class Customer(models.Model):
     id = models.AutoField(primary_key=True)
     custregmobile = models.CharField(max_length=15,unique=True)
@@ -31,9 +31,9 @@ class Customer(models.Model):
     custstatus = models.CharField(max_length=1)
     custstatusold = models.CharField(max_length=1)
     custprofstatus = models.CharField(max_length=5)
-    zipcode = models.Charfield(max_length=12)
+    zipcode = models.CharField(max_length=12)
     createddt = models.DateTimeField()
     updateddt = models.DateTimeField()
     class Meta:
         db_table = 'customer'
-'''        
+        

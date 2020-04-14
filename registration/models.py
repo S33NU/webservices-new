@@ -11,7 +11,7 @@ class Registration(models.Model):
     email_otp = models.CharField(max_length=25)
 
 class CustRegistration(models.Model):
-    id = models.AutoField(models.Model)
+    id = models.AutoField(primary_key=True)
     custid = models.IntegerField()
     motp = models.CharField(max_length=10)
     eotp = models.CharField(max_length=10)
