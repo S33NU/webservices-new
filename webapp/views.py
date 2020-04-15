@@ -8,9 +8,9 @@ from metadata.functions.service import validateCookieService, getProfileQuestion
 from rest_framework.decorators import api_view
 import sys
 
-from customer.functions.customer_service import getCustomerDetailsService,updateCustomerDetailsService
-from metadata.functions.service import getMenuItemsByCustomerStatuService,checkSubscriptionExpirationService
-
+from customer.functions.customer_service import getCustTasksByCustIdService,getCustomerDetailsService,updateCustomerDetailsService
+from metadata.functions.service import getMenuItemsByCustomerStatuService
+from subscriptions.functions.subscriptions_service import checkSubscriptionExpirationService
 
 # Create your views here.
 
@@ -185,7 +185,7 @@ def homePage(request):
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
             
             if customerDetailsObj.custstatus in "S,I" and not checkSubscriptionExpirationService(request.COOKIES['userName']):
-                updateCustomerDetailsService({'username':request.COOKIES['userName'],'customerStatus':'E'})
+                updateCustomerDetailsService({'custregmobile':request.COOKIES['userName'],'customerStatus':'E'})
                 return redirect('../home/default')
             
             
@@ -307,19 +307,24 @@ def dashboardPage(request):
         
         if request.method == 'GET':   
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            custTaskObjs=getCustTasksByCustIdService(customerDetailsObj.id)
             profileLink = ''
             profileCompleted = False
-            if 'personal' in customerDetailsObj.profileStatus:
-                profileLink = 'personal-profile'
-                profileCompleted = False
-            elif 'invest' in customerDetailsObj.profileStatus:
-                profileLink =  'investment-profile'
-                profileCompleted = False
-            elif 'document' in customerDetailsObj.profileStatus:
-                profileLink = 'documents'
-                profileCompleted = False
-            else:
+            
+            for custTask in custTaskObjs:
+                if custTask.taskname =="Personal" and custTask.status == 'P':
+                    profileLink = 'personal-profile'
+                    profileCompleted = False
+                elif custTask.taskname == "Investment" and custTask.status == 'P':
+                    profileLink =  'investment-profile'
+                    profileCompleted = False
+                elif custTask.taskname == "Document" and custTask.status == 'P':
+                    profileLink = 'documents'
+                    profileCompleted = False
+                        
+            if profileLink == '':
                 profileCompleted = True    
+            
             menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             
             currentPath=getCurrentPath(request.path)
@@ -358,9 +363,6 @@ def investedPage(request):
         
         if request.method == 'GET':   
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
-            if customerDetailsObj.custstatus in "S,I" and not checkSubscriptionExpirationService(request.COOKIES['userName']):
-                updateCustomerDetailsService({'username':request.COOKIES['userName'],'customerStatus':'E'})
-                return redirect('../home/default')
             
             
             menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 

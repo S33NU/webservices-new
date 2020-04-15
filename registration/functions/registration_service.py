@@ -4,16 +4,13 @@ import logging
 from metadata.functions.metadata import getOTP,verifyOTP,getOTPByEmail, getConfig,generateOTP,reSendOTP
 import json
 
-from customer.functions.database import saveCustomerDetailsDB,getTasksByCustIdDB,updateCustomerEmailDB,updateCustomerDetailsDB,getCustomerDetailsDB,updateCustTaskStatusDB
+from customer.functions.database import saveCustomerDetailsDB,getCustTasksByCustIdDB,updateCustomerEmailDB,updateCustomerDetailsDB,getCustomerDetailsDB,updateCustTaskStatusDB
 def saveClientPasswordService(dataObj,userName):
     try:
         customerDetailsobjs=getCustomerDetailsDB(userName)
         saveClientPasswordDB(dataObj,customerDetailsobjs[0].id)
-        custObj={
-            'custregmobile':userName,
-            'customerStatus':'R'
-        }
-        custTasksObjs = getTasksByCustIdDB(customerDetailsobjs[0].id)
+        
+        custTasksObjs = getCustTasksByCustIdDB(customerDetailsobjs[0].id)
         if len(custTasksObjs) != 3: 
             profileTaskStatusList = []
             obj = {
@@ -32,12 +29,17 @@ def saveClientPasswordService(dataObj,userName):
             profileTaskStatusList.append(obj)
             obj = {
                 'custid':customerDetailsobjs[0].id,
-                'taskname':'document',
+                'taskname':'Document',
                 'status':'P',
                 'tasktype':'D'
             }
             profileTaskStatusList.append(obj)
             updateCustTaskStatusDB(profileTaskStatusList)
+    
+        custObj={
+            'custregmobile':userName,
+            'customerStatus':'R'
+        }
         updateCustomerDetailsDB(custObj)
         
     except Exception as e:

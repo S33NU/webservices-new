@@ -3,10 +3,14 @@
 function saveSubscriptionDetails(){
     console.log("Save Payment Details")
     dataObj ={
-        "subscriptionType":"nirvana_plan_a",
-        "amountPaid":"2500"
+        'servidList':[1,3],
+        'paymentmod':"card",
+        'paygateway':"Phonepay",
+        'payamount':50000.89,
+        'payreference':"refer"
     };
 
+   
     $.post(CONFIG['host']+"/clients/subscriptions/subscription-paid", JSON.stringify(dataObj), function(res){
         data = res.data;
         console.log(res);

@@ -11,7 +11,7 @@ def saveInvestmentProfileService(investmentProfileList,userName):
     try:
         customerDetailsobjs=getCustomerDetailsDB(userName)
         saveInvestmentProfileDB(investmentProfileList,customerDetailsobjs[0].id)
-        updateTaskByCustIdAndNameDB(customerDetailsobjs[0].id,'I','C')
+        updateTaskByCustIdAndNameDB(customerDetailsobjs[0].id,'Investment','C')
         
     
     except Exception as e:

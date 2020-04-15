@@ -1,4 +1,4 @@
-from customer.functions.database import getCustomerDetailsDB, saveCustomerDetailsDB,updateCustomerDetailsDB
+from customer.functions.database import getCustTasksByCustIdDB,getCustomerDetailsDB, saveCustomerDetailsDB,updateCustomerDetailsDB
 import logging
 
 def getCustomerDetailsService(userName):
@@ -38,3 +38,12 @@ def getCustomerEmailandMobileService(userName):
     except Exception as e:
         logging.error("Error in  retreiving registration details  service "+str(e))
         raise
+
+def getCustTasksByCustIdService(custID):
+    try:
+        customerTasksObjs = getCustTasksByCustIdDB(custID)
+        return customerTasksObjs
+    except Exception as e:
+      logging.error("Error in retrieving customer tasks by custID service "+str(e))
+      raise
+      

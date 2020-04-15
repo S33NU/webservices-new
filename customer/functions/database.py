@@ -53,38 +53,10 @@ def updateCustomerDetailsDB(dataObj):
         customerDetailsobj=Customer.objects.filter(custregmobile=dataObj['custregmobile'])
         if len(customerDetailsobj) == 1:
             customerDetailsobj=customerDetailsobj[0]
-        if customerDetailsobj.custstatus == 'P' and customerDetailsobj.custstatusold == 'P':
             customerDetailsobj.custstatusold = customerDetailsobj.custstatus
             customerDetailsobj.custstatus=dataObj['customerStatus']
-        elif customerDetailsobj.custstatus == 'R' and customerDetailsobj.custstatusold == 'P' and dataObj['customerStatus'] == 'S':
-            customerDetailsobj.custstatusold = customerDetailsobj.custstatus
-            customerDetailsobj.custstatus=dataObj['customerStatus']
-            customerDetailsobj.subscriptionType=dataObj['subscriptionType']
-            customerDetailsobj.subscriptionExpirationDate = dataObj['subscriptionExpirationDate']
-            customerDetailsobj.amountPaid = dataObj['amountPaid']
-        elif customerDetailsobj.custstatus == 'E' and customerDetailsobj.custstatusold == 'S' and dataObj['customerStatus'] == 'S':
-            customerDetailsobj.custstatusold = customerDetailsobj.custstatus
-            customerDetailsobj.custstatus=dataObj['customerStatus']
-            customerDetailsobj.subscriptionType=dataObj['subscriptionType']
-            customerDetailsobj.subscriptionExpirationDate = dataObj['subscriptionExpirationDate']
-            customerDetailsobj.amountPaid = dataObj['amountPaid']    
-        elif customerDetailsobj.custstatus == 'S' and dataObj['customerStatus'] == 'E':
-            customerDetailsobj.custstatusold = customerDetailsobj.custstatus
-            customerDetailsobj.custstatus=dataObj['customerStatus']
-        elif customerDetailsobj.custstatus == 'I' and dataObj['customerStatus'] == 'E':
-            customerDetailsobj.custstatusold = customerDetailsobj.custstatus
-            customerDetailsobj.custstatus=dataObj['customerStatus']
-        elif customerDetailsobj.custstatus == 'E' and customerDetailsobj.custstatusold == 'I' and dataObj['customerStatus'] == 'I':
-            customerDetailsobj.custstatusold = customerDetailsobj.custstatus
-            customerDetailsobj.custstatus=dataObj['customerStatus']
-            customerDetailsobj.subscriptionType=dataObj['subscriptionType']
-            customerDetailsobj.subscriptionExpirationDate = dataObj['subscriptionExpirationDate']
-            customerDetailsobj.amountPaid = dataObj['amountPaid']    
-        elif customerDetailsobj.custstatus == 'S' and dataObj['customerStatus'] == 'I':
-            customerDetailsobj.custstatusold = customerDetailsobj.custstatus
-            customerDetailsobj.custstatus=dataObj['customerStatus']
-        customerDetailsobj.updateddt=datetime.datetime.now()
-        customerDetailsobj.save()
+            customerDetailsobj.updateddt=datetime.datetime.now()
+            customerDetailsobj.save()
     except Exception as e:
         logging.error("Error in updating customer details DB " + str(e))
         raise    
@@ -101,7 +73,7 @@ def updateCustTaskStatusDB(profileTaskStatusList):
         logging.error("Error in creating customer tasks  DB " + str(e))
         raise    
 
-def getTasksByCustIdDB(custID):
+def getCustTasksByCustIdDB(custID):
     try:
         
         custTaskobjs=CustTask.objects.filter(custid=custID)

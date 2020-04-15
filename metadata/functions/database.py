@@ -10,7 +10,7 @@ def validateCookieDB(cookie):
             
             return False
         elif len(registrationObjs) != 0:
-            return True     
+            return True
     except Exception as e:
         logging.error("Error in validating Cookie DB "+str(e))
         raise    
@@ -37,6 +37,18 @@ def getLookUpValues(lookupid):
     except Exception as e:
         logging.error("Error in retrieving lookUpValues " + str(e))
         raise
+
+def getLookUpValue(lookupID,lookupmasterID):
+    try:
+        
+        lookupMasterObjs = LookUpMaster.objects.filter(lookupmasterid=lookupmasterID,lookupid=lookupID)
+  
+        return lookupMasterObjs
+
+    except Exception as e:
+        logging.error("Error in retrieving lookUpValues " + str(e))
+        raise
+
     
 def getMenuItemsByCustomerStatusDB(customerStatus):
     try:
