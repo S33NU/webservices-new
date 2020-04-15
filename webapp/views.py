@@ -59,7 +59,7 @@ def savePasswordPage(request):
         if request.method == 'GET':   
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
             
-            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.customerStatus_new) 
+            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             currentPath=getCurrentPath(request.path)
             menuItemObjList = [child for menuItemObj in menuItemList for child in menuItemObj['child'] if child['menuItemLink'] == currentPath ]
             if len(menuItemObjList) == 1:
@@ -99,7 +99,7 @@ def personalProfilePage(request):
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
             
             
-            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.customerStatus_new) 
+            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             currentPath=getCurrentPath(request.path)
             menuItemObjList = [child for menuItemObj in menuItemList for child in menuItemObj['child'] if child['menuItemLink'] == currentPath ]
             if len(menuItemObjList) == 1:
@@ -141,7 +141,7 @@ def investmentProfilePage(request):
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
             
             
-            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.customerStatus_new) 
+            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             currentPath=getCurrentPath(request.path)
             menuItemObjList = [child for menuItemObj in menuItemList for child in menuItemObj['child'] if child['menuItemLink'] == currentPath ]
             if len(menuItemObjList) == 1:
@@ -187,21 +187,21 @@ def homePage(request):
             
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
             
-            if customerDetailsObj.customerStatus_new in "S,I" and not checkSubscriptionExpirationService(request.COOKIES['userName']):
+            if customerDetailsObj.custstatus in "S,I" and not checkSubscriptionExpirationService(request.COOKIES['userName']):
                 updateCustomerDetailsService({'username':request.COOKIES['userName'],'customerStatus':'E'})
                 return redirect('../home/default')
             
             
             
-            if customerDetailsObj.customerStatus_new == 'P':
+            if customerDetailsObj.custstatus == 'P':
                 return redirect('../home/save-password')    
-            elif customerDetailsObj.customerStatus_new == 'R':
+            elif customerDetailsObj.custstatus == 'R':
                 return redirect('../home/subscription')    
-            elif customerDetailsObj.customerStatus_new == 'S':
+            elif customerDetailsObj.custstatus == 'S':
                 return redirect('../home/dashboard')    
-            elif customerDetailsObj.customerStatus_new == 'I':
+            elif customerDetailsObj.custstatus == 'I':
                 return redirect('../home/invested')    
-            elif customerDetailsObj.customerStatus_new == 'E':
+            elif customerDetailsObj.custstatus == 'E':
                 return redirect('../home/subscription')    
             
             #return render(request,"home.html",{"template_name":"personalProfile.html"})  
@@ -234,7 +234,7 @@ def subscriptionPage(request):
         if request.method == 'GET':   
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
             
-            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.customerStatus_new) 
+            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             
             currentPath=getCurrentPath(request.path)
             menuItemObjList = [child for menuItemObj in menuItemList for child in menuItemObj['child'] if child['menuItemLink'] == currentPath ]
@@ -273,7 +273,7 @@ def documentPage(request):
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
             
             
-            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.customerStatus_new) 
+            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             
             currentPath=getCurrentPath(request.path)
             menuItemObjList = [child for menuItemObj in menuItemList for child in menuItemObj['child'] if child['menuItemLink'] == currentPath ]
@@ -323,7 +323,7 @@ def dashboardPage(request):
                 profileCompleted = False
             else:
                 profileCompleted = True    
-            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.customerStatus_new) 
+            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             
             currentPath=getCurrentPath(request.path)
             menuItemObjList = [child for menuItemObj in menuItemList for child in menuItemObj['child'] if child['menuItemLink'] == currentPath ]
@@ -361,12 +361,12 @@ def investedPage(request):
         
         if request.method == 'GET':   
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
-            if customerDetailsObj.customerStatus_new in "S,I" and not checkSubscriptionExpirationService(request.COOKIES['userName']):
+            if customerDetailsObj.custstatus in "S,I" and not checkSubscriptionExpirationService(request.COOKIES['userName']):
                 updateCustomerDetailsService({'username':request.COOKIES['userName'],'customerStatus':'E'})
                 return redirect('../home/default')
             
             
-            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.customerStatus_new) 
+            menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             
             currentPath=getCurrentPath(request.path)
             menuItemObjList = [child for menuItemObj in menuItemList for child in menuItemObj['child'] if child['menuItemLink'] == currentPath ]

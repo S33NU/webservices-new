@@ -1,7 +1,7 @@
-from investment_profile.models import InvestmentProfile, InvestmentQuestions
+from investment_profile.models import CustInvestmentProfile
 from metadata.models import ProfQuestion
 import logging
-
+import datetime
 
 
 
@@ -17,18 +17,19 @@ def getInvestmentProfileQuestionsDB():
         raise
 
 
-def saveInvestmentProfileDB(dataObj,userName):
+def saveInvestmentProfileDB(investmentProfileList,custID):
     try:
 
-        investmentProfileObj = InvestmentProfile(userName=userName,
-                                                 investmentAmount=dataObj['investmentAmount'],
-                                                 investmentType=dataObj['investmentType'],
-                                                 investmentFrequency=dataObj['investmentFrequency'],
-                                                 investmentReviewFrequency=dataObj['investmentReviewFrequency'],
-                                                 montlyAvgSavings=dataObj['montlyAvgSavings'],
-                                                 lossPercent=dataObj['lossPercent']
+        for investmentProfileObj in investmentProfileList:
+        
+            custInvestmentProfileObj = CustInvestmentProfile(custid=custID,
+                                                 order=investmentProfileObj['order'],
+                                                 attribute=investmentProfileObj['attribute'],
+                                                 custresponse=investmentProfileObj['custresponse'],
+                                                 attributetype=investmentProfileObj['attributetype'],
+                                                 createddt=datetime.datetime.now()
                                             )
-        investmentProfileObj.save()
+            custInvestmentProfileObj.save()
 
     except Exception as e:
         logging.error("Error in saving Investment Profile DB" + str(e))

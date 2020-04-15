@@ -5,9 +5,9 @@ from metadata.functions.metadata import getConfig, configureLogging,get_client_i
 import logging
 import json
 from rest_framework.decorators import api_view
-from registration.functions.registration_service import saveClientPasswordService, checkClientPasswordService,saveClientMobileService, validateMobileandSaveService , validateClientPasswordService, verifyOTPService
-from metadata.functions.service import validateCookieService, verifyOTPByEmailService
-from registration.functions.registration_service import resendOTPService,sendOTPByEmailService,getRegistrationDetailsService 
+from registration.functions.registration_service import saveClientPasswordService,saveClientMobileService, validateMobileandSaveService , validateClientPasswordService, verifyOTPService
+from metadata.functions.service import validateCookieService
+from registration.functions.registration_service import resendOTPService,sendOTPByEmailService,verifyOTPByEmailService 
 
 @csrf_exempt
 @api_view(['PUT'])
@@ -65,8 +65,8 @@ def validatePhoneno(request):
         configureLogging(log)
         if request.method == "POST":
             ip = get_client_ip(request)
-            device = request.META['HTTP_USER_AGENT']
-           
+            device = request.user_agent.device.family
+            
             hasNoClientDetails = validateMobileandSaveService(json.loads(request.body.decode('utf-8')), ip, device)
             if hasNoClientDetails == True:
                 #print(json.loads(request.body.decode('utf-8')))
@@ -79,6 +79,7 @@ def validatePhoneno(request):
                 response['data'] = True
                 response['error'] = 'null'
                 response['statusCode'] = 0
+                
     except Exception as e:
         logging.error(str(e))
         response['data'] = 'Error in validating client phone number'
@@ -157,39 +158,6 @@ def verifyOTP(request):
         response['error'] = str(e)
     return JsonResponse(response)
 
-@csrf_exempt
-@api_view(['POST'])
-def checkPassword(request):
-    response = {
-        'data': None,
-        'error': None,
-        'statusCode': 1
-    }
-    try:
-        '''
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-        '''
-        config = getConfig()
-        log = config['log']
-        configureLogging(log)
-
-        if request.method == "POST":
-            if checkClientPasswordService(json.loads(request.body.decode('utf-8'))):
-                # print(json.loads(request.body.decode('utf-8')))
-                response['statusCode'] = 0
-                response['data'] = True
-            else:
-                response['statusCode'] = 0
-                response['data'] = False
-                    
-    except Exception as e:
-        logging.error(str(e))
-        response['data'] = 'Error in checking client password'
-        response['error'] = str(e)
-    return JsonResponse(response)
 
 @csrf_exempt
 @api_view(['POST'])
@@ -278,37 +246,7 @@ def resendOTP(request):
     return JsonResponse(response)
 
 
-@csrf_exempt
-@api_view(['GET'])
-def getRegistrationDetails(request):
-    response = {
-        'data': None,
-        'error': None,
-        'statusCode': 1
-    }
-    try:
-        config = getConfig()
-        log = config['log']
-        configureLogging(log)
-        
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
-                response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
 
-        if request.method == "GET":
-            data=getRegistrationDetailsService(request.COOKIES['userName'])
-            response['statusCode'] = 0
-            response['data'] = data
-                    
-    except Exception as e:
-        logging.error(str(e))
-        response['data'] = 'Error in retreiving registration details'
-        response['error'] = str(e)
-    return JsonResponse(response)
 
 
 

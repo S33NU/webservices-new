@@ -41,32 +41,42 @@
                     
                   <form class="user" id="investmentForm" data-parsley-validate="">                   
                     {% for profileQuestions in investmentProfileQuestions %}
-                        {% if profileQuestions.investqtype == "yes/no" and profileQuestions.investqselection == "singleselect" and ":" in profileQuestions.investqkey %}
+                        {% if profileQuestions.profqtype == "C" %}
                         <div class='form-group row'>
                             <div class='col-sm-12 mb-3 mb-sm-0'>
-                                <label>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label>
+                                <label>{{profileQuestions.profqorder}}.{{profileQuestions.profqname}}</label>
                                 {% for value in profileQuestions.values %}
-                                    {% with value|split:":" as value %}
-                                    <div class='form-group'>{{value.0}}<input data-parsley-type="digits" data-parsley-min="500" data-parsley-max="1000000000" data-parsley-required-message='Please Enter Investment Amount ' class='form-control' name='{{profileQuestions.investqkey}}' id='{{value.1}}' required/></div>
-                                    {% endwith %}    
+                                    
+                                    <div class='form-group'>{{value}}<input data-parsley-type="digits" data-parsley-min="500" data-parsley-max="1000000000" data-parsley-required-message='Please Enter Investment Amount ' class='form-control' name='{{profileQuestions.profqname}}' id='{{value}}' required/></div>
+                                        
                                 {% endfor %}
                             </div>
                         </div>    
-                        {% elif profileQuestions.investqtype == "yes/no" and profileQuestions.investqselection == "singleselect" and ":" not in profileQuestions.investqkey %}
+                        {% elif profileQuestions.profqtype == "S" %}
                         <div class='form-group row'><div class='col-sm-12 mb-3 mb-sm-0'>
-                            <label for='{{profileQuestions.investqname|cut:" "}}'>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label></br> 
+                            <label for='{{profileQuestions.profqname}}'>{{profileQuestions.profqorder}}.{{profileQuestions.profqname}}</label></br> 
                             {% for value in profileQuestions.values %}
-                                {% with value|split:":" as value %}
-                                <input type='radio' name='{{profileQuestions.investqname|cut:" "}}' value='{{value.1}}' required /><label> {{value.0}} </label>
-                                {% endwith %}    
+                                
+                                <input type='radio' name='{{profileQuestions.profqname}}' value='{{value}}' required checked/><label> {{value}} </label>
+                                    
                             {% endfor %}
                          </div>
-                        </div>   
-                        {% elif profileQuestions.investqtype == "text" and profileQuestions.investqselection == "null" %}
+                        </div>
+                        {% elif profileQuestions.profqtype == "M" %}
+                        <div class='form-group row'><div class='col-sm-12 mb-3 mb-sm-0'>
+                            <label for='{{profileQuestions.profqname}}'>{{profileQuestions.profqorder}}.{{profileQuestions.profqname}}</label></br> 
+                            <select name='{{profileQuestions.profqname}}'>
+                            {% for value in profileQuestions.values %}
+        													<option name='{{profileQuestions.profqname}}' value='{{ value }}'>{{value}}</option>
+                            {% endfor %}
+													  </select>
+                         </div>
+                        </div>    
+                        {% elif profileQuestions.profqtype == "E" %}
                         <div class='form-group row'>
                             <div class='col-sm-12 mb-3 mb-sm-0'>
-                                <label>{{profileQuestions.investqorder}}.{{profileQuestions.investqname}}</label>
-                                <input data-parsley-required data-parsley-type="digits" class='form-control' data-parsley-max="1000000000" data-parsley-required-message='Please Enter monthly avg  savings ' name='{{profileQuestions.investqname|cut:" "}}' id='{{profileQuestions.investqname|cut:" "}}' />
+                                <label>{{profileQuestions.profqorder}}.{{profileQuestions.profqname}}</label>
+                                <input data-parsley-required data-parsley-type="digits" class='form-control' data-parsley-max="1000000000" data-parsley-required-message='Please Enter monthly avg  savings ' name='{{profileQuestions.profqname}}' id='{{profileQuestions.profqname}}' />
                             </div>
                         </div>    
                         {% endif %}

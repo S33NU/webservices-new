@@ -1,14 +1,16 @@
 import logging
-from registration.models import Registration
+from registration.models import CustRegistration
 from django.db.models import Q
+import datetime
 
-def saveClientPasswordDB(dataObj,userName):
+def saveClientPasswordDB(dataObj,custID):
     try:
         registrationObjs = []
-        registrationObjs=Registration.objects.filter(phonenumber=userName)
+        registrationObjs=CustRegistration.objects.filter(custid=custID)
     
         for record in registrationObjs:
             record.password = dataObj['password']
+            record.updateddt=datetime.datetime.now()
             record.save()
         
     except Exception as e:
@@ -16,10 +18,10 @@ def saveClientPasswordDB(dataObj,userName):
         raise
 
 
-def validateClientMobileDB(dataObj, ip, device):
+def validateClientMobileDB(custID, ip, device):
     try:
         
-        registrationObjs = Registration.objects.filter(~Q(password='None'),phonenumber=dataObj['phonenumber'],ip_address=ip,device=device)
+        registrationObjs = CustRegistration.objects.filter(~Q(password='None'),custid=custID,ipaddress=ip,device=device)
 
         return registrationObjs
     except Exception as msg:
@@ -27,29 +29,37 @@ def validateClientMobileDB(dataObj, ip, device):
         raise
 
 
-def saveClientMobileDB(dataObj, ip, device):
+def saveClientMobileDB(dataObj, ip, device,custID):
     try:
-        registration = Registration(phonenumber=dataObj['phonenumber'],ip_address=ip,device=device,password='None')
-        registration.save()        
         
-        clientPassword=Registration.objects.filter(phonenumber=dataObj['phonenumber'])
+        
+        registration = CustRegistration(custid=custID,
+                                        ipaddress=ip,
+                                        device=device,
+                                        password='None',
+                                        createddt=datetime.datetime.now(),
+                                        updateddt=datetime.datetime.now())
+        registration.save()         
+        
+        clientPassword=CustRegistration.objects.filter(custid=custID)
         
         if clientPassword[0].password == 'None':
             pass
         elif clientPassword[0].password != 'None':
-            clientRecords = Registration.objects.filter(phonenumber=dataObj['phonenumber'],ip_address=ip,device=device)        
+            clientRecords = CustRegistration.objects.filter(custid=custID,ipaddress=ip,device=device)        
             for record in clientRecords:
                 record.password = clientPassword[0].password
+                record.updateddt=datetime.datetime.now()
                 record.save()
                             
     except Exception as e:
         logging.error("Error in saving client mobile number in DB " + str(e))
         raise
 
-def validateClientPasswordDB(dataObj):
+def validateClientPasswordDB(password,custID):
     try:
         
-        registrationObjs=Registration.objects.filter(phonenumber=dataObj['phonenumber'],password=dataObj['password'])
+        registrationObjs=CustRegistration.objects.filter(custid=custID,password=password)
         
         
         return registrationObjs
@@ -57,38 +67,27 @@ def validateClientPasswordDB(dataObj):
         logging.error("Error in validating client password DB "+str(e))
         raise 
 
-def checkClientPasswordDB(dataObj):
-    try:
-        
-        registrationObjs=Registration.objects.filter(phonenumber=dataObj['phonenumber'])
-        
-        return registrationObjs
-    except Exception as e:
-        logging.error("Error in checking client password DB "+str(e))
-        raise 
 
 
-def updateEmailOTPDB(otp,phonenumber,email):
+def updateEmailOTPDB(otp,custId):
     try:
         
-        registrationObjs=Registration.objects.filter(phonenumber=phonenumber)
+        registrationObjs=CustRegistration.objects.filter(custid=custId)
         for record in registrationObjs:
-            record.email = email
-            record.email_otp = otp
+            record.eotp = otp
+            record.updateddt=datetime.datetime.now()
             record.save()
         return registrationObjs
     except Exception as e:
         logging.error("Error in sending OTP by email  DB "+str(e))
         raise 
 
-def getRegistrationDetailsDB(userName):
+def validateClientOTPByEmailDB(otp,custID):
     try:
-        
-        registrationObjs=Registration.objects.filter(phonenumber=userName)
-        if len(registrationObjs) > 0:
-            registrationObjs = registrationObjs[0]
+        registrationObjs=CustRegistration.objects.filter(eotp=otp,custid=custID)
+            
         return registrationObjs
     except Exception as e:
-        logging.error("Error in retreiving registration details DB "+str(e))
+        logging.error("Error in validating client password by email in DB "+str(e))
         raise 
 

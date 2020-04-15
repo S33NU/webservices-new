@@ -23,3 +23,18 @@ def updateCustomerDetailsService(customer_details):
       except Exception as e:
         logging.error("Error in updating customer details service "+str(e))
         raise      
+      
+def getCustomerEmailandMobileService(userName):
+    try:
+        customerDetailsObj = getCustomerDetailsDB(userName)
+        if len(customerDetailsObj) == 1:
+            customerDetailsObj=customerDetailsObj[0]
+        dataObj = {
+            'custregmobile':customerDetailsObj.custregmobile,
+            'custemail':customerDetailsObj.custemail  
+        }
+        
+        return dataObj
+    except Exception as e:
+        logging.error("Error in  retreiving registration details  service "+str(e))
+        raise

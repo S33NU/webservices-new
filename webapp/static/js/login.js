@@ -7,7 +7,8 @@
     $('#userMobileNumber').parsley().on('field:success', function() {
         var phonenumber =  $('#userMobileNumber').val();
         dataObj={
-            "phonenumber":phonenumber
+            "custregmobile":phonenumber,
+            "custcountrycode":"91"
         }
        
         $.post(CONFIG['host']+"/clients/registration/validate-phoneno", JSON.stringify(dataObj), function(res){
@@ -47,7 +48,7 @@
         $("#loginSubmit").hide();
         $("#userOTP").val('');
         $("#userPassword").val('');
-        $("#userMobileNumber"),val('');
+        $("#userMobileNumber").val('');
         $('#mobile').prop('checked', true);
         $('.invalid-form-error-message')
         .html('')
@@ -85,14 +86,15 @@ function verifyUserCredentials(){
         var otpType=$("input[name='otpType']:checked").val();
         if (otpType == 'mobile'){
             dataObj={
-                "phonenumber":"91"+phonenumber,
+                "custregmobile":phonenumber,
+                "custcountrycode":"91",
                 "otp":otp
             };
             verifyOTPByMobile(dataObj,phonenumber);
 
         }else if (otpType == 'email'){
             dataObj={
-                "email":email,
+                "custregmobile":phonenumber,
                 "otp":otp
             };
             
@@ -100,7 +102,7 @@ function verifyUserCredentials(){
         }
     }else if(password != "" && otp == ""){
         dataObj={
-            "phonenumber":phonenumber,
+            "custregmobile":phonenumber,
             "password":password
         }
         
@@ -220,7 +222,7 @@ function resendOTP(){
 
     dataObj ={
         'otpType':otpType,
-        'phonenumber':phonenumber,
+        'custregmobile':phonenumber,
         'email':email
     };
     $("#mobileotpMessage").hide();
@@ -256,7 +258,7 @@ function registerEmailValidation(){
         var phonenumber =  $('#userMobileNumber').val()
         dataObj={
             "email": email,
-            "phonenumber":phonenumber
+            "custregmobile":phonenumber
         }
        
         $.post(CONFIG['host']+"/clients/registration/send-otp-email", JSON.stringify(dataObj), function(res){

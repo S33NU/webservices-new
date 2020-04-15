@@ -30,10 +30,17 @@ class Customer(models.Model):
     custoccupation = models.CharField(max_length=60,null=True)
     custstatus = models.CharField(max_length=1,null=True)
     custstatusold = models.CharField(max_length=1,null=True)
-    custprofstatus = models.CharField(max_length=5,null=True)
     zipcode = models.CharField(max_length=12)
     createddt = models.DateTimeField(null=True)
     updateddt = models.DateTimeField(null=True)
     class Meta:
         db_table = 'customer'
-        
+
+class CustTask(models.Model):
+    id =  models.AutoField(primary_key=True)
+    custid = models.IntegerField()
+    taskname = models.CharField(max_length=100)
+    status = models.CharField(max_length=1)
+    tasktype = models.CharField(max_length=1)
+    class Meta:
+        db_table = 'custtask'

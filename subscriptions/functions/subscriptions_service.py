@@ -1,4 +1,3 @@
-from subscriptions.functions.database import getSubscriptionsListDB
 import logging
 from customer.functions.database import getCustomerDetailsDB,updateCustomerDetailsDB
 import datetime
@@ -7,7 +6,7 @@ import pytz
 
 def getSubscriptionsService():
     try:
-       subscriptionsList = getSubscriptionsListDB()
+       #subscriptionsList = getSubscriptionsListDB()
        temp=[]
        for subscription in subscriptionsList:
            subscriptionObj={
@@ -23,7 +22,7 @@ def getSubscriptionsService():
     except Exception as e:
         logging.error("Error in retrieving subscription list "+str(e))
         raise
-    
+   
 def saveSubscriptionService(subscriptionDetils,userName):
     try:
         
@@ -77,7 +76,7 @@ def saveSubscriptionService(subscriptionDetils,userName):
 def reviewInvestmentService(userName):
     try:
         
-        dataObj ={
+        dataObj = {
                 'username':userName,
                 'customerStatus':'I',
                 'profileStatus':'completed'

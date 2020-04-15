@@ -1,9 +1,10 @@
-from registration.models import Registration
+from customer.models import Customer
 from metadata.models import LookUpMaster, MenuItems
 from django.db.models import Q
+
 def validateCookieDB(cookie):
     try:
-        registrationObjs=Registration.objects.filter(phonenumber=cookie)
+        registrationObjs=Customer.objects.filter(custregmobile=cookie)
 
         if len(registrationObjs) == 0:
             
@@ -14,14 +15,6 @@ def validateCookieDB(cookie):
         logging.error("Error in validating Cookie DB "+str(e))
         raise    
 
-def validateClientOTPByEmailDB(dataObj):
-    try:
-        registrationObjs=Registration.objects.filter(email_otp=dataObj['otp'],email=dataObj['email'])
-            
-        return registrationObjs
-    except Exception as e:
-        logging.error("Error in validating client password by email in DB "+str(e))
-        raise 
 
 def getLookUpID(lookupname):
     try:

@@ -6,3 +6,7 @@ mysqlclient
 djangorestframework
 markdown
 django-filter
+pyyaml
+ua-parser 
+user-agents
+django-user-agents

@@ -1,4 +1,4 @@
-from metadata.functions.database import validateCookieDB, validateClientOTPByEmailDB,getMenuItemsByCustomerStatusDB
+from metadata.functions.database import validateCookieDB,getMenuItemsByCustomerStatusDB
 import logging
 from customer.functions.database import getCustomerDetailsDB
 import datetime
@@ -16,17 +16,6 @@ def validateCookieService(cookie):
         logging.error("Error in validating Cookie Service "+str(e))
         raise    
     
-def verifyOTPByEmailService(dataObj):
-    try:
-        clientList = validateClientOTPByEmailDB(dataObj)
-        if len(clientList) != 0:
-            return True
-        else:
-            return False
-    except Exception as e:
-        logging.error("Error in verifyting OTP by email" + str(e))
-        raise
-
 def getMenuItemsByCustomerStatuService(customerStatus):
     try:
         menuItemList= getMenuItemsByCustomerStatusDB(customerStatus)
