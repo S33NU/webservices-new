@@ -2,12 +2,12 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from metadata.functions.metadata import getConfig, configureLogging
-from personal_profile.functions.personal_profile_service import savePersonalProfileService,getPersonalProfileQuestionsService,personalProfileDataService,personalProfileDataByIdService,personalProfileEditDataByIdService
+from personal_profile.functions.personal_profile_service import savePersonalProfileService,personalProfileDataService,personalProfileDataByIdService,personalProfileEditDataByIdService
 import logging
 import json
 from rest_framework.decorators import api_view
 from personal_profile.functions.database import getProfileData
-from metadata.functions.service import validateCookieService
+from metadata.functions.service import validateCookieService, getProfileQuestionsService
 
 @csrf_exempt
 @api_view(['GET', 'POST'])
@@ -135,7 +135,7 @@ def personalProfileQuestionsView(request):
        
         if request.method == "GET":
             #print(request.POST)
-            profileQuestions=getPersonalProfileQuestionsService()
+            profileQuestions=getProfileQuestionsService('P')
             #print(json.loads(request.body.decode('utf-8')))
             response['statusCode'] = 0
             response['data'] = profileQuestions

@@ -4,19 +4,6 @@ import logging
 import datetime
 
 
-
-
-def getInvestmentProfileQuestionsDB():
-    try:
-        
-        investmentQuestionsObjs = ProfQuestion.objects.filter(profqclass='I', profqstatus='A')
-
-        return investmentQuestionsObjs
-    except Exception as e:
-        logging.error("Error in retrieving Investment Profile questions DB " + str(e))
-        raise
-
-
 def saveInvestmentProfileDB(investmentProfileList,custID):
     try:
 

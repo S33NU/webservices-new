@@ -58,15 +58,7 @@ def updateProfileDataFromDbById(id, dataObj):
         raise
 
 
-def getPersonalProfileQuestionsDB():
-    try:
-        
-        profQuestionsObjs = ProfQuestion.objects.filter(profqstatus='A')
-        
-        return profQuestionsObjs
-    except Exception as e:
-        logging.error("Error in retrieving Personal Profile questions " + str(e))
-        raise
+
 
 
 

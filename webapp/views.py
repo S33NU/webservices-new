@@ -4,13 +4,10 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import logging
 from metadata.functions.metadata import getConfig, configureLogging, getCurrentPath
-from metadata.functions.service import validateCookieService
+from metadata.functions.service import validateCookieService, getProfileQuestionsService
 from rest_framework.decorators import api_view
 import sys
 
-            
-from investment_profile.functions.investment_profile_service import getInvestmentProfileQuestionsService
-from personal_profile.functions.personal_profile_service import getPersonalProfileQuestionsService
 from customer.functions.customer_service import getCustomerDetailsService,updateCustomerDetailsService
 from metadata.functions.service import getMenuItemsByCustomerStatuService,checkSubscriptionExpirationService
 
@@ -95,7 +92,7 @@ def personalProfilePage(request):
             raise Exception("Authentication failure")
         
         if request.method == 'GET':
-            personalProfileQuestions = getPersonalProfileQuestionsService()
+            personalProfileQuestions = getProfileQuestionsService('P')
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
             
             
@@ -137,7 +134,7 @@ def investmentProfilePage(request):
             raise Exception("Authentication failure")
         
         if request.method == 'GET':   
-            investmentProfileQuestions=getInvestmentProfileQuestionsService()
+            investmentProfileQuestions=getProfileQuestionsService('I')
             customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
             
             

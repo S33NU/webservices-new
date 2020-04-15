@@ -1,4 +1,4 @@
-from personal_profile.functions.database import savePersonalProfileDB,getPersonalProfileQuestionsDB,getProfileData, getProfileDataFromDbById, updateProfileDataFromDbById
+from personal_profile.functions.database import savePersonalProfileDB,getProfileData, getProfileDataFromDbById, updateProfileDataFromDbById
 import logging
 from metadata.functions.database import getLookUpValues,getLookUpID
 from customer.functions.database import getCustomerDetailsDB,updateCustomerDetailsDB
@@ -83,35 +83,5 @@ def personalProfileEditDataByIdService(id, data):
         raise
 
 
-def getPersonalProfileQuestionsService():
-    try:
-        profileQuestions=getPersonalProfileQuestionsDB()
-        
-        temp = []
-        
-        for profileQuestion in profileQuestions:
-           
-            profileQuestionsObj = {
-                'profqname':profileQuestion.profqname,
-                'profqtype':profileQuestion.profqtype,
-                'profqorder':profileQuestion.profqorder,
-                'profqkey': profileQuestion.profqkey,
-                'profqselection': profileQuestion.profqselection,
-                'values':None
-            }
-            
-            lookUpId = getLookUpID(profileQuestionsObj['profqkey'])
-            
-            if len(lookUpId) != 0:
-                
-                lookUpValues = getLookUpValues(lookUpId[0].lookupid)
-                lookUpValues = [ lookUpValue.lookupname+":"+lookUpValue.lookupparam1 for lookUpValue in lookUpValues]
-                profileQuestionsObj['values']=lookUpValues      
-            temp.append(profileQuestionsObj)
-        profileQuestions = temp
-        #print(profileQuestions)
-        return profileQuestions
-    except Exception as e:
-        logging.error("Error in retrieving personal profile questions "+str(e))
-        
+    
 

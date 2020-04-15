@@ -1,5 +1,5 @@
 from customer.models import Customer
-from metadata.models import LookUpMaster, MenuItems
+from metadata.models import LookUpMaster, MenuItems, ProfQuestion
 from django.db.models import Q
 
 def validateCookieDB(cookie):
@@ -48,4 +48,14 @@ def getMenuItemsByCustomerStatusDB(customerStatus):
     except Exception as e:
         logging.error("Error in retrieving menu items by customer status DB " + str(e))
         raise
-    
+
+
+def getProfileQuestionsDB(profqclass):
+    try:
+        
+        investmentQuestionsObjs = ProfQuestion.objects.filter(profqclass=profqclass, profqstatus='A')
+
+        return investmentQuestionsObjs
+    except Exception as e:
+        logging.error("Error in retrieving Profile questions DB " + str(e))
+        raise

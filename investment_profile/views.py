@@ -4,9 +4,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from metadata.functions.metadata import getConfig, configureLogging
-from metadata.functions.service import validateCookieService
+from metadata.functions.service import validateCookieService, getProfileQuestionsService
 import json
-from investment_profile.functions.investment_profile_service import getInvestmentProfileQuestionsService, saveInvestmentProfileService
+from investment_profile.functions.investment_profile_service import saveInvestmentProfileService
 
 
 # Create your views here.
@@ -36,7 +36,7 @@ def investmentProfileQuestionsView(request):
        
         if request.method == "GET":
             #print(request.POST)
-            profileQuestions=getInvestmentProfileQuestionsService()
+            profileQuestions=getProfileQuestionsService('I')
             #print(json.loads(request.body.decode('utf-8')))
             response['statusCode'] = 0
             response['data'] = profileQuestions

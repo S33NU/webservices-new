@@ -1,4 +1,4 @@
-from metadata.functions.database import validateCookieDB,getMenuItemsByCustomerStatusDB
+from metadata.functions.database import validateCookieDB,getMenuItemsByCustomerStatusDB, getProfileQuestionsDB
 import logging
 from customer.functions.database import getCustomerDetailsDB
 import datetime
@@ -58,3 +58,29 @@ def checkSubscriptionExpirationService(userName):
     except Exception as e:
         logging.error("Error in saving subscription"+str(e))
         raise
+
+def getProfileQuestionsService(profqclass):
+    try:
+        profileQuestions=getProfileQuestionsDB(profqclass)
+        
+        temp = []
+        
+        for profileQuestion in profileQuestions:
+           
+            profileQuestionsObj = {
+                'profqname':profileQuestion.profqname,
+                'profqtype':profileQuestion.profqtype,
+                'profqorder':profileQuestion.profqorder,
+                'values':None
+            }
+            if profileQuestion.profqchoicelabels != "null":
+                vals=profileQuestion.profqchoicelabels
+                profilevalues=vals.split(",")
+                profileQuestionsObj['values']=profilevalues
+            temp.append(profileQuestionsObj)
+        profileQuestions = temp
+        profileQuestions = sorted(profileQuestions,key=lambda x:x['profqorder'])
+        return profileQuestions
+    except Exception as e:
+        logging.error("Error in retrieving profile questions service "+str(e))
+  
