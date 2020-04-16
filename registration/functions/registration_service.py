@@ -12,40 +12,43 @@ def saveClientPasswordService(dataObj,userName):
         custRegistrationObj = getCustRegistrationDB(customerDetailsobjs[0].id)
         print(custRegistrationObj.password)
         print(type(custRegistrationObj.password))        
-        if custRegistrationObj.password == '':
+        if custRegistrationObj.password == 'None':
             saveClientPasswordDB(dataObj,customerDetailsobjs[0].id)
+            
             custObj={
                 'custregmobile':userName,
                 'customerStatus':'R'
             }
             updateCustomerDetailsDB(custObj)
          
-        custTasksObjs = getCustTasksByCustIdDB(customerDetailsobjs[0].id)
-        if len(custTasksObjs) != 3: 
-            profileTaskStatusList = []
-            obj = {
-                'custid':customerDetailsobjs[0].id,
-                'taskname':'Personal',
-                'status':'P',
-                'tasktype':'P'
-            }
-            profileTaskStatusList.append(obj)
-            obj = {
-                'custid':customerDetailsobjs[0].id,
-                'taskname':'Investment',
-                'status':'P',
-                'tasktype':'P'
-            }
-            profileTaskStatusList.append(obj)
-            obj = {
-                'custid':customerDetailsobjs[0].id,
-                'taskname':'Document',
-                'status':'P',
-                'tasktype':'D'
-            }
-            profileTaskStatusList.append(obj)
-            updateCustTaskStatusDB(profileTaskStatusList)
-    
+            custTasksObjs = getCustTasksByCustIdDB(customerDetailsobjs[0].id)
+            if len(custTasksObjs) != 3: 
+                profileTaskStatusList = []
+                obj = {
+                    'custid':customerDetailsobjs[0].id,
+                    'taskname':'Personal',
+                    'status':'P',
+                    'tasktype':'P'
+                }
+                profileTaskStatusList.append(obj)
+                obj = {
+                    'custid':customerDetailsobjs[0].id,
+                    'taskname':'Investment',
+                    'status':'P',
+                    'tasktype':'P'
+                }
+                profileTaskStatusList.append(obj)
+                obj = {
+                    'custid':customerDetailsobjs[0].id,
+                    'taskname':'Document',
+                    'status':'P',
+                    'tasktype':'D'
+                }
+                profileTaskStatusList.append(obj)
+                updateCustTaskStatusDB(profileTaskStatusList)
+        else:
+            saveClientPasswordDB(dataObj,customerDetailsobjs[0].id)
+            
         
     except Exception as e:
         logging.error("Error in saving client password service "+str(e))
