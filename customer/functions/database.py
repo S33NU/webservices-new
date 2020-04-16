@@ -92,7 +92,7 @@ def getTaskByCustIdAndNameDB(custID,taskName):
 
 def updateTaskByCustIdAndNameDB(custID,taskName,taskStatus):
     try:   
-        custTaskobjs=CustTask.objects.filter(custid=custID,taskname=taskName)
+        custTaskobjs=CustTask.objects.filter(custid=custID,taskname=taskName,status='P')
         if len(custTaskobjs) == 1:
             custTaskobjs[0].status = taskStatus
             custTaskobjs[0].save()

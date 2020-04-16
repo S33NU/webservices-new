@@ -20,8 +20,8 @@ var PROFILE_QUESTIONS =[];
 
     });
 
-    $.get(CONFIG['host']+"/clients/registration/details", function(res, status){
-
+    $.get(CONFIG['host']+"/clients/customer/email-mobile", function(res, status){
+        
         if(res.statusCode == 0){
 
             var data = res.data;
