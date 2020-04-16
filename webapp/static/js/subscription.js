@@ -3,7 +3,7 @@
 function saveSubscriptionDetails(){
     console.log("Save Payment Details")
     dataObj ={
-        'servidList':[1,3],
+        'servidList':[1],
         'paymentmod':"card",
         'paygateway':"Phonepay",
         'payamount':50000.89,
