@@ -38,46 +38,43 @@
                 <div class="p-5 personalprofile">
 
                   <form id='Pform'  class="user" data-parsley-validate="">
-                      {% for profileQuestions in personalProfileQuestions %}
+                  {% for profileQuestions in personalProfileQuestions %}
 
-                            {% if profileQuestions.profqtype == "E" %}
+                      {% if profileQuestions.profqtype == "E" %}
                                     <div class="form-group"><label>{{profileQuestions.profqname}}:</label>
                                         <input class="form-control form-control" name='{{profileQuestions.profqname|cut:" "}}' id='{{profileQuestions.profqname|cut:" "}}' data-parsley-required  pattern="[A-Za-z0-9@.()$,]+" data-parsley-maxlength="200" >
                                     </div>
-                            {% elif profileQuestions.profqtype == "S" %}
-						                <div class="form-group row">
-											    <div class="col-sm-12 mb-3 mb-sm-0">
-												    <label for='{{profileQuestions.profqname|cut:" "}}'>{{profileQuestions.profqname}}:</label></br>
+                      {% elif profileQuestions.profqtype == "S" %}
+						              <div class="form-group row">
+											      <div class="col-sm-12 mb-3 mb-sm-0">
+												      <label for='{{profileQuestions.profqname|cut:" "}}'>{{profileQuestions.profqname}}:</label></br>
                                     {% for value in profileQuestions.values %}
-                                        {% with value|split:":" as value %}
-                                            <input type='radio' id='{{profileQuestions.profqname|cut:" "}}' name='{{profileQuestions.profqname|cut:" "}}' value='{{value.0}}' checked/><label>   {{ value.0}} </label>
-                                        {% endwith %}
+                                        
+                                    <input type='radio' id='{{profileQuestions.profqname|cut:" "}}' name='{{profileQuestions.profqname|cut:" "}}' value='{{value}}' checked/><label>   {{ value}} </label>
+                                        
                                     {% endfor %}
 											</div>
 										</div>
-                            {% elif profileQuestions.profqtype == "M" %}
-										<div class="form-group row">
-                                            <div class="col-sm-12 mb-3 mb-sm-0">
-												<h6>{{ profileQuestions.profqname }}:</h6>
+                    {% elif profileQuestions.profqtype == "M" %}
+										    <div class="form-group row">
+                          <div class="col-sm-12 mb-3 mb-sm-0">
+    												<h6>{{ profileQuestions.profqname }}:</h6>
 
-													<select name='{{profileQuestions.profqname|cut:" "}}' class="AgeDropdown" id='{{profileQuestions.profqname|cut:" "}}'>
-                                                     {% for value in profileQuestions.values %}
-                                                            {% with value|split:":" as value %}
-													            <option name='{{profileQuestions.profqname|cut:" "}}' value="{{ value.0 }}">{{value.0}}</option>
-                                                            {% endwith %}
-                                                    {% endfor %}
-													</select>
+		  											<select name='{{profileQuestions.profqname|cut:" "}}' class="AgeDropdown" id='{{profileQuestions.profqname|cut:" "}}'>
+                              {% for value in profileQuestions.values %}
+                                <option name='{{profileQuestions.profqname|cut:" "}}' value="{{ value }}">{{value}}</option>
+                              {% endfor %}
+					  								</select>
 
 											</div>
 										</div>
 
-                            {% endif %}
-                      {% endfor %}
+                    {% endif %}
+                  {% endfor %}
 
 
                       <center><h5 id="saveStatus0"><font color="blue">Details saved successfully</font></h5></center>
                       <center><h5 id="saveStatus1"><font color="red">Internal Server Error</font></h5></center>
-                      <center><h5 id="getProfqStatus1"><font color="red">Internal Server Error</font></h5></center>
                       <button type="submit" class="btn btn-primary btn-user btn-block"  id="submit"   >Save</button>
 
 

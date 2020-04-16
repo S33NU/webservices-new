@@ -84,7 +84,7 @@ var INVESTENT_QUESTIONS =[];
 
                     if(data[i].attributetype == 'C'){
                         choiceEntry = data[i].custresponse.split(",");
-                        $("#"+choiceEntry[0].split(" ").join("")).val(choiceEntry[1]);
+                        $("#"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")).val(choiceEntry[1]);
                     }else if (data[i].attributetype == 'E'){
                         $('input[name="'+data[i].attribute.split(" ").join("")+'"]').val(data[i].custresponse);
                     }else if (data[i].attributetype == 'S'){
