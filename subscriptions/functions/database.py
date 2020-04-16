@@ -36,23 +36,23 @@ def saveSubscriptionDetailsDB(custSubscription):
 
 def getCustSubscriptionByServIDAndCustIdDB(custID,servID,servstatus):
     try:
-        custSubscriptionObjs= CustSubscription.objects.filetr(custid=custID,servid=servID,servstatus=servstatus)
+        custSubscriptionObjs= CustSubscription.objects.filter(custid=custID,servid=servID,servstatus=servstatus)
         return custSubscriptionObjs
     except Exception as e:
         logging.error("Error in retreving cust subscription by servid and custid  DB"+str(e))
         raise
 
-def getCustPaymentByIDs(custID,servID,custsubID):
+def getCustPaymentByIDsDB(custID,servID,custsubID):
     try:
-        custPaymentsObjs = CustPayments.objects.filetr(custid=custID,servid=servID,custsubid=custsubID)
+        custPaymentsObjs = CustPayments.objects.filter(custid=custID,servid=servID,custsubid=custsubID)
         return custPaymentsObjs
     except Exception as e:
         logging.error("Error in retreving cust payment by servid and custid and custsubid DB"+str(e))
         raise
 
-def updateCustSubscriptionPaymentID(custsubID,paymentID):
+def updateCustSubscriptionPaymentIDDB(custsubID,paymentID):
     try:
-        custSubscriptionObjs= CustSubscription.objects.filetr(id=custsubID)
+        custSubscriptionObjs= CustSubscription.objects.filter(id=custsubID)
         
         if len(custSubscriptionObjs) == 1:
             custSubscriptionObjs[0].servpayid = paymentID
@@ -62,10 +62,10 @@ def updateCustSubscriptionPaymentID(custsubID,paymentID):
         logging.error("Error in updating cust subscription payment id DB"+str(e))
         raise
 
-def updateCustSubscriptionStatus(custID,servstatus):
+def updateCustSubscriptionStatusDB(custID,servstatus):
     try:
 
-        custSubscriptionObjs= CustSubscription.objects.filetr(id=custsubID,servstatus='A')
+        custSubscriptionObjs= CustSubscription.objects.filter(id=custsubID,servstatus='A')
         
         for custSubscriptionObj in custSubscriptionObjs:
             custSubscriptionObj.servstatus = servstatus
@@ -73,4 +73,12 @@ def updateCustSubscriptionStatus(custID,servstatus):
         
     except Exception as e:
         logging.error("Error in updating cust subscription status by custid and servstatus DB"+str(e))
+        raise
+    
+def getCustSubscriptionByStatusAndCustIdDB(custID,servstatus):
+    try:
+        custSubscriptionObjs= CustSubscription.objects.filter(custid=custID,servstatus=servstatus)
+        return custSubscriptionObjs
+    except Exception as e:
+        logging.error("Error in retreving cust subscription by status and custid  DB"+str(e))
         raise

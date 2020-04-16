@@ -312,15 +312,19 @@ def dashboardPage(request):
             profileCompleted = False
             
             for custTask in custTaskObjs:
+  
                 if custTask.taskname =="Personal" and custTask.status == 'P':
                     profileLink = 'personal-profile'
                     profileCompleted = False
+                    break
                 elif custTask.taskname == "Investment" and custTask.status == 'P':
                     profileLink =  'investment-profile'
                     profileCompleted = False
+                    break
                 elif custTask.taskname == "Document" and custTask.status == 'P':
                     profileLink = 'documents'
                     profileCompleted = False
+                    break
                         
             if profileLink == '':
                 profileCompleted = True    

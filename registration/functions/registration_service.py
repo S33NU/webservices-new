@@ -1,5 +1,5 @@
 from registration.functions.database import saveClientPasswordDB,validateClientPasswordDB,saveClientMobileDB, validateClientMobileDB
-from registration.functions.database import updateEmailOTPDB, validateClientOTPByEmailDB
+from registration.functions.database import updateEmailOTPDB, validateClientOTPByEmailDB, getCustRegistrationDB
 import logging
 from metadata.functions.metadata import getOTP,verifyOTP,getOTPByEmail, getConfig,generateOTP,reSendOTP
 import json
@@ -8,39 +8,47 @@ from customer.functions.database import saveCustomerDetailsDB,getCustTasksByCust
 def saveClientPasswordService(dataObj,userName):
     try:
         customerDetailsobjs=getCustomerDetailsDB(userName)
-        saveClientPasswordDB(dataObj,customerDetailsobjs[0].id)
         
-        custTasksObjs = getCustTasksByCustIdDB(customerDetailsobjs[0].id)
-        if len(custTasksObjs) != 3: 
-            profileTaskStatusList = []
-            obj = {
-                'custid':customerDetailsobjs[0].id,
-                'taskname':'Personal',
-                'status':'P',
-                'tasktype':'P'
+        custRegistrationObj = getCustRegistrationDB(customerDetailsobjs[0].id)
+        print(custRegistrationObj.password)
+        print(type(custRegistrationObj.password))        
+        if custRegistrationObj.password == 'None':
+            saveClientPasswordDB(dataObj,customerDetailsobjs[0].id)
+            
+            custObj={
+                'custregmobile':userName,
+                'customerStatus':'R'
             }
-            profileTaskStatusList.append(obj)
-            obj = {
-                'custid':customerDetailsobjs[0].id,
-                'taskname':'Investment',
-                'status':'P',
-                'tasktype':'P'
-            }
-            profileTaskStatusList.append(obj)
-            obj = {
-                'custid':customerDetailsobjs[0].id,
-                'taskname':'Document',
-                'status':'P',
-                'tasktype':'D'
-            }
-            profileTaskStatusList.append(obj)
-            updateCustTaskStatusDB(profileTaskStatusList)
-    
-        custObj={
-            'custregmobile':userName,
-            'customerStatus':'R'
-        }
-        updateCustomerDetailsDB(custObj)
+            updateCustomerDetailsDB(custObj)
+         
+            custTasksObjs = getCustTasksByCustIdDB(customerDetailsobjs[0].id)
+            if len(custTasksObjs) != 3: 
+                profileTaskStatusList = []
+                obj = {
+                    'custid':customerDetailsobjs[0].id,
+                    'taskname':'Personal',
+                    'status':'P',
+                    'tasktype':'P'
+                }
+                profileTaskStatusList.append(obj)
+                obj = {
+                    'custid':customerDetailsobjs[0].id,
+                    'taskname':'Investment',
+                    'status':'P',
+                    'tasktype':'P'
+                }
+                profileTaskStatusList.append(obj)
+                obj = {
+                    'custid':customerDetailsobjs[0].id,
+                    'taskname':'Document',
+                    'status':'P',
+                    'tasktype':'D'
+                }
+                profileTaskStatusList.append(obj)
+                updateCustTaskStatusDB(profileTaskStatusList)
+        else:
+            saveClientPasswordDB(dataObj,customerDetailsobjs[0].id)
+            
         
     except Exception as e:
         logging.error("Error in saving client password service "+str(e))

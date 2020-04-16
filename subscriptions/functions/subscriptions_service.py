@@ -1,7 +1,7 @@
 import logging
 from customer.functions.database import getCustomerDetailsDB,updateCustomerDetailsDB, updateTaskByCustIdAndNameDB
 from subscriptions.functions.database import saveSubscriptionDetailsDB,savePaymentDetailsDB,getCustSubscriptionByServIDAndCustIdDB
-from subscriptions.functions.database import getCustPaymentByIDs, updateCustSubscriptionPaymentID, updateCustSubscriptionStatus
+from subscriptions.functions.database import getCustSubscriptionByStatusAndCustIdDB,getCustPaymentByIDsDB, updateCustSubscriptionPaymentIDDB, updateCustSubscriptionStatusDB
 import datetime
 import pytz
 from metadata.functions.database import getLookUpValue, getLookUpID
@@ -33,19 +33,15 @@ def saveSubscriptionService(subscriptionDetils,userName):
         customerObj = customerObj[0]
         
         servsigneddt=datetime.datetime.now()
-        lookupObj = getLookUpID('Service')
         
-        if len(lookupObj) == 1:
-            lookupObj = lookupObj[0]
-            
       
         for servid in subscriptionDetils['servidList']:
-            lookUpValueObj = getLookUpValue(lookupObj.lookupid,servid)
-            if len(lookUpValueObj) == 1:
-                lookUpValueObj = lookUpValueObj[0]
-            servexpdt= servsigneddt+datetime.timedelta(int(lookUpValueObj.lookupparam1))
+            
+            servexpdt= servsigneddt+datetime.timedelta(365)
             print(servexpdt)
             servexpdt = servsigneddt + datetime.timedelta(0,600)
+            print("1")
+            
             obj = {
                 'custid':customerObj.id,
                 'servid':servid,
@@ -54,13 +50,13 @@ def saveSubscriptionService(subscriptionDetils,userName):
                 'servstatus':'A'    
             }
             saveSubscriptionDetailsDB(obj)
-        
-            
+
+            print("2")    
             custSubscriptionObj = getCustSubscriptionByServIDAndCustIdDB(customerObj.id,servid,'A')
             
             if len(custSubscriptionObj) == 1:
                 custSubscriptionObj = custSubscriptionObj[0]
-            
+            print("3")
             obj = {
                 'custid':customerObj.id,
                 'servid':servid,
@@ -70,37 +66,37 @@ def saveSubscriptionService(subscriptionDetils,userName):
                 'payamount':subscriptionDetils['payamount'],
                 'payreference': subscriptionDetils['payreference']
             }
-            
+            print("4")
             savePaymentDetailsDB(obj)
         
-            custPaymentObj = getCustPaymentByIDs(customerObj.id,servid,custSubscriptionObj.id)
+            custPaymentObj = getCustPaymentByIDsDB(customerObj.id,servid,custSubscriptionObj.id)
             if len(custPaymentObj) == 1:
                 custPaymentObj = custPaymentObj[0]
             
-            updateCustSubscriptionPaymentID(custSubscriptionObj.id,custPaymentObj.id)
-        
+            updateCustSubscriptionPaymentIDDB(custSubscriptionObj.id,custPaymentObj.id)
+            print("5")
         
         if customerObj.custstatus == 'R' and customerObj.custstatusold == 'P':
             dataObj ={
                 'custregmobile':userName,
-                'customerStatus':'S',
+                'customerStatus':'S'
             }
             updateCustomerDetailsDB(dataObj)
         elif customerObj.custstatus == 'E' and customerObj.custstatusold == 'S' :
             dataObj ={
                 'custregmobile':userName,
-                'customerStatus':'S',
+                'customerStatus':'S'
                 }
             updateCustomerDetailsDB(dataObj)
         elif customerObj.custstatus == 'E' and customerObj.custstatusold == 'I' :
             dataObj ={
                 'custregmobile':userName,
-                'customerStatus':'I',
+                'customerStatus':'I'
                 }
             updateCustomerDetailsDB(dataObj)
             
     except Exception as e:
-        logging.error("Error in saving subscription service"+str(e))
+        logging.error("Error in saving subscription service "+str(e))
         raise
 
 
@@ -109,30 +105,20 @@ def checkSubscriptionExpirationService(userName):
         customerObj = getCustomerDetailsDB(userName)
         customerObj = customerObj[0]
         
-        lookupObj = getLookUpID('Service')
-        
-        if len(lookupObj) == 1:
-            lookupObj = lookupObj[0]
             
-        custSubscriptionObjs = getCustSubscriptionByCustIDAndStatus(customerObj.id,'A')
+        custSubscriptionObjs = getCustSubscriptionByStatusAndCustIdDB(customerObj.id,'A')
         
         for custSubscriptionObj in custSubscriptionObjs:
-            
-            lookUpValueObj = getLookUpValue(lookupObj.lookupid,custSubscriptionObj.servid)
-            if len(lookUpValueObj) == 1:
-                lookUpValueObj = lookUpValueObj[0]
-            
-            if lookUpValueObj.lookupparam1 != '1':
-                utc=pytz.UTC
-                signdt = custSubscriptionObj.servsigneddt.replace(tzinfo=utc)
-                expirationDt = custSubscriptionObj.servexpdt.replace(tzinfo=utc)   
-                if signdt<expirationDt:
-                    return True
-                else:
-                    updateCustSubscriptionStatus(customerObj.id,'E') 
-                    return False  
+            utc=pytz.UTC
+            signdt = custSubscriptionObj.servsigneddt.replace(tzinfo=utc)
+            expirationDt = custSubscriptionObj.servexpdt.replace(tzinfo=utc)   
+            if signdt<expirationDt:
+                return True
+            else:
+                updateCustSubscriptionStatusDB(customerObj.id,'E') 
+                return False  
     except Exception as e:
-        logging.error("Error in saving subscription"+str(e))
+        logging.error("Error in checking subscription expiration "+str(e))
         raise
 
 

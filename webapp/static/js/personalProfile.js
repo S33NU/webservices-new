@@ -28,8 +28,10 @@ var PROFILE_QUESTIONS =[];
 
     });
 
-$.get(CONFIG['host']+"/clients/customer/email-mobile", function(res, status){
-            console.log(res)
+
+    $.get(CONFIG['host']+"/clients/customer/email-mobile", function(res, status){
+        
+
         if(res.statusCode == 0){
 
             var data = res.data;

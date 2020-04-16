@@ -1,14 +1,39 @@
-
-(function() {
+$(document).ready(function(){
     $("#existingUserLogin").hide();
     $("#newUserLogin").hide();
     $("#loginSubmit").hide();
     $("#otpMessage").hide();
+});
+(function() {
+    
+    $.get(CONFIG['host']+"/public/country-codes", function(res, status){
+        data = res.data;
+        if(res.statusCode == 0){
+            $('.invalid-form-error-message')
+                    .html('')
+                    .toggleClass('filled', false);
+                
+            for(var i=0;i<data.length;i++) {
+                $("select[name='countryCode']").append("<option value="+data[i].countryCodeValue+">"+data[i].countryCodeDisplayVal+"</option>");
+            }
+    
+        }else if(res.statusCode == 1){
+               
+            $('.invalid-form-error-message')
+                .html('Internal Server Error, try later')
+                .toggleClass('filled', true);
+            
+        }
+    });
+
+
+
+
     $('#userMobileNumber').parsley().on('field:success', function() {
         var phonenumber =  $('#userMobileNumber').val();
         dataObj={
             "custregmobile":phonenumber,
-            "custcountrycode":"91"
+            "custcountrycode":$('select[name="countryCode"').val()
         }
        
         $.post(CONFIG['host']+"/clients/registration/validate-phoneno", JSON.stringify(dataObj), function(res){
@@ -87,7 +112,7 @@ function verifyUserCredentials(){
         if (otpType == 'mobile'){
             dataObj={
                 "custregmobile":phonenumber,
-                "custcountrycode":"91",
+                "custcountrycode":$('select[name="countryCode"').val(),
                 "otp":otp
             };
             verifyOTPByMobile(dataObj,phonenumber);

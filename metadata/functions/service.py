@@ -1,4 +1,4 @@
-from metadata.functions.database import validateCookieDB,getMenuItemsByCustomerStatusDB, getProfileQuestionsDB
+from metadata.functions.database import validateCookieDB,getMenuItemsByCustomerStatusDB, getProfileQuestionsDB,getLookUpID, getLookUpValues
 import logging
 
 
@@ -70,4 +70,21 @@ def getProfileQuestionsService(profqclass):
         return profileQuestions
     except Exception as e:
         logging.error("Error in retrieving profile questions service "+str(e))
-  
+        raise
+
+def getCountryCodesService():
+    try:
+        lookupValueObj =  getLookUpID('countryCode')
+        masterLookupObjs = getLookUpValues(lookupValueObj[0].lookupid)
+        countryCodeList = []
+        for masterLookupObj in masterLookupObjs:
+            obj = {
+            'countryCodeValue':masterLookupObj.lookupname,
+            'countryCodeDisplayVal':masterLookupObj.lookupparam1
+            }
+            countryCodeList.append(obj)
+       
+        return countryCodeList       
+    except Exception as e:
+        logging.error("Error is retreieving country codes service"+str(e))         
+        raise
