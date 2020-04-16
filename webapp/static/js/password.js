@@ -30,10 +30,8 @@ function savePassword(){
         passwordReEntry = $('#passwordReEntry').val()
         
         if(passwordEntry == passwordReEntry){
-            var userName='';
            
-            
-            dataObj={
+           dataObj={
                 "password": passwordEntry
             }
             $('.invalid-form-error-message')

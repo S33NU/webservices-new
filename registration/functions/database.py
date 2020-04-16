@@ -91,3 +91,13 @@ def validateClientOTPByEmailDB(otp,custID):
         logging.error("Error in validating client password by email in DB "+str(e))
         raise 
 
+def getCustRegistrationDB(custID):
+    try:
+        
+        registrationObjs=CustRegistration.objects.filter(custid=custID)
+
+        return registrationObjs[0]
+    except Exception as e:
+        logging.error("Error in retreving customer regsiration OBj DB "+str(e))
+        raise 
+
