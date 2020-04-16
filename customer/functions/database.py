@@ -14,9 +14,10 @@ def getCustomerDetailsDB(custregmobile):
     
 def saveCustomerDetailsDB(dataObj):
     try:
-        
+
         customerDetailsobjs=getCustomerDetailsDB(dataObj['custregmobile'])
-        
+
+
         if len(customerDetailsobjs) == 0:
             
             customerDetailsobj=Customer(custregmobile=dataObj['custregmobile'],
@@ -30,7 +31,31 @@ def saveCustomerDetailsDB(dataObj):
             
     except Exception as e:
         logging.error("Error in saving customer details DB " + str(e))
-        raise    
+        raise
+
+
+def saveCustomerProfileDB(dataObj):
+
+
+    mblno=dataObj['RegisteredMobile']
+
+    custprofilebymblno=Customer.objects.get(custregmobile=mblno)
+
+    custprofilebymblno.custfirstname=dataObj['FirstName']
+    custprofilebymblno.custlastname=dataObj['LastName']
+    custprofilebymblno.custemail=dataObj['EMail']
+    custprofilebymblno.custmaritalstatus=dataObj['MarriedStatus']
+    custprofilebymblno.custagegroup=dataObj['AgeGroup']
+    custprofilebymblno.custadd1=dataObj['AddressLine1']
+    custprofilebymblno.custadd2=dataObj['AddressLine2']
+    custprofilebymblno.custcity=dataObj['City']
+    custprofilebymblno.custstate=dataObj['State']
+    custprofilebymblno.zipcode=dataObj['Pincode']
+    custprofilebymblno.custoccupation=dataObj['Occupation']
+    custprofilebymblno.updateddt=datetime.datetime.now()
+    custprofilebymblno.save()
+
+
 
 def updateCustomerEmailDB(custemail,custregmobile):
     try:
