@@ -48,7 +48,7 @@
                                 <label>{{profileQuestions.profqorder}}.{{profileQuestions.profqname}}</label>
                                 {% for value in profileQuestions.values %}
 
-                                    <div class='form-group'>{{value}}<input data-parsley-type="digits" data-parsley-min="500" data-parsley-max="1000000000" class='form-control' name='{{profileQuestions.profqname|cut:" "}}' id='{{value}}' required/></div>
+                                    <div class='form-group'>{{value}}<input data-parsley-type="digits" data-parsley-min="500" data-parsley-max="1000000000" class='form-control' name='{{profileQuestions.profqname|cut:" "}}' id='{{value|clean}}' data-value='{{value}}' required/></div>
                                         
                                 {% endfor %}
                             </div>
@@ -92,7 +92,10 @@
                         <div class="btn-block-profile">
 							<button class="btn btn-primary btn-user-investment btn-block-profile" type="submit" id="saveInvestmentProfileButton"  >
 							Save
-							</button>
+              </button>
+              <button class="btn btn-primary btn-user-investment btn-block-profile" type="submit" id="updateInvestmentProfileButton"  >
+                Update
+                </button>
 						</div>
                   
                     

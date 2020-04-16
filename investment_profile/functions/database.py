@@ -21,3 +21,12 @@ def saveInvestmentProfileDB(investmentProfileList,custID):
     except Exception as e:
         logging.error("Error in saving Investment Profile DB" + str(e))
         raise
+
+
+def getInvestmentProfileDB(custID):
+    try:
+        custInvestmentProfileObjs = CustInvestmentProfile.objects.filter(custid=custID)
+        return custInvestmentProfileObjs
+    except Exception as e:
+        logging.error("Error in retreving Investment Profile by custID DB" + str(e))
+        raise

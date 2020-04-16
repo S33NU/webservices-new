@@ -4,5 +4,8 @@ register = template.Library()
 
 @register.filter
 @stringfilter
-def split(value,key):
-    return value.split(key)
+def clean(value):
+    value=value.replace('(', '')
+    value=value.replace(')', '')
+    value=value.replace(' ', '')
+    return value

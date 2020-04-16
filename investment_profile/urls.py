@@ -19,5 +19,5 @@ from . import views
 
 urlpatterns = [
     path('investment-profile/questions',views.investmentProfileQuestionsView),
-    path('investment-profile',views.saveInvestmentProfile),
+    path('investment-profile',views.InvestmentProfileView),
 ]

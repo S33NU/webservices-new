@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from metadata.functions.metadata import getConfig, configureLogging
 from metadata.functions.service import validateCookieService, getProfileQuestionsService
 import json
-from investment_profile.functions.investment_profile_service import saveInvestmentProfileService
+from investment_profile.functions.investment_profile_service import saveInvestmentProfileService, getInvestmentProfileService
 
 
 # Create your views here.
@@ -48,8 +48,8 @@ def investmentProfileQuestionsView(request):
     return JsonResponse(response)
 
 @csrf_exempt
-@api_view(['POST'])
-def saveInvestmentProfile(request):
+@api_view(['POST','GET'])
+def InvestmentProfileView(request):
     response = {
         'data':None,
         'error':None,
@@ -74,9 +74,16 @@ def saveInvestmentProfile(request):
             saveInvestmentProfileService(json.loads(request.body.decode('utf-8')),request.COOKIES['userName'])
             response['statusCode'] = 0
             response['data'] = 'Investment Profile data saved successfully'
+        elif request.method == "GET":
+            investmentProfielList = getInvestmentProfileService(request.COOKIES['userName'])
+            response['statusCode'] = 0
+            response['data'] = investmentProfielList
+                
                  
     except Exception as e:
         logging.error(str(e))
-        response['data'] = 'Error in saving Investment Profile data'
+        response['data'] = 'Error in processing Investment Profile data'
         response['error'] = str(e)
     return JsonResponse(response)
+
+

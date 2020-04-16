@@ -107,12 +107,12 @@ def getCustTasksByCustIdDB(custID):
         logging.error("Error in retreiving customer tasks DB " + str(e))
         raise    
 
-def getTaskByCustIdAndNameDB(custID,taskName):
+def checkTaskStatusByCustIdAndNameDB(custID,taskName):
     try:   
-        custTaskobjs=CustTask.objects.filter(custid=custID,taskname=taskName)
+        custTaskobjs=CustTask.objects.filter(custid=custID,taskname=taskName,status='P')
         return custTaskobjs    
     except Exception as e:
-        logging.error("Error in retreiving customer tasks by custid and task name DB " + str(e))
+        logging.error("Error in checking customer task status by custid and task name and P status DB " + str(e))
         raise    
 
 def updateTaskByCustIdAndNameDB(custID,taskName,taskStatus):
@@ -125,3 +125,5 @@ def updateTaskByCustIdAndNameDB(custID,taskName,taskStatus):
     except Exception as e:
         logging.error("Error in retreiving customer tasks by custid and task name DB " + str(e))
         raise    
+
+
