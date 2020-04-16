@@ -14,11 +14,11 @@ var PROFILE_QUESTIONS =[];
 
             PROFILE_QUESTIONS = res.data;
             console.log(PROFILE_QUESTIONS);
-            $('#getProfqStatus1').hide();
+            $('#saveStatus1').hide();
 
         }else if (res.statusCode == 1){
 
-            $('#getProfqStatus1').show();
+            $('#saveStatus1').show();
 
         }else if(res.statusCode == 5){
 
@@ -58,7 +58,6 @@ var PROFILE_QUESTIONS =[];
 $(document).ready(function(){
     $('#saveStatus0').hide();
     $('#saveStatus1').hide();
-    $('#getProfqStatus1').hide();
     $('#Pform').parsley();
 
  $('#Pform').on('submit', function(event){
@@ -114,7 +113,6 @@ $(document).ready(function(){
              $("#AgeGroup").prop('disabled',true);
              $('#saveStatus0').show();
              $('#saveStatus1').hide();
-             $('#getProfqStatus1').hide();
              window.location.href = "default";
 
         }
@@ -129,7 +127,6 @@ $(document).ready(function(){
 
          $('#saveStatus1').show();
          $('#saveStatus0').hide();
-         $('#getProfqStatus1').hide();
 
         }
 

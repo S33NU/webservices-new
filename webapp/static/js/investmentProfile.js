@@ -11,7 +11,7 @@ var INVESTENT_QUESTIONS =[];
 
             INVESTENT_QUESTIONS = res.data;
             
-            $('#getProfqStatus1').hide();
+            $('#saveStatus1').hide();
 
             obj=INVESTENT_QUESTIONS.find(ele=>{
                 return ele.profqtype=='C'
@@ -58,7 +58,7 @@ var INVESTENT_QUESTIONS =[];
 
         }else if (res.statusCode == 1){
 
-            $('#getProfqStatus1').show();
+            $('#saveStatus1').show();
 
         }else if(res.statusCode == 5){
 
@@ -73,7 +73,7 @@ var INVESTENT_QUESTIONS =[];
         if(res.statusCode == 0){
 
             data  = res.data;
-            $('#getProfqStatus1').hide();
+            $('#saveStatus1').hide();
 
             if (typeof data == "boolean"){
                 console.log("Test");
@@ -105,7 +105,7 @@ var INVESTENT_QUESTIONS =[];
 
         }else if (res.statusCode == 1){
 
-            $('#getProfqStatus1').show();
+            $('#saveStatus1').show();
 
         }else if(res.statusCode == 5){
 
@@ -128,7 +128,6 @@ var INVESTENT_QUESTIONS =[];
 $(document).ready(function(){
     $('#saveStatus0').hide();
     $('#saveStatus1').hide();
-    $('#getProfqStatus1').hide();
     $('#investmentForm').parsley();
 
  $('#investmentForm').on('submit', function(event){
@@ -174,7 +173,6 @@ $(document).ready(function(){
                      $("input").prop('disabled', true);
                      $('#saveStatus0').show();
                      $('#saveStatus1').hide();
-                     $('#getProfqStatus1').hide();
                     window.location.href = "default";
 
                  }
@@ -189,7 +187,6 @@ $(document).ready(function(){
 
                      $('#saveStatus1').show();
                     $('#saveStatus0').hide();
-                    $('#getProfqStatus1').hide();
                 }
              });
             }else if (btnid=="updateInvestmentProfileButton"){
