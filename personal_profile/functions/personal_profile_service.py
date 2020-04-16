@@ -1,20 +1,17 @@
 from personal_profile.functions.database import savePersonalProfileDB,getProfileData, getProfileDataFromDbById, updateProfileDataFromDbById
 import logging
 from metadata.functions.database import getLookUpValues,getLookUpID
-from customer.functions.database import getCustomerDetailsDB,updateCustomerDetailsDB
+from customer.functions.database import getCustomerDetailsDB, updateCustomerDetailsDB, \
+    updateTaskByCustIdAndNameDB,saveCustomerDetailsDB,saveCustomerProfileDB
+
 
 def savePersonalProfileService(personal_profile,userName):
     try:
-        savePersonalProfileDB(personal_profile)
-        customerObj = getCustomerDetailsDB(userName)
-        customerObj = customerObj[0]
-        
-        dataObj ={
-                'username':userName,
-                'customerStatus':customerObj.profileStatus,
-                'profileStatus':'personal'
-        }
-        updateCustomerDetailsDB(dataObj)
+        customerDetailsobjs = getCustomerDetailsDB(userName)
+        saveCustomerProfileDB(personal_profile['cust'])
+        savePersonalProfileDB(personal_profile['custProfile'],customerDetailsobjs[0].id)
+        updateTaskByCustIdAndNameDB(customerDetailsobjs[0].id,'Personal','C')
+
     except Exception as e:
         logging.error("Error in saving personal profile "+str(e))
         raise

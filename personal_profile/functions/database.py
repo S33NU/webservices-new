@@ -1,19 +1,26 @@
 import logging
-from personal_profile.models import PersonalProfile
+from personal_profile.models import PersonalProfile,CustPersonalProfile
+from customer.models import Customer
 from metadata.models import ProfQuestion
 from django.db.models import Q
-def savePersonalProfileDB(dataObj):
+import datetime
+
+
+
+
+
+def savePersonalProfileDB(dataObj,custID):
     try:
 
-        clientProfiledata = PersonalProfile(registeredmobile=dataObj['registeredMobile'],
-                                            firstname=dataObj['firstName'],
-                                            lastname=dataObj['lastName'], email=dataObj['email'],
-                                            marriedstatus=dataObj['marriedStatus'], age=dataObj['age'],
-                                            addr1=dataObj['addrLine1'], addr2=dataObj['addrLine2'],
-                                            addr3=dataObj['addrLine3'], addr4=dataObj['addrLine4'],
-                                            occupation=dataObj['occupation']
-                                            )
-        clientProfiledata.save()
+        for custProfileObj in dataObj:
+            custPersonalProfileObj = CustPersonalProfile(custid=custID,
+                                                             order=custProfileObj['order'],
+                                                             attribute=custProfileObj['attribute'],
+                                                             custresponse=custProfileObj['custresponse'],
+                                                             attributetype=custProfileObj['attributetype'],
+                                                             createddt=datetime.datetime.now()
+                                                             )
+            custPersonalProfileObj.save()
 
     except Exception as e:
         logging.error("Error in saving Personal Profile " + str(e))
