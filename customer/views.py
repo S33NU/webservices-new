@@ -7,6 +7,5 @@ from metadata.functions.metadata import getConfig, configureLogging
 from metadata.functions.service import validateCookieService
 import json
 # Create your views here.
-from customer.functions.customer_service import getCustomerEmailandMobileService
 
 
