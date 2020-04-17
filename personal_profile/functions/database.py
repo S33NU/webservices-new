@@ -60,7 +60,7 @@ def updatecustPersonalProfileDB(custPersonalProfileupdatedata,custID):
                 custPersoanlProfileObj.save()
 
     except Exception as e:
-        logging.error("Error in updating Investment Profile DB " + str(e))
+        logging.error("Error in updating Personal Profile DB " + str(e))
         raise
 
 
