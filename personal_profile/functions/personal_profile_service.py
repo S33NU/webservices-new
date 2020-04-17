@@ -62,7 +62,7 @@ def updateCustPersonalProfileService(custPersonalProfileUpdatedata,userName):
 
 
     except Exception as e:
-        logging.error("Error in updating Personal profile service" + str(e))
+        logging.error("Error in updating Personal Profile service" + str(e))
         raise
 
 
