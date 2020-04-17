@@ -23,14 +23,14 @@ def subscriptionsView(request):
         log=config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
-                  
+            raise       
+                 
         if request.method == "GET":
             subscriptionList = getSubscriptionsService()
             response['statusCode'] = 0
@@ -55,16 +55,16 @@ def subscriptionCompleted(request):
         log=config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
-                  
+            raise       
+                 
         if request.method == "POST":
-            subscriptionList = saveSubscriptionService(json.loads(request.body.decode('utf-8')),request.COOKIES['userName'])
+            subscriptionList = saveSubscriptionService(json.loads(request.body.decode('utf-8')),cookieVal)
             response['statusCode'] = 0
             response['data'] = subscriptionList
     except Exception as e:
@@ -87,16 +87,16 @@ def reviewInvestment(request):
         log=config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
-                  
+            raise       
+                 
         if request.method == "POST":
-            subscriptionList = reviewInvestmentService(request.COOKIES['userName'])
+            subscriptionList = reviewInvestmentService(cookieVal)
             response['statusCode'] = 0
             response['data'] = subscriptionList
     except Exception as e:
@@ -118,16 +118,16 @@ def submitDocuments(request):
         log=config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
-                  
+            raise       
+                 
         if request.method == "POST":
-            subscriptionList = saveDocumentsService(request.COOKIES['userName'])
+            subscriptionList = saveDocumentsService(cookieVal)
             response['statusCode'] = 0
             response['data'] = subscriptionList
     except Exception as e:
