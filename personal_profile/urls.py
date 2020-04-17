@@ -20,6 +20,4 @@ from . import views
 urlpatterns = [
     path('personal-profile',views.personalProfileView),
     path('personal-profile/questions',views.personalProfileQuestionsView),
-    path('personal-profile/', views.getprofile),
-    path('personal-profile/<str:id>', views.getprofilebyid)
 ]
