@@ -34,7 +34,7 @@ def saveCustomerDetailsDB(dataObj):
         raise
 
 
-def saveCustomerProfileDB(dataObj):
+def updateCustomerProfileDB(dataObj):
 
 
     mblno=dataObj['RegisteredMobile']
