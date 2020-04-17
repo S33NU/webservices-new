@@ -49,6 +49,7 @@ def getInvestmentProfileService(userName):
 def updateInvestmentProfileService(investmentProfileList,userName):
     try:
         customerDetailsobjs=getCustomerDetailsDB(userName)
+        print(investmentProfileList)
         updateInvestmentProfileDB(investmentProfileList,customerDetailsobjs[0].id)
         
     
