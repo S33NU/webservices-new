@@ -56,3 +56,23 @@ input.form-control.form-control-user.text1.mobile {
 select[name='countryCode']{
     height: 40px;
 }
+
+#saveButtons{
+    display: flex;
+    margin-right: 20%;
+}
+
+#saveButtons #cancelSaveInvestmentProfileButton{
+    margin: auto;
+}
+
+#updateButtons{
+    display: flex;
+    margin-right: 20%;
+}
+
+
+#updateButtons #cancelUpdateInvestmentProfileButton{
+    margin: auto;
+}
+

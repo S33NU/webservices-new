@@ -23,19 +23,20 @@ def personalProfileView(request):
         configureLogging(log)
        
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
+            raise 
+
         
         
         if request.method == "POST":
             #print(request.POST)
             #print(json.loads(request.body))
-            savePersonalProfileService(json.loads(request.body.decode('utf-8')),request.COOKIES['userName'])
+            savePersonalProfileService(json.loads(request.body.decode('utf-8')),cookieVal)
             response['statusCode'] = 0
             response['data'] = 'Personal Profile data saved successfully'
         elif request.method == "GET":
@@ -62,14 +63,13 @@ def getprofilebyid(request, id):
         log=config['log']
         configureLogging(log)
        
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
-        
+            raise 
         
         if request.method == "GET":
             try:
@@ -124,14 +124,13 @@ def personalProfileQuestionsView(request):
         log=config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
-               
+            raise        
        
         if request.method == "GET":
             #print(request.POST)
@@ -160,13 +159,13 @@ def getprofile(request):
         configureLogging(log)
         
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
+            raise 
         
         if request.method == "GET":
             all_profiles = getProfileData()

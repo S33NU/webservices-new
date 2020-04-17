@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from metadata.functions.metadata import getConfig, configureLogging
 from metadata.functions.service import validateCookieService, getProfileQuestionsService
 import json
-from investment_profile.functions.investment_profile_service import saveInvestmentProfileService, getInvestmentProfileService
+from investment_profile.functions.investment_profile_service import updateInvestmentProfileService,saveInvestmentProfileService, getInvestmentProfileService
 
 
 # Create your views here.
@@ -25,14 +25,13 @@ def investmentProfileQuestionsView(request):
         log=config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
-               
+            raise       
        
         if request.method == "GET":
             #print(request.POST)
@@ -48,7 +47,7 @@ def investmentProfileQuestionsView(request):
     return JsonResponse(response)
 
 @csrf_exempt
-@api_view(['POST','GET'])
+@api_view(['POST','GET','PUT'])
 def InvestmentProfileView(request):
     response = {
         'data':None,
@@ -61,24 +60,26 @@ def InvestmentProfileView(request):
         configureLogging(log)
        
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
-        
+            raise
         
         if request.method == "POST":
-            saveInvestmentProfileService(json.loads(request.body.decode('utf-8')),request.COOKIES['userName'])
+            saveInvestmentProfileService(json.loads(request.body.decode('utf-8')),cookieVal)
             response['statusCode'] = 0
             response['data'] = 'Investment Profile data saved successfully'
         elif request.method == "GET":
-            investmentProfielList = getInvestmentProfileService(request.COOKIES['userName'])
+            investmentProfielList = getInvestmentProfileService(cookieVal)
             response['statusCode'] = 0
             response['data'] = investmentProfielList
-                
+        elif request.method == "PUT":
+            updateInvestmentProfileService(json.loads(request.body.decode('utf-8')),cookieVal)
+            response['statusCode'] = 0
+            response['data'] = 'Investment Profile data updated successfully'
                  
     except Exception as e:
         logging.error(str(e))

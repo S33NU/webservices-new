@@ -13,7 +13,7 @@ var PROFILE_QUESTIONS =[];
         if(res.statusCode == 0){
 
             PROFILE_QUESTIONS = res.data;
-            console.log(PROFILE_QUESTIONS);
+            
             $('#saveStatus1').hide();
 
         }else if (res.statusCode == 1){
@@ -35,7 +35,7 @@ var PROFILE_QUESTIONS =[];
         if(res.statusCode == 0){
 
             var data = res.data;
-            console.log(data)
+            
 
             $("#RegisteredMobile").val(data.custregmobile)
             $("#RegisteredMobile").prop("disabled", true);
@@ -101,10 +101,10 @@ $(document).ready(function(){
             'custProfile' :dataObjList,
             'cust' :custdataObj
             }
-        console.log(custObj);
+        
         $.post(CONFIG['host']+"/clients/personal-profile", JSON.stringify(custObj), function(res){
             data = res.data;
-            console.log(res)
+            
                     if(res.statusCode == 0){
 
              //alert("Details are saved Successfully");

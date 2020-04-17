@@ -22,10 +22,16 @@ def login(request):
         log = config['log']
         configureLogging(log)
 
-        if 'userName' in request.COOKIES:
-            if validateCookieService(request.COOKIES['userName']):
-                raise Exception('Logged In')
-       
+        cookieVal = ''
+        try:
+            cookieVal=validateCookieService(request)
+            raise Exception('Logged In')    
+        except Exception as e:
+            if str(e) == "Logged In":
+                raise
+        
+        
+        
         if request.method == 'GET':
             return render(request,"index.html")  
         
@@ -46,15 +52,15 @@ def savePasswordPage(request):
         log = config['log']
         configureLogging(log)
 
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
-                raise Exception("Authentication failure")
-        else:
-            raise Exception("Authentication failure")
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            raise
         
        
         if request.method == 'GET':   
-            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            customerDetailsObj=getCustomerDetailsService(cookieVal)
             
             menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             currentPath=getCurrentPath(request.path)
@@ -84,16 +90,15 @@ def personalProfilePage(request):
         log = config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-           
-            if not validateCookieService(request.COOKIES['userName']):
-                raise Exception("Authentication failure")
-        else:
-            raise Exception("Authentication failure")
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            raise 
         
         if request.method == 'GET':
             personalProfileQuestions = getProfileQuestionsService('P')
-            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            customerDetailsObj=getCustomerDetailsService(cookieVal)
             
             
             menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
@@ -127,15 +132,15 @@ def investmentProfilePage(request):
         log = config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
-                raise Exception("Authentication failure")
-        else:
-            raise Exception("Authentication failure")
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            raise 
         
         if request.method == 'GET':   
             investmentProfileQuestions=getProfileQuestionsService('I')
-            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            customerDetailsObj=getCustomerDetailsService(cookieVal)
             
             
             menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
@@ -171,21 +176,20 @@ def homePage(request):
         log = config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            
-            if not validateCookieService(request.COOKIES['userName']):
-                raise Exception("Authentication failure")
-        else:
-            raise Exception("Authentication failure")
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            raise 
         
         if request.method == 'GET':  
             
             
             
-            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            customerDetailsObj=getCustomerDetailsService(cookieVal)
             
-            if customerDetailsObj.custstatus in "S,I" and not checkSubscriptionExpirationService(request.COOKIES['userName']):
-                updateCustomerDetailsService({'custregmobile':request.COOKIES['userName'],'customerStatus':'E'})
+            if customerDetailsObj.custstatus in "S,I" and not checkSubscriptionExpirationService(cookieVal):
+                updateCustomerDetailsService({'custregmobile':cookieVal,'customerStatus':'E'})
                 return redirect('../home/default')
             
             
@@ -222,14 +226,14 @@ def subscriptionPage(request):
         log = config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
-                raise Exception("Authentication failure")
-        else:
-            raise Exception("Authentication failure")
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            raise 
         
         if request.method == 'GET':   
-            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            customerDetailsObj=getCustomerDetailsService(cookieVal)
             
             menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
             
@@ -260,14 +264,14 @@ def documentPage(request):
         log = config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
-                raise Exception("Authentication failure")
-        else:
-            raise Exception("Authentication failure")
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            raise 
         
         if request.method == 'GET':   
-            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            customerDetailsObj=getCustomerDetailsService(cookieVal)
             
             
             menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 
@@ -299,14 +303,14 @@ def dashboardPage(request):
         log = config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
-                raise Exception("Authentication failure")
-        else:
-            raise Exception("Authentication failure")
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            raise 
         
         if request.method == 'GET':   
-            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            customerDetailsObj=getCustomerDetailsService(cookieVal)
             custTaskObjs=getCustTasksByCustIdService(customerDetailsObj.id)
             profileLink = ''
             profileCompleted = False
@@ -359,14 +363,14 @@ def investedPage(request):
         log = config['log']
         configureLogging(log)
         
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
-                raise Exception("Authentication failure")
-        else:
-            raise Exception("Authentication failure")
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            raise 
         
         if request.method == 'GET':   
-            customerDetailsObj=getCustomerDetailsService(request.COOKIES['userName'])
+            customerDetailsObj=getCustomerDetailsService(cookieVal)
             
             
             menuItemList=getMenuItemsByCustomerStatuService(customerDetailsObj.custstatus) 

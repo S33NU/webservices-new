@@ -13,9 +13,8 @@ function saveSubscriptionDetails(){
    
     $.post(CONFIG['host']+"/clients/subscriptions/subscription-paid", JSON.stringify(dataObj), function(res){
         data = res.data;
-        console.log(res);
+       
         if(res.statusCode == 0){
-            console.log("sdad")
             window.location.href = "default";
             
         }else if(res.statusCode == 1){

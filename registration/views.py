@@ -22,19 +22,18 @@ def savePassword(request):
         log = config['log']
         configureLogging(log)
 
-        
-        if 'userName' in request.COOKIES:
-            if not validateCookieService(request.COOKIES['userName']):
+       
+        cookieVal= ''
+        try:
+            cookieVal=validateCookieService(request)    
+        except Exception as e:
+            if str(e) == "Authentication failure":
                 response['statusCode'] = 5
-                raise Exception("Authentication failure")
-        else:
-            response['statusCode'] = 5
-            raise Exception("Authentication failure")
-            
-        
+            raise 
+               
         if request.method == "PUT":
             #print(json.loads(request.body.decode('utf-8')))
-            saveClientPasswordService(json.loads(request.body.decode('utf-8')),request.COOKIES['userName'])
+            saveClientPasswordService(json.loads(request.body.decode('utf-8')),cookieVal)
             # print(json.loads(request.body.decode('utf-8')))
             response['statusCode'] = 0
             response['data'] = 'Client password saved successfully'
@@ -54,12 +53,7 @@ def validatePhoneno(request):
         'statusCode': 1
     }
     try:
-        '''
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-        '''
+        
         config = getConfig()
         log = config['log']
         configureLogging(log)
@@ -95,12 +89,7 @@ def validateClient(request):
         'statusCode': 1
     }
     try:
-        '''
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-        '''
+       
         config = getConfig()
         log = config['log']
         configureLogging(log)
@@ -131,12 +120,7 @@ def verifyOTP(request):
         'statusCode': 1
     }
     try:
-        '''
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-        '''
+        
         config = getConfig()
         log = config['log']
         configureLogging(log)
@@ -169,12 +153,6 @@ def verifyOTPByEmail(request):
         'statusCode': 1
     }
     try:
-        '''
-        if 'userName' in request.COOKIES:
-            print(request.COOKIES['userName'])
-        else:
-            raise Exception("Authentication failure")
-        '''
         config = getConfig()
         log = config['log']
         configureLogging(log)

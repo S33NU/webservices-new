@@ -2,18 +2,20 @@ from metadata.functions.database import validateCookieDB,getMenuItemsByCustomerS
 import logging
 
 
-def validateCookieService(cookie):
+def validateCookieService(request):
     try:
-        cookieStatus=validateCookieDB(cookie)
-        
-        if cookieStatus:
-            return True
-        else: 
-            return False
+        if 'userName' in request.COOKIES:
+            
+            if validateCookieDB(request.COOKIES['userName']):
+                return request.COOKIES['userName']
+            else:
+                raise Exception("Authentication failure")   
+        else:
+            raise Exception("Authentication failure")  
     except Exception as e:
         logging.error("Error in validating Cookie Service "+str(e))
-        raise    
-    
+        raise  
+
 def getMenuItemsByCustomerStatuService(customerStatus):
     try:
         menuItemList= getMenuItemsByCustomerStatusDB(customerStatus)

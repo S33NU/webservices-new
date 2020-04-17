@@ -76,15 +76,17 @@ var INVESTENT_QUESTIONS =[];
             $('#saveStatus1').hide();
 
             if (typeof data == "boolean"){
-                console.log("Test");
+                $("#saveButtons").show();
+                $('#updateButtons').hide();
             }else if(typeof data == "object"){
-                $("#saveInvestmentProfileButton").hide();
-                $('#updateInvestmentProfileButton').show();
+                $("#updateButtons").show();
+                $('#saveButtons').hide();
                 for(var i=0;i<data.length;i++){
 
                     if(data[i].attributetype == 'C'){
                         choiceEntry = data[i].custresponse.split(",");
                         $("#"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")).val(choiceEntry[1]);
+                        $("input[name='"+data[i].attribute.split(" ").join("")+"']").not("[id='"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")+"']").prop("disabled", true);
                     }else if (data[i].attributetype == 'E'){
                         $('input[name="'+data[i].attribute.split(" ").join("")+'"]').val(data[i].custresponse);
                     }else if (data[i].attributetype == 'S'){
@@ -143,13 +145,8 @@ $(document).ready(function(){
                     'attributetype':INVESTENT_QUESTIONS[i].profqtype
                 }
                 if (INVESTENT_QUESTIONS[i].profqtype == "C" ){
-                    ele=$('input[name="'+INVESTENT_QUESTIONS[i].profqname.split(" ").join("")+'"]');
-                    for(var j=0;j<ele.length;j++){ 
-                        if($(ele[j]).val() != ''){
-                            dataObj['custresponse'] = $(ele[j]).attr('data-value')+","+$(ele[j]).val(); 
-                            break;
-                        }
-                    }   
+                    ele=$('input[name="'+INVESTENT_QUESTIONS[i].profqname.split(" ").join("")+'"]:enabled');
+                    dataObj['custresponse'] = $(ele).attr('data-value')+","+$(ele).val();
                  }
                 else if (INVESTENT_QUESTIONS[i].profqtype == "S" ){
                     dataObj['custresponse']=$('input[name="'+INVESTENT_QUESTIONS[i].profqname.split(" ").join("")+'"]:checked').val();
@@ -169,8 +166,7 @@ $(document).ready(function(){
             $.post(CONFIG['host']+"/clients/investment-profile", JSON.stringify(dataObjList), function(res){
                 data = res.data;
                 if(res.statusCode == 0){
-                     $('#saveInvestmentProfileButton').hide();
-                     $("input").prop('disabled', true);
+                     $('#saveButtons').hide();
                      $('#saveStatus0').show();
                      $('#saveStatus1').hide();
                     window.location.href = "default";
@@ -190,7 +186,38 @@ $(document).ready(function(){
                 }
              });
             }else if (btnid=="updateInvestmentProfileButton"){
-                console.log("put")
+         
+                $.ajax({
+                    url: CONFIG['host']+"/clients/investment-profile",
+                    type: 'PUT',
+                    data:JSON.stringify(dataObjList),
+                    dataType : "json",
+                    success: function(res) {
+                        
+                        data = res.data;
+                        if(res.statusCode == 0){
+                            $('#updateButtons').hide();
+                            $('#saveStatus0').show();
+                            $('#saveStatus1').hide();
+                           window.location.href = "default";
+       
+                        }
+       
+                       else if(res.statusCode == 5){
+       
+                           window.location.href = "../login"
+       
+                       }
+       
+                       else if(res.statusCode == 1){
+       
+                            $('#saveStatus1').show();
+                           $('#saveStatus0').hide();
+                       }       
+                                   
+                    }
+            
+                });
             }
     }
 });

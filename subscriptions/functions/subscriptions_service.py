@@ -38,9 +38,7 @@ def saveSubscriptionService(subscriptionDetils,userName):
         for servid in subscriptionDetils['servidList']:
             
             servexpdt= servsigneddt+datetime.timedelta(365)
-            print(servexpdt)
             servexpdt = servsigneddt + datetime.timedelta(0,600)
-            print("1")
             
             obj = {
                 'custid':customerObj.id,
@@ -51,12 +49,10 @@ def saveSubscriptionService(subscriptionDetils,userName):
             }
             saveSubscriptionDetailsDB(obj)
 
-            print("2")    
             custSubscriptionObj = getCustSubscriptionByServIDAndCustIdDB(customerObj.id,servid,'A')
             
             if len(custSubscriptionObj) == 1:
                 custSubscriptionObj = custSubscriptionObj[0]
-            print("3")
             obj = {
                 'custid':customerObj.id,
                 'servid':servid,
@@ -66,7 +62,6 @@ def saveSubscriptionService(subscriptionDetils,userName):
                 'payamount':subscriptionDetils['payamount'],
                 'payreference': subscriptionDetils['payreference']
             }
-            print("4")
             savePaymentDetailsDB(obj)
         
             custPaymentObj = getCustPaymentByIDsDB(customerObj.id,servid,custSubscriptionObj.id)
@@ -74,8 +69,7 @@ def saveSubscriptionService(subscriptionDetils,userName):
                 custPaymentObj = custPaymentObj[0]
             
             updateCustSubscriptionPaymentIDDB(custSubscriptionObj.id,custPaymentObj.id)
-            print("5")
-        
+            
         if customerObj.custstatus == 'R' and customerObj.custstatusold == 'P':
             dataObj ={
                 'custregmobile':userName,
