@@ -29,7 +29,6 @@ var PROFILE_QUESTIONS =[];
     });
 
 
-
     $.get(CONFIG['host']+"/clients/personal-profile", function(res, status){
 
 
