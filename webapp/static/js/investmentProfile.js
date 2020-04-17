@@ -86,6 +86,7 @@ var INVESTENT_QUESTIONS =[];
                     if(data[i].attributetype == 'C'){
                         choiceEntry = data[i].custresponse.split(",");
                         $("#"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")).val(choiceEntry[1]);
+                        $("input[name='"+data[i].attribute.split(" ").join("")+"']").not("[id='"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")+"']").prop("disabled", true);
                     }else if (data[i].attributetype == 'E'){
                         $('input[name="'+data[i].attribute.split(" ").join("")+'"]').val(data[i].custresponse);
                     }else if (data[i].attributetype == 'S'){
@@ -144,13 +145,8 @@ $(document).ready(function(){
                     'attributetype':INVESTENT_QUESTIONS[i].profqtype
                 }
                 if (INVESTENT_QUESTIONS[i].profqtype == "C" ){
-                    ele=$('input[name="'+INVESTENT_QUESTIONS[i].profqname.split(" ").join("")+'"]');
-                    for(var j=0;j<ele.length;j++){ 
-                        if($(ele[j]).val() != ''){
-                            dataObj['custresponse'] = $(ele[j]).attr('data-value')+","+$(ele[j]).val(); 
-                            break;
-                        }
-                    }   
+                    ele=$('input[name="'+INVESTENT_QUESTIONS[i].profqname.split(" ").join("")+'"]:enabled');
+                    dataObj['custresponse'] = $(ele).attr('data-value')+","+$(ele).val();
                  }
                 else if (INVESTENT_QUESTIONS[i].profqtype == "S" ){
                     dataObj['custresponse']=$('input[name="'+INVESTENT_QUESTIONS[i].profqname.split(" ").join("")+'"]:checked').val();
@@ -190,8 +186,7 @@ $(document).ready(function(){
                 }
              });
             }else if (btnid=="updateInvestmentProfileButton"){
-                alert("PUT")
-
+         
                 $.ajax({
                     url: CONFIG['host']+"/clients/investment-profile",
                     type: 'PUT',
