@@ -47,12 +47,14 @@ def saveSubscriptionService(subscriptionDetils,userName):
                 'servexpdt':servexpdt,
                 'servstatus':'A'    
             }
+            
             saveSubscriptionDetailsDB(obj)
 
             custSubscriptionObj = getCustSubscriptionByServIDAndCustIdDB(customerObj.id,servid,'A')
             
             if len(custSubscriptionObj) == 1:
                 custSubscriptionObj = custSubscriptionObj[0]
+            
             obj = {
                 'custid':customerObj.id,
                 'servid':servid,
@@ -63,7 +65,7 @@ def saveSubscriptionService(subscriptionDetils,userName):
                 'payreference': subscriptionDetils['payreference']
             }
             savePaymentDetailsDB(obj)
-        
+            
             custPaymentObj = getCustPaymentByIDsDB(customerObj.id,servid,custSubscriptionObj.id)
             if len(custPaymentObj) == 1:
                 custPaymentObj = custPaymentObj[0]
@@ -98,17 +100,20 @@ def checkSubscriptionExpirationService(userName):
     try:
         customerObj = getCustomerDetailsDB(userName)
         customerObj = customerObj[0]
-        
+       
             
         custSubscriptionObjs = getCustSubscriptionByStatusAndCustIdDB(customerObj.id,'A')
         
         for custSubscriptionObj in custSubscriptionObjs:
             utc=pytz.UTC
-            signdt = custSubscriptionObj.servsigneddt.replace(tzinfo=utc)
-            expirationDt = custSubscriptionObj.servexpdt.replace(tzinfo=utc)   
-            if signdt<expirationDt:
+            
+            expirationDt = custSubscriptionObj.servexpdt.replace(tzinfo=utc) 
+            presentDt = datetime.datetime.now().replace(tzinfo=utc) 
+            if presentDt<expirationDt:
+                
                 return True
             else:
+                
                 updateCustSubscriptionStatusDB(customerObj.id,'E') 
                 return False  
     except Exception as e:

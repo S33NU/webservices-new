@@ -65,7 +65,7 @@ def updateCustSubscriptionPaymentIDDB(custsubID,paymentID):
 def updateCustSubscriptionStatusDB(custID,servstatus):
     try:
 
-        custSubscriptionObjs= CustSubscription.objects.filter(id=custsubID,servstatus='A')
+        custSubscriptionObjs= CustSubscription.objects.filter(custid=custID,servstatus='A')
         
         for custSubscriptionObj in custSubscriptionObjs:
             custSubscriptionObj.servstatus = servstatus
