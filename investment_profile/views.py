@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from metadata.functions.metadata import getConfig, configureLogging
 from metadata.functions.service import validateCookieService, getProfileQuestionsService
 import json
-from investment_profile.functions.investment_profile_service import saveInvestmentProfileService, getInvestmentProfileService
+from investment_profile.functions.investment_profile_service import updateInvestmentProfileService,saveInvestmentProfileService, getInvestmentProfileService
 
 
 # Create your views here.
@@ -47,7 +47,7 @@ def investmentProfileQuestionsView(request):
     return JsonResponse(response)
 
 @csrf_exempt
-@api_view(['POST','GET'])
+@api_view(['POST','GET','PUT'])
 def InvestmentProfileView(request):
     response = {
         'data':None,
@@ -76,7 +76,10 @@ def InvestmentProfileView(request):
             investmentProfielList = getInvestmentProfileService(cookieVal)
             response['statusCode'] = 0
             response['data'] = investmentProfielList
-                
+        elif request.method == "PUT":
+            updateInvestmentProfileService(json.loads(request.body.decode('utf-8')),cookieVal)
+            response['statusCode'] = 0
+            response['data'] = 'Investment Profile data updated successfully'
                  
     except Exception as e:
         logging.error(str(e))

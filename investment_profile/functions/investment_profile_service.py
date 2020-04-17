@@ -1,5 +1,5 @@
 
-from investment_profile.functions.database import saveInvestmentProfileDB, getInvestmentProfileDB
+from investment_profile.functions.database import saveInvestmentProfileDB, getInvestmentProfileDB, updateInvestmentProfileDB
 from metadata.functions.database import getLookUpValues,getLookUpID
 import logging
 from customer.functions.database import getCustomerDetailsDB,checkTaskStatusByCustIdAndNameDB,updateTaskByCustIdAndNameDB
@@ -25,7 +25,6 @@ def getInvestmentProfileService(userName):
         
         custTaskObj=checkTaskStatusByCustIdAndNameDB(customerDetailsobjs[0].id,'Investment')
         investmentData = False
-        print(len(custTaskObj))
         if len(custTaskObj) == 0:
             
             custInvestmentgProfileObjs=getInvestmentProfileDB(customerDetailsobjs[0].id)
@@ -45,4 +44,14 @@ def getInvestmentProfileService(userName):
         return investmentData     
     except Exception as e:
         logging.error("Error in retreving Investment profile By custID service"+str(e))
+        raise
+    
+def updateInvestmentProfileService(investmentProfileList,userName):
+    try:
+        customerDetailsobjs=getCustomerDetailsDB(userName)
+        updateInvestmentProfileDB(investmentProfileList,customerDetailsobjs[0].id)
+        
+    
+    except Exception as e:
+        logging.error("Error in updating Investment profile service"+str(e))
         raise

@@ -76,10 +76,11 @@ var INVESTENT_QUESTIONS =[];
             $('#saveStatus1').hide();
 
             if (typeof data == "boolean"){
-                console.log("Test");
+                $("#saveButtons").show();
+                $('#updateButtons').hide();
             }else if(typeof data == "object"){
-                $("#saveInvestmentProfileButton").hide();
-                $('#updateInvestmentProfileButton').show();
+                $("#updateButtons").show();
+                $('#saveButtons').hide();
                 for(var i=0;i<data.length;i++){
 
                     if(data[i].attributetype == 'C'){
@@ -169,8 +170,7 @@ $(document).ready(function(){
             $.post(CONFIG['host']+"/clients/investment-profile", JSON.stringify(dataObjList), function(res){
                 data = res.data;
                 if(res.statusCode == 0){
-                     $('#saveInvestmentProfileButton').hide();
-                     $("input").prop('disabled', true);
+                     $('#saveButtons').hide();
                      $('#saveStatus0').show();
                      $('#saveStatus1').hide();
                     window.location.href = "default";
@@ -190,7 +190,39 @@ $(document).ready(function(){
                 }
              });
             }else if (btnid=="updateInvestmentProfileButton"){
-                console.log("put")
+                alert("PUT")
+
+                $.ajax({
+                    url: CONFIG['host']+"/clients/investment-profile",
+                    type: 'PUT',
+                    data:JSON.stringify(dataObjList),
+                    dataType : "json",
+                    success: function(res) {
+                        
+                        data = res.data;
+                        if(res.statusCode == 0){
+                            $('#updateButtons').hide();
+                            $('#saveStatus0').show();
+                            $('#saveStatus1').hide();
+                           window.location.href = "default";
+       
+                        }
+       
+                       else if(res.statusCode == 5){
+       
+                           window.location.href = "../login"
+       
+                       }
+       
+                       else if(res.statusCode == 1){
+       
+                            $('#saveStatus1').show();
+                           $('#saveStatus0').hide();
+                       }       
+                                   
+                    }
+            
+                });
             }
     }
 });

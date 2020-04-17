@@ -10,8 +10,6 @@ def saveClientPasswordService(dataObj,userName):
         customerDetailsobjs=getCustomerDetailsDB(userName)
         
         custRegistrationObj = getCustRegistrationDB(customerDetailsobjs[0].id)
-        print(custRegistrationObj.password)
-        print(type(custRegistrationObj.password))        
         if custRegistrationObj.password == 'None':
             saveClientPasswordDB(dataObj,customerDetailsobjs[0].id)
             
