@@ -29,27 +29,6 @@ var PROFILE_QUESTIONS =[];
     });
 
 
-   /* $.get(CONFIG['host']+"/clients/customer/email-mobile", function(res, status){
-
-
-        if(res.statusCode == 0){
-
-            var data = res.data;
-            
-
-            $("#RegisteredMobile").val(data.custregmobile)
-            $("#RegisteredMobile").prop("disabled", true);
-            if(data.custemail != null){
-                $("#EMail").val(data.custemail)
-                $("#EMail").prop("disabled", true);
-
-            }
-
-        }
-
-    });
-*/
-
     $.get(CONFIG['host']+"/clients/personal-profile", function(res, status){
 
 

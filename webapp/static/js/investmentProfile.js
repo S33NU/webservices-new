@@ -1,6 +1,6 @@
 
 var INVESTENT_QUESTIONS =[];
-
+var INVESTENT_PROFILE_RESPONSE = [];
 (function(){
 
 
@@ -81,27 +81,8 @@ var INVESTENT_QUESTIONS =[];
             }else if(typeof data == "object"){
                 $("#updateButtons").show();
                 $('#saveButtons').hide();
-                for(var i=0;i<data.length;i++){
-
-                    if(data[i].attributetype == 'C'){
-                        choiceEntry = data[i].custresponse.split(",");
-                        $("#"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")).val(choiceEntry[1]);
-                        $("input[name='"+data[i].attribute.split(" ").join("")+"']").not("[id='"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")+"']").prop("disabled", true);
-                    }else if (data[i].attributetype == 'E'){
-                        $('input[name="'+data[i].attribute.split(" ").join("")+'"]').val(data[i].custresponse);
-                    }else if (data[i].attributetype == 'S'){
-                        $("input[name='"+data[i].attribute.split(" ").join("")+"'][value='" + data[i].custresponse + "']").attr('checked', 'checked');
-
-                    }else if (data[i].attributetype == 'M'){
-                        $('select[name="'+data[i].attribute.split(" ").join("")+'"] option[value="'+data[i].custresponse+'"]').attr("selected","selected");
-                    }
-
-
-
-
-
-
-                }
+                INVESTENT_PROFILE_RESPONSE = data;
+                appendExistingData()
             }
            
 
@@ -223,5 +204,34 @@ $(document).ready(function(){
 });
 })
 
+function appendExistingData(){
+
+    for(var i=0;i<INVESTENT_PROFILE_RESPONSE.length;i++){
+
+        if(INVESTENT_PROFILE_RESPONSE[i].attributetype == 'C'){
+            choiceEntry = INVESTENT_PROFILE_RESPONSE[i].custresponse.split(",");
+            $("#"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")).val(choiceEntry[1]);
+            $("input[name='"+INVESTENT_PROFILE_RESPONSE[i].attribute.split(" ").join("")+"']").not("[id='"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")+"']").prop("disabled", true);
+            $("input[name='"+INVESTENT_PROFILE_RESPONSE[i].attribute.split(" ").join("")+"']").not("[id='"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")+"']").removeAttr('required');
+            $("input[name='"+INVESTENT_PROFILE_RESPONSE[i].attribute.split(" ").join("")+"']").not("[id='"+choiceEntry[0].replace(/[{()}]/g, '').split(" ").join("")+"']").removeAttr('data-parsley-required-message');
+        }else if (INVESTENT_PROFILE_RESPONSE[i].attributetype == 'E'){
+            $('input[name="'+INVESTENT_PROFILE_RESPONSE[i].attribute.split(" ").join("")+'"]').val(INVESTENT_PROFILE_RESPONSE[i].custresponse);
+        }else if (INVESTENT_PROFILE_RESPONSE[i].attributetype == 'S'){
+            $("div[data-id='"+INVESTENT_PROFILE_RESPONSE[i].attribute.split(" ").join("")+"']").buttonset();
+            $("input[name='"+INVESTENT_PROFILE_RESPONSE[i].attribute.split(" ").join("")+"'][value='" + INVESTENT_PROFILE_RESPONSE[i].custresponse + "']").attr('checked', 'checked');            
+            $("div[data-id='"+INVESTENT_PROFILE_RESPONSE[i].attribute.split(" ").join("")+"']").buttonset('refresh');
+        }else if (INVESTENT_PROFILE_RESPONSE[i].attributetype == 'M'){
+            $('select[name="'+INVESTENT_PROFILE_RESPONSE[i].attribute.split(" ").join("")+'"]').val(INVESTENT_PROFILE_RESPONSE[i].custresponse);
+        }
 
 
+
+
+
+
+    }
+}
+
+function revertToOriginalData(){
+    appendExistingData()
+}

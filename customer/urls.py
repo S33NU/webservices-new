@@ -18,5 +18,5 @@ from . import views
 
 
 urlpatterns = [
-    path('customer/email-mobile',views.getEmailandMobile),
+   
 ]

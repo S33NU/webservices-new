@@ -54,11 +54,11 @@
                             </div>
                         </div>    
                         {% elif profileQuestions.profqtype == "S" %}
-                        <div class='form-group row'><div class='col-sm-12 mb-3 mb-sm-0'>
+                        <div class='form-group row' data-id='{{profileQuestions.profqname|cut:" "}}'><div class='col-sm-12 mb-3 mb-sm-0'>
                             <label for='{{profileQuestions.profqname|cut:" "}}'>{{profileQuestions.profqorder}}.{{profileQuestions.profqname}}</label></br>
                             {% for value in profileQuestions.values %}
                                 
-                                <input type='radio' name='{{profileQuestions.profqname|cut:" "}}' value='{{value}}' required checked/><label> {{value}} </label>
+                                <input type='radio' name='{{profileQuestions.profqname|cut:" "}}' value='{{value}}' id='{{value|clean}}' required /><label for='{{value|clean}}'> {{value}} </label>
                                     
                             {% endfor %}
                          </div>
@@ -103,7 +103,7 @@
               <button class="btn btn-primary btn-user-investment btn-block-profile" type="submit" id="updateInvestmentProfileButton"  >
                 Save
                 </button>
-                <button class="btn btn-primary btn-user-investment btn-block-profile" type="submit" id="cancelUpdateInvestmentProfileButton"  >
+                <button class="btn btn-primary btn-user-investment btn-block-profile" type="submit" id="cancelUpdateInvestmentProfileButton" onclick="revertToOriginalData();return false;">
                   Cancel
                   </button>
                 
